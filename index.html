@@ -58,10 +58,6 @@ button{font:inherit;color:inherit}
 .facts b{display:block;font-family:var(--f-display);font-size:var(--s3);line-height:1;color:var(--gilt);font-weight:700}
 .facts span{font-size:var(--s-1);color:var(--dust);line-height:1.3;display:block;margin-top:4px}
 @media (max-width:520px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div:nth-child(3){padding-left:0;border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--rule)}}
-.gallery{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:10px;margin:0 0 28px}
-.gallery span{display:block;aspect-ratio:1;opacity:.92}
-.gallery svg{display:block;width:100%;height:100%}
-@media (max-width:520px){.gallery{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}}
 .note{color:var(--dust);font-size:var(--s-1);margin:14px 0 0;max-width:40em}
 .last{margin:0 0 20px;padding:10px 14px;border-left:2px solid var(--verdigris);background:var(--vault);font-size:15px}
 .last b{color:var(--bone)}
@@ -155,12 +151,11 @@ button{font:inherit;color:inherit}
 .bro[open]{border-color:var(--gilt-deep)}
 .bro.flash{animation:flash 1.2s ease}
 @keyframes flash{0%{border-color:var(--gilt);box-shadow:0 0 0 2px rgba(207,167,82,.35)}100%{box-shadow:none}}
-.bro summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:24px 26px minmax(0,1fr) 72px 3.2em 14px;gap:10px;align-items:center;padding:11px 12px}
+.bro summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:30px 14px minmax(0,1fr) 72px 3.2em 14px;gap:10px;align-items:center;padding:11px 12px}
 .bro summary::-webkit-details-marker{display:none}
 .bro summary:hover{background:#231e17}
 .bro .no{font-family:var(--f-mono);font-size:13px;color:var(--dust);text-align:right}
-.bro .dot{width:26px;height:26px;display:block}
-.bro .dot svg{display:block;width:100%;height:100%}
+.bro .dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(235,225,204,.35)}
 .bro .who{min-width:0}
 .bro .who b{display:block;font-family:var(--f-display);font-size:var(--s1);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bro .who span{display:block;font-size:13px;color:var(--dust);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -189,7 +184,7 @@ button{font:inherit;color:inherit}
 .bro .bd{font-size:14px;color:var(--dust)}
 .bro .note-me{font-size:14px;color:var(--dust)}
 @media (max-width:560px){
-  .bro summary{grid-template-columns:20px 26px minmax(0,1fr) 3em 12px;gap:8px}
+  .bro summary{grid-template-columns:24px 12px minmax(0,1fr) 3em 12px;gap:8px}
   .bro .tr{display:none}
   .bro .body{padding:4px 14px 16px 14px}
   .bro .two{grid-template-columns:1fr}
@@ -247,7 +242,6 @@ footer p{margin:0 0 6px}
     <div><b>18</b><span>примархов, II и XI изъяты</span></div>
     <div><b>1</b><span>секретный результат</span></div>
   </div>
-  <div class="gallery" id="gallery" aria-label="Печати восемнадцати примархов"></div>
   <p class="last" id="last" hidden></p>
   <button class="btn" id="start" type="button">Начать анализ</button>
   <p class="note">Здесь нет вопросов про болтеры и цепные мечи. Отвечай, как есть на самом деле, а не как хотелось бы. Около четырёх минут.</p>
@@ -1030,68 +1024,18 @@ function scan(){
 var ROMAN=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX"];
 function lum(hex){ var n=parseInt(hex.slice(1),16), r=(n>>16&255)/255, g=(n>>8&255)/255, b=(n&255)/255;
   var f=function(c){return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);}; return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b); }
-/* ---------- Оригинальные эмблемы: символ характера каждого примарха (не символы легионов) ---------- */
-var SYM = (function(){
-  function laurel(){
-    var g='<path d="M46 78 Q24 62 32 26"/><path d="M54 78 Q76 62 68 26"/>';
-    for(var i=0;i<6;i++){
-      var t=0.1+i*0.15, u=1-t;
-      var lx=u*u*46+2*u*t*24+t*t*32, ly=u*u*78+2*u*t*62+t*t*26;
-      var rx=100-lx;
-      g+='<ellipse cx="'+(lx-6).toFixed(1)+'" cy="'+ly.toFixed(1)+'" rx="7" ry="3.2" transform="rotate(-35 '+(lx-6).toFixed(1)+' '+ly.toFixed(1)+')"/>';
-      g+='<ellipse cx="'+(rx+6).toFixed(1)+'" cy="'+ly.toFixed(1)+'" rx="7" ry="3.2" transform="rotate(35 '+(rx+6).toFixed(1)+' '+ly.toFixed(1)+')"/>';
-    }
-    return g+'<circle cx="50" cy="20" r="3.5" class="f"/>';
-  }
-  function rays(n, r0, r1, alt){
-    var g=''; for(var i=0;i<n;i++){ var a=i*2*Math.PI/n-Math.PI/2, e=alt&&i%2?r1-8:r1;
-      g+='<line x1="'+(50+r0*Math.cos(a)).toFixed(1)+'" y1="'+(50+r0*Math.sin(a)).toFixed(1)+'" x2="'+(50+e*Math.cos(a)).toFixed(1)+'" y2="'+(50+e*Math.sin(a)).toFixed(1)+'"/>'; }
-    return g;
-  }
-  return {
-    lion:'<circle cx="34" cy="50" r="12"/><circle cx="34" cy="50" r="4"/><path d="M46 50 H84 M74 50 V61 M82 50 V58"/>',
-    fulgrim:'<path d="M28 40 L39 26 H61 L72 40 L50 76 Z M28 40 H72 M39 26 L45 40 L50 76 L55 40 L61 26"/>',
-    perturabo:'<path d="M26 76 V26 L74 76 Z M34 68 V46 L55 68 Z"/><path d="M26 34 H31 M26 42 H31 M26 50 H31 M26 58 H31"/>',
-    khan:'<path d="M36 22 Q72 50 36 78 Z"/><path d="M18 50 H80 M71 43 L80 50 L71 57 M18 50 L13 44 M18 50 L13 56"/>',
-    russ:'<path d="M22 60 C44 62 66 50 76 24 L83 30 C74 58 46 72 24 70 Z"/><path d="M38 61 L40 70 M54 56 L58 66 M68 46 L74 54"/>',
-    dorn:'<path d="M32 36 V26 H40 V32 H46 V26 H54 V32 H60 V26 H68 V36 Z"/><path d="M35 36 V78 H65 V36"/><path d="M44 78 V65 Q50 57 56 65 V78"/><path d="M35 50 H65"/>',
-    curze:'<path d="M50 22 V74 M24 32 H76 M38 76 H62"/><path d="M24 32 L16 56 M24 32 L32 56 M76 32 L68 56 M76 32 L84 56"/><path d="M14 56 Q24 66 34 56 Z M66 56 Q76 66 86 56 Z"/>',
-    sanguinius:'<circle cx="50" cy="50" r="11"/>'+rays(12,18,32,true),
-    ferrus:'<path d="M20 38 H70 Q78 38 80 32 H85 Q83 50 66 52 V60 H74 V72 H32 V60 H42 V52 Q26 50 20 38 Z"/>',
-    angron:'<ellipse cx="32" cy="60" rx="13" ry="7" transform="rotate(-35 32 60)"/><ellipse cx="68" cy="40" rx="13" ry="7" transform="rotate(-35 68 40)"/><path d="M45 44 L40 38 M55 56 L60 62 M50 41 V33 M50 59 V67"/>',
-    guilliman:'<path d="M50 32 Q36 24 20 28 V72 Q36 68 50 76 Q64 68 80 72 V28 Q64 24 50 32 Z M50 32 V76"/><path d="M27 38 L43 40 M27 46 L43 48 M27 54 L43 56 M57 40 L73 38 M57 48 L73 46 M57 56 L73 54"/>',
-    mortarion:'<path d="M30 22 H70 M30 78 H70"/><path d="M35 22 C35 42 49 45 49 50 C49 55 35 58 35 78 M65 22 C65 42 51 45 51 50 C51 55 65 58 65 78"/><path d="M42 72 H58 L50 62 Z" class="f"/>',
-    magnus:'<path d="M18 50 Q50 22 82 50 Q50 78 18 50 Z"/><circle cx="50" cy="50" r="10"/><circle cx="50" cy="50" r="4" class="f"/>',
-    horus:laurel(),
-    lorgar:'<path d="M50 20 C62 36 70 46 66 60 C63 72 56 78 50 78 C44 78 37 72 34 60 C30 46 40 40 44 30 C46 40 49 44 52 46 C55 38 53 29 50 20 Z"/><path d="M50 52 C56 58 56 66 50 70 C44 66 44 58 50 52 Z"/>',
-    vulkan:'<rect x="28" y="24" width="44" height="17" rx="2"/><rect x="45" y="41" width="10" height="36" rx="2"/><path d="M34 32 H66"/>',
-    corax:'<path d="M28 76 V46 Q50 16 72 46 V54"/><path d="M38 76 V36 M50 76 V28 M60 76 V36"/><path d="M22 76 H72"/><path d="M72 54 L86 60 V78 L72 72"/><path d="M78 30 Q84 24 90 28" />',
-    alpharius:'<circle cx="40" cy="46" r="17"/><circle cx="60" cy="56" r="17" class="bg"/><path d="M33 41 h5 M44 41 h5 M33 52 Q40 58 47 52"/><path d="M53 51 h5 M64 51 h5 M53 66 Q60 60 67 66"/>',
-    emperor:'<circle cx="50" cy="50" r="12" class="f"/>'+rays(20,17,36,true)
-  };
-})();
-function emblem(id, col, bg, sw){
-  var s=(SYM[id]||"").replace(/class="f"/g,'fill="'+col+'" stroke="none"').replace(/class="bg"/g,'fill="'+bg+'"');
-  return '<g fill="none" stroke="'+col+'" stroke-width="'+(sw||3.6)+'" stroke-linecap="round" stroke-linejoin="round">'+s+'</g>';
-}
-function inkFor(p, emp){ return emp ? "#1a140a" : (lum(p.c)>0.28 ? "#14110d" : "#f3ead6"); }
-function miniSeal(p, emp){
-  var ink=inkFor(p,emp), fill=emp?"#cfa752":p.c;
-  return '<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="'+fill+'" stroke="#cfa752" stroke-width="4"/><g transform="translate(13 13) scale(.74)">'+emblem(p.id,ink,fill,5)+'</g></svg>';
-}
 function sealSVG(p, emperor){
   var ticks="", i;
   for(i=0;i<72;i++){ var a=i*5*Math.PI/180, r1=(i%6===0)?80:85, r2=91;
     ticks+='<line x1="'+(100+r1*Math.cos(a)).toFixed(2)+'" y1="'+(100+r1*Math.sin(a)).toFixed(2)+'" x2="'+(100+r2*Math.cos(a)).toFixed(2)+'" y2="'+(100+r2*Math.sin(a)).toFixed(2)+'" stroke="#cfa752" stroke-width="'+(i%6===0?1.6:0.8)+'"/>'; }
-  var fill=emperor?"url(#gg)":p.c, txt=inkFor(p,emperor), solid=emperor?"#cfa752":p.c;
-  var label=emperor?"I–XX":p.l;
-  return '<svg viewBox="0 0 200 200" role="img" aria-label="Печать: '+p.n+'">'+
+  var fill=emperor?"url(#gg)":p.c, txt=emperor?"#1a140a":(lum(p.c)>0.28?"#14110d":"#f3ead6");
+  var label=emperor?"I–XX":p.l, fs=label.length>3?(label.length>4?40:48):(label.length>2?54:62);
+  return '<svg viewBox="0 0 200 200" role="img" aria-label="Печать легиона '+label+'">'+
     '<defs><radialGradient id="gg" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f0d58e"/><stop offset=".6" stop-color="#cfa752"/><stop offset="1" stop-color="#8f6e2c"/></radialGradient></defs>'+
     '<circle cx="100" cy="100" r="96" fill="none" stroke="#cfa752" stroke-width="1.4"/>'+ticks+
     '<circle cx="100" cy="100" r="72" fill="'+fill+'" stroke="#cfa752" stroke-width="2.4"/>'+
     '<circle cx="100" cy="100" r="64" fill="none" stroke="'+txt+'" stroke-opacity=".35" stroke-width="1"/>'+
-    '<g transform="translate(56 44) scale(.88)">'+emblem(p.id,txt,solid,4)+'</g>'+
-    '<text x="100" y="146" text-anchor="middle" font-family="Cormorant SC, Georgia, serif" font-weight="700" font-size="17" letter-spacing="1" fill="'+txt+'">'+label+'</text></svg>';
+    '<text x="100" y="100" text-anchor="middle" dominant-baseline="central" font-family="Cormorant SC, Georgia, serif" font-weight="700" font-size="'+fs+'" fill="'+txt+'">'+label+'</text></svg>';
 }
 var FATE={loyal:"Остался верен",traitor:"Предал отца",unknown:"Верность неизвестна",emperor:"Золотой Трон"};
 function list(el, arr){ el.innerHTML=""; arr.forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li);}); }
@@ -1153,7 +1097,7 @@ function renderBros(rk, meId){
       if(i===1 || (!meId && i===0)) d.open=true;
       var s=mk("summary");
       s.appendChild(mk("span","no",String(i+1)));
-      var dot=mk("span","dot"); dot.innerHTML=miniSeal(p,false); s.appendChild(dot);
+      var dot=mk("span","dot"); dot.style.background=p.c; s.appendChild(dot);
       var who=mk("span","who"); who.appendChild(mk("b",null,p.n)); who.appendChild(mk("span",null,"Легион "+p.l+" · "+p.leg)); s.appendChild(who);
       var tr=mk("span","tr"), bar=mk("i"); bar.style.width=x.pct+"%"; tr.appendChild(bar); s.appendChild(tr);
       s.appendChild(mk("span","v",x.pct+"%")); s.appendChild(mk("span","chev"));
@@ -1228,7 +1172,7 @@ function printSVG(user, pv, size, labels){
 function renderPrint(res, p){ $("print").innerHTML=printSVG(res.user, p?Q.vec(p.v):null, 440, true); }
 
 /* ---------- Карточка для сторис ---------- */
-function makeCard(symImg){
+function makeCard(){
   var res=state.res, top=res.ranking[0], emp=res.emperor, p=emp?Q.EMPEROR:top.p;
   var W=1080,H=1350,c=document.createElement("canvas"); c.width=W; c.height=H; var x=c.getContext("2d");
   var bg=x.createRadialGradient(W/2,-200,50,W/2,200,1100); bg.addColorStop(0,"#2c2318"); bg.addColorStop(1,"#14110d");
@@ -1245,9 +1189,9 @@ function makeCard(symImg){
   if(emp){ var gg=x.createRadialGradient(sx-40,sy-50,10,sx,sy,r); gg.addColorStop(0,"#f0d58e"); gg.addColorStop(.6,"#cfa752"); gg.addColorStop(1,"#8f6e2c"); x.fillStyle=gg; }
   else x.fillStyle=p.c;
   x.beginPath(); x.arc(sx,sy,r,0,7); x.fill(); x.lineWidth=5; x.strokeStyle="#cfa752"; x.stroke();
-  var lab=emp?"I–XX":p.l, ink=inkFor(p,emp);
-  if(symImg) x.drawImage(symImg, sx-r*0.62, sy-r*0.78, r*1.24, r*1.24);
-  x.fillStyle=ink; x.font='700 40px "Cormorant SC", Georgia, serif'; x.fillText(lab, sx, sy+r*0.72);
+  var lab=emp?"I–XX":p.l, light=emp||lum(p.c)>0.28;
+  x.fillStyle=light?"#14110d":"#f3ead6"; x.font='700 '+(lab.length>3?110:140)+'px "Cormorant SC", Georgia, serif'; x.textBaseline="middle";
+  x.fillText(lab, sx, sy+6); x.textBaseline="alphabetic";
   /* имя */
   x.fillStyle="#a2967f"; x.font='500 30px "JetBrains Mono", monospace';
   x.fillText(emp?"ВНЕ ЛЕГИОНОВ":("ЛЕГИОН "+p.l+" · "+p.leg.toUpperCase()), W/2, 600);
@@ -1277,16 +1221,8 @@ function wrap(x, text, cx, y, maxW, lh){
 }
 function fitText(x, t, cx, y, maxW){ var f=40; while(x.measureText(t).width>maxW&&f>24){ f-=2; x.font='700 '+f+'px "Cormorant SC", Georgia, serif'; } x.fillText(t,cx,y); x.font='700 40px "Cormorant SC", Georgia, serif'; }
 $("cardBtn").addEventListener("click",function(){
-  var res=state.res, emp=res.emperor, p=emp?Q.EMPEROR:res.ranking[0].p, ink=inkFor(p,emp);
-  var svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="400" height="400">'+emblem(p.id,ink,emp?"#cfa752":p.c,3.6)+'</svg>';
   var go=function(){
-    var im=new Image();
-    im.onload=function(){ done(makeCard(im)); };
-    im.onerror=function(){ done(makeCard(null)); };
-    im.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svg);
-  };
-  var done=function(url){
-    $("cardImg").src=url; $("cardOut").hidden=false;
+    var url=makeCard(); $("cardImg").src=url; $("cardOut").hidden=false;
     var hosted=/^https?:/.test(location.href) && !/claude/.test(location.host);
     var note=$("cardNote"); note.textContent="";
     if(hosted){ var a=document.createElement("a"); a.href=url; a.download="krov-primarhov.png"; a.className="btn small"; a.textContent="Скачать картинку"; note.appendChild(a); }
@@ -1316,7 +1252,6 @@ $("start").addEventListener("click",start);
 var last=store(true);
 if(last && last.n){ var el=$("last"); el.hidden=false; el.innerHTML="В прошлый раз в тебе нашли кровь: <b></b>. Вопросы будут другими."; el.querySelector("b").textContent=last.n; $("start").textContent="Пройти анализ снова"; }
 
-(function(){ var g=$("gallery"); Q.PRIMARCHS.forEach(function(p){ var d=document.createElement("span"); d.title=p.n; d.innerHTML=miniSeal(p,false); g.appendChild(d); }); })();
 if(reduce) loop(1000); else requestAnimationFrame(loop);
 window.addEventListener("resize",redraw);
 })();
