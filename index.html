@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Кровь примархов">
+<meta property="og:description" content="Тест о быте, а не о болтерах. 15 вопросов из 30 — чья кровь течёт в тебе? 18 примархов и один секрет.">
+<meta property="og:type" content="website">
+<title>Кровь примархов</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Тест о быте, а не о болтерах: 15 вопросов из 30 и ответ, чья кровь течёт в тебе. 18 примархов и один секретный результат.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Cormorant+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Макет: одна колонна-реликварий ~680px; спираль геносемени — единственный «живой» элемент; рамка с двойной позолоченной линией только у карточки вопроса и печати. */
+:root{
+  --ink:#14110d;        /* фон: копоть и бронза */
+  --vault:#1d1913;      /* поверхность */
+  --vault-2:#272119;    /* приподнятая поверхность */
+  --rule:#3d3328;       /* линии */
+  --bone:#ebe1cc;       /* основной текст: кость */
+  --dust:#a2967f;       /* вторичный текст */
+  --gilt:#cfa752;       /* позолота: акцент */
+  --gilt-deep:#8f6e2c;
+  --verdigris:#73a898;  /* патина: второй цвет спирали */
+  --blood:#c4524a;      /* метка предательства */
+  --on-gilt:#1a140a;
+  --f-display:"Cormorant SC","Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-body:"Alegreya Sans","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --s-1:13px;--s0:16px;--s1:19px;--s2:23px;--s3:30px;--s4:42px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--f-body);font-size:var(--s0);line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background-image:radial-gradient(120% 70% at 50% -10%,#2a2117 0%,transparent 60%),radial-gradient(90% 60% at 50% 110%,#1c1712 0%,transparent 70%);
+  background-attachment:fixed;min-height:100%}
+[hidden]{display:none!important}
+img{max-width:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gilt);outline-offset:3px}
+.wrap{max-width:680px;margin:0 auto;padding-block:28px 56px}
+.eyebrow{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.14em;text-transform:uppercase;color:var(--dust)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* ---------- Вступление ---------- */
+.hero{position:relative;padding-block:24px 8px}
+.hero canvas{position:absolute;left:0;right:0;top:54px;width:100%;height:150px;opacity:.55;pointer-events:none}
+.hero h1{position:relative;font-family:var(--f-display);font-weight:700;font-size:clamp(52px,12vw,104px);line-height:.92;letter-spacing:.01em;margin:18px 0 22px;text-wrap:balance;color:var(--bone)}
+.hero h1 span{display:block;color:var(--gilt)}
+.lead{position:relative;font-size:var(--s1);max-width:34em;margin:0 0 26px;color:var(--bone)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--rule);margin:0 0 28px}
+.facts div{padding:12px 10px 12px 0;min-width:0}
+.facts div + div{padding-left:12px;border-left:1px solid var(--rule)}
+.facts b{display:block;font-family:var(--f-display);font-size:var(--s3);line-height:1;color:var(--gilt);font-weight:700}
+.facts span{font-size:var(--s-1);color:var(--dust);line-height:1.3;display:block;margin-top:4px}
+@media (max-width:520px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div:nth-child(3){padding-left:0;border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--rule)}}
+.note{color:var(--dust);font-size:var(--s-1);margin:14px 0 0;max-width:40em}
+.last{margin:0 0 20px;padding:10px 14px;border-left:2px solid var(--verdigris);background:var(--vault);font-size:15px}
+.last b{color:var(--bone)}
+
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--gilt);background:var(--gilt);color:var(--on-gilt);font-family:var(--f-display);font-weight:700;font-size:var(--s2);letter-spacing:.04em;padding:12px 26px 13px;cursor:pointer;transition:background .15s,transform .15s}
+.btn:hover{background:#ddb862}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--gilt)}
+.btn.ghost:hover{background:rgba(207,167,82,.1)}
+.btn.small{font-size:var(--s1);padding:8px 16px 9px}
+.link{background:none;border:0;padding:6px 0;color:var(--dust);cursor:pointer;font-size:15px;text-decoration:underline;text-underline-offset:3px}
+.link:hover{color:var(--bone)}
+
+/* ---------- Вопрос ---------- */
+.qhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:8px 0 6px}
+.strip{display:block;width:100%;height:46px;margin:0 0 18px}
+.card{position:relative;background:var(--vault);border:1px solid var(--gilt-deep);outline:1px solid var(--rule);outline-offset:4px;padding:26px 22px 22px;margin:4px}
+.qtext{font-family:var(--f-body);font-weight:500;font-size:clamp(21px,4.6vw,27px);line-height:1.3;margin:0 0 22px;text-wrap:balance}
+.answers{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.ans{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;width:100%;text-align:left;background:var(--vault-2);border:1px solid var(--rule);padding:11px 14px;cursor:pointer;font-size:17px;line-height:1.4;transition:border-color .15s,background .15s}
+.ans .k{font-family:var(--f-mono);font-size:13px;color:var(--dust);padding-top:3px}
+.ans:hover{border-color:var(--gilt-deep);background:#2e271e}
+.ans.picked{border-color:var(--gilt);background:#3a2f1f}
+.ans.picked .k{color:var(--gilt)}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;min-height:34px}
+.qfoot .hint{font-size:var(--s-1);color:var(--dust)}
+.qmulti{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--verdigris);margin:-12px 0 16px}
+.answers.multi .ans .k{width:20px;height:20px;border:1px solid var(--dust);display:inline-flex;align-items:center;justify-content:center;padding:0;font-size:11px;margin-top:1px}
+.answers.multi .ans.picked .k{background:var(--gilt);border-color:var(--gilt);color:var(--on-gilt)}
+.answers.multi .ans.off{opacity:.45;cursor:default}
+.next{margin-top:16px}
+.next:disabled{opacity:.4;cursor:default}
+@media (hover:none){.qfoot .hint{display:none}}
+.fade{animation:fade .32s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Сканирование ---------- */
+.scan{padding-block:60px}
+.scan canvas{display:block;width:100%;height:120px}
+.scan ol{list-style:none;padding:0;margin:24px 0 0;font-family:var(--f-mono);font-size:14px;color:var(--dust);display:grid;gap:6px}
+.scan li{opacity:0;animation:fade .3s ease forwards}
+.scan li.warn{color:var(--blood)}
+
+/* ---------- Результат ---------- */
+.res-top{display:grid;grid-template-columns:180px minmax(0,1fr);gap:26px;align-items:center;margin:10px 0 26px}
+.seal{width:180px;max-width:100%;aspect-ratio:1}
+.seal svg{display:block;width:100%;height:100%}
+.res-top h2{font-family:var(--f-display);font-weight:700;font-size:clamp(38px,8vw,58px);line-height:.98;margin:8px 0 8px;text-wrap:balance}
+.res-top .ep{font-style:italic;font-size:var(--s1);color:var(--dust);margin:0 0 12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tag{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--rule);color:var(--dust)}
+.tag.loyal{border-color:var(--verdigris);color:var(--verdigris)}
+.tag.traitor{border-color:var(--blood);color:var(--blood)}
+.tag.unknown{border-color:var(--dust)}
+.tag.emperor,.tag.match{border-color:var(--gilt);color:var(--gilt)}
+@media (max-width:560px){.res-top{grid-template-columns:1fr;gap:14px}.seal{width:150px}}
+.secret{margin:0 0 22px;padding:12px 16px;border:1px solid var(--gilt);background:rgba(207,167,82,.08);font-size:15px}
+.desc{font-size:var(--s1);margin:0 0 28px;max-width:34em}
+.h3{font-family:var(--f-display);font-weight:700;font-size:var(--s2);margin:0 0 10px;color:var(--gilt);letter-spacing:.02em}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:0 0 30px}
+@media (max-width:560px){.cols{grid-template-columns:1fr}}
+.cols ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.cols li{position:relative;padding-left:18px}
+.cols li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;background:var(--gilt);transform:rotate(45deg)}
+.cols .shadow li::before{background:transparent;border:1px solid var(--blood)}
+.scene{margin:0 0 30px;padding:18px 20px;background:var(--vault);border-left:2px solid var(--gilt)}
+.scene p{margin:0}
+.motto{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,6vw,40px);line-height:1.1;margin:0 0 8px;text-wrap:balance}
+.bond{color:var(--dust);margin:0 0 34px}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-block:1px solid var(--rule);margin:0 0 36px}
+.pair div{padding:14px 12px 14px 0;min-width:0}
+.pair div + div{padding-left:14px;border-left:1px solid var(--rule)}
+.pair b{display:block;font-family:var(--f-display);font-size:var(--s2);line-height:1.15;margin:4px 0 2px}
+.pair span{color:var(--dust);font-size:15px}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0 0 12px}
+.cell{position:relative;aspect-ratio:1/1;border:1px solid var(--rule);background:var(--vault);display:flex;flex-direction:column;justify-content:space-between;padding:6px 7px;cursor:pointer;text-align:left;min-width:0}
+.cell .num{font-family:var(--f-display);font-weight:700;font-size:clamp(17px,4.4vw,26px);line-height:1}
+.cell .pc{font-family:var(--f-mono);font-size:11px;color:var(--dust)}
+.cell.me{border:2px solid var(--gilt)}
+.cell.me .pc{color:var(--gilt)}
+.cell.sel{outline:1px solid var(--bone);outline-offset:2px}
+.cell.void{cursor:default;background:repeating-linear-gradient(135deg,var(--vault) 0 6px,#211b14 6px 12px);color:var(--dust)}
+.cell.void .pc{font-size:9px;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}
+.cell .bar{position:absolute;left:0;bottom:0;height:3px;background:var(--gilt);opacity:.8}
+.mapnote{font-size:var(--s-1);color:var(--dust);margin:0 0 14px}
+.bros{display:grid;gap:6px;margin:0 0 36px}
+.bgrp{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.14em;text-transform:uppercase;color:var(--dust);margin:18px 0 4px}
+.bgrp:first-child{margin-top:0}
+.bro{background:var(--vault);border:1px solid var(--rule)}
+.bro[open]{border-color:var(--gilt-deep)}
+.bro.flash{animation:flash 1.2s ease}
+@keyframes flash{0%{border-color:var(--gilt);box-shadow:0 0 0 2px rgba(207,167,82,.35)}100%{box-shadow:none}}
+.bro summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:30px 14px minmax(0,1fr) 72px 3.2em 14px;gap:10px;align-items:center;padding:11px 12px}
+.bro summary::-webkit-details-marker{display:none}
+.bro summary:hover{background:#231e17}
+.bro .no{font-family:var(--f-mono);font-size:13px;color:var(--dust);text-align:right}
+.bro .dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(235,225,204,.35)}
+.bro .who{min-width:0}
+.bro .who b{display:block;font-family:var(--f-display);font-size:var(--s1);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bro .who span{display:block;font-size:13px;color:var(--dust);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bro .tr{height:6px;background:var(--vault-2);position:relative}
+.bro .tr i{position:absolute;inset:0 auto 0 0;background:var(--gilt)}
+.bro .v{font-family:var(--f-mono);font-size:14px;text-align:right;color:var(--dust);font-variant-numeric:tabular-nums}
+.bro .chev{width:8px;height:8px;border-right:1.5px solid var(--dust);border-bottom:1.5px solid var(--dust);transform:rotate(45deg);margin-top:-4px;transition:transform .2s}
+.bro[open] .chev{transform:rotate(225deg);margin-top:4px}
+.bro.me .who b,.bro.me .v{color:var(--gilt)}
+.bro.anti .tr i{background:var(--blood)}
+.bro .body{padding:4px 16px 18px 56px;display:grid;gap:14px}
+.bro .body p{margin:0}
+.bro .ep{font-style:italic;color:var(--dust)}
+.bro .cmp{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px}
+.bro .cmp .lab{color:var(--dust);margin-right:2px}
+.bro .pill{font-family:var(--f-mono);font-size:12px;padding:3px 7px;border:1px solid var(--verdigris);color:var(--verdigris)}
+.bro .pill.minus{border-color:var(--rule);color:var(--dust)}
+.bro .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.bro .two h4{font-family:var(--f-display);font-size:var(--s1);color:var(--gilt);margin:0 0 6px}
+.bro .two ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:15px}
+.bro .two li{position:relative;padding-left:16px}
+.bro .two li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;background:var(--gilt);transform:rotate(45deg)}
+.bro .two .neg li::before{background:transparent;border:1px solid var(--blood)}
+.bro .sc{padding:12px 14px;background:var(--vault-2);border-left:2px solid var(--gilt);font-size:15px}
+.bro .mt{font-family:var(--f-display);font-weight:700;font-size:var(--s2);line-height:1.15}
+.bro .bd{font-size:14px;color:var(--dust)}
+.bro .note-me{font-size:14px;color:var(--dust)}
+@media (max-width:560px){
+  .bro summary{grid-template-columns:24px 12px minmax(0,1fr) 3em 12px;gap:8px}
+  .bro .tr{display:none}
+  .bro .body{padding:4px 14px 16px 14px}
+  .bro .two{grid-template-columns:1fr}
+}
+
+.rank{display:grid;gap:8px;margin:0 0 36px}
+.row{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) 3.2em;gap:12px;align-items:center;font-size:15px}
+.row .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .tr{height:8px;background:var(--vault-2);position:relative}
+.row .tr i{position:absolute;inset:0 auto 0 0;background:var(--gilt)}
+.row.me .nm{color:var(--gilt);font-weight:700}
+.row.anti .tr i{background:var(--blood)}
+.row .v{font-family:var(--f-mono);text-align:right;color:var(--dust);font-variant-numeric:tabular-nums}
+.gap{color:var(--dust);font-family:var(--f-mono);font-size:13px;padding-left:2px}
+@media (max-width:420px){.row{grid-template-columns:minmax(0,7.5em) minmax(0,1fr) 3em}}
+
+.share{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 12px}
+.copied{font-size:15px;color:var(--verdigris)}
+.sharebox{width:100%;min-height:96px;background:var(--vault);color:var(--bone);border:1px solid var(--rule);padding:10px;font:15px/1.4 var(--f-body);margin-top:8px}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--rule);font-size:13px;color:var(--dust)}
+footer p{margin:0 0 6px}
+
+/* ---------- Отпечаток, карточка, благодарность ---------- */
+.seal img.art{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid var(--gilt)}
+.print{margin:0 0 34px;display:flex;justify-content:center}
+.print svg{width:100%;max-width:520px;height:auto;overflow:visible}
+.cardout{margin:14px 0 0}
+.cardout img{display:block;width:100%;max-width:360px;border:1px solid var(--rule)}
+.thanks{margin:34px 0 0;padding:20px;border:1px solid var(--gilt-deep);background:var(--vault)}
+.thanks p{margin:0 0 14px;max-width:34em}
+.thanks .btn[aria-disabled="true"]{opacity:.45;cursor:default;pointer-events:none}
+
+/* ---------- Ничья ---------- */
+.tie h2{font-family:var(--f-display);font-size:var(--s4);line-height:1;margin:10px 0 12px}
+.tie p{margin:0 0 22px;color:var(--dust)}
+
+@media (prefers-reduced-motion:reduce){.fade,.scan li{animation:none;opacity:1}.btn{transition:none}}
+
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ВСТУПЛЕНИЕ -->
+<section id="intro" class="hero" aria-labelledby="t">
+  <canvas id="helixHero" aria-hidden="true"></canvas>
+  <div class="eyebrow">Генетический анализ · Терра, М31</div>
+  <h1 id="t">Кровь <span>примархов</span></h1>
+  <p class="lead">Император создал двадцать сыновей, и каждому досталась часть его характера. Ответь на вопросы о самой обычной жизни: друзьях, доме, ссорах и выходных. Анализ покажет, чья кровь течёт в тебе.</p>
+  <div class="facts">
+    <div><b>15</b><span>вопросов за раз</span></div>
+    <div><b>30</b><span>в пуле: каждый раз другие</span></div>
+    <div><b>18</b><span>примархов, II и XI изъяты</span></div>
+    <div><b>1</b><span>секретный результат</span></div>
+  </div>
+  <p class="last" id="last" hidden></p>
+  <button class="btn" id="start" type="button">Начать анализ</button>
+  <p class="note">Здесь нет вопросов про болтеры и цепные мечи. Отвечай, как есть на самом деле, а не как хотелось бы. Около четырёх минут.</p>
+</section>
+
+<!-- ВОПРОС -->
+<section id="quiz" hidden aria-live="polite">
+  <div class="qhead">
+    <span class="eyebrow" id="qcount">Образец 01 / 15</span>
+    <button class="link" id="quit" type="button">Начать сначала</button>
+  </div>
+  <canvas id="helixStrip" class="strip" aria-hidden="true"></canvas>
+  <div class="card" id="qcard">
+    <p class="qtext" id="qtext"></p>
+    <p class="qmulti" id="qmulti" hidden></p>
+    <ul class="answers" id="answers"></ul>
+    <button class="btn small next" id="next" type="button" hidden>Дальше</button>
+  </div>
+  <div class="qfoot">
+    <button class="link" id="back" type="button">← Назад</button>
+    <span class="hint">Можно отвечать клавишами 1–8</span>
+  </div>
+</section>
+
+<!-- НИЧЬЯ -->
+<section id="tie" class="tie" hidden>
+  <div class="eyebrow">Анализ не сходится</div>
+  <h2>Две крови почти поровну</h2>
+  <p>Тебе одинаково близки два брата. Последний вопрос решит, чья кровь сильнее. Что тебе ближе?</p>
+  <ul class="answers" id="tieAnswers"></ul>
+</section>
+
+<!-- СКАНИРОВАНИЕ -->
+<section id="scan" class="scan" hidden aria-live="polite">
+  <canvas id="helixScan" aria-hidden="true"></canvas>
+  <ol id="scanLog"></ol>
+</section>
+
+<!-- РЕЗУЛЬТАТ -->
+<section id="result" hidden>
+  <div class="eyebrow">Результат анализа</div>
+  <div class="res-top">
+    <div class="seal" id="seal"></div>
+    <div>
+      <div class="eyebrow" id="rLeg"></div>
+      <h2 id="rName"></h2>
+      <p class="ep" id="rEp"></p>
+      <div class="tags" id="rTags"></div>
+    </div>
+  </div>
+  <p class="secret" id="rSecret" hidden></p>
+  <p class="desc" id="rDesc"></p>
+  <div class="cols">
+    <div><h3 class="h3">Сила</h3><ul id="rS"></ul></div>
+    <div class="shadow"><h3 class="h3">Тень</h3><ul id="rSh"></ul></div>
+  </div>
+  <h3 class="h3">Сцена из жизни</h3>
+  <div class="scene"><p id="rScene"></p></div>
+  <p class="motto" id="rMotto"></p>
+  <p class="bond" id="rBond"></p>
+
+  <div class="pair">
+    <div><span class="eyebrow">Вторая кровь</span><b id="rSecond"></b><span id="rSecondP"></span></div>
+    <div><span class="eyebrow">Твой антипод</span><b id="rAnti"></b><span id="rAntiP"></span></div>
+  </div>
+
+  <h3 class="h3">Генетический отпечаток</h3>
+  <p class="mapnote">Твои черты характера по ответам (зелёным) и черты твоего примарха (золотой контур). Чем больше совпадают фигуры, тем сильнее кровь.</p>
+  <div class="print" id="print"></div>
+
+  <h3 class="h3">Генетическая карта</h3>
+  <p class="mapnote">Совпадение с каждым из двадцати легионов. Нажми на номер — откроется его досье ниже.</p>
+  <div class="map" id="map"></div>
+
+  <h3 class="h3">Все братья в твоей крови</h3>
+  <p class="mapnote">Все восемнадцать примархов по степени сходства. Открой любого, чтобы прочитать, что у вас общего и чем вы различаетесь.</p>
+  <div class="bros" id="bros"></div>
+
+  <h3 class="h3">Поделиться</h3>
+  <div class="share">
+    <button class="btn small" id="copy" type="button">Скопировать результат</button>
+    <button class="btn small ghost" id="cardBtn" type="button">Картинка для сторис</button>
+    <button class="btn small ghost" id="again" type="button">Пройти ещё раз</button>
+    <span class="copied" id="copied" role="status"></span>
+  </div>
+  <textarea class="sharebox" id="sharebox" readonly hidden aria-label="Текст результата"></textarea>
+  <div class="cardout" id="cardOut" hidden>
+    <img id="cardImg" alt="Карточка с результатом теста">
+    <p class="note" id="cardNote"></p>
+  </div>
+
+  <div class="thanks" id="thanks" hidden>
+    <h3 class="h3">Поблагодарить автора</h3>
+    <p id="thanksText"></p>
+    <div class="share" id="thanksBtns"></div>
+  </div>
+  <p class="note">При повторном прохождении вопросы будут другими. Секретный результат получают единицы.</p>
+</section>
+
+<footer>
+  <p>Фанатский некоммерческий тест. Warhammer, Horus Heresy, имена примархов и легионов принадлежат Games Workshop.</p>
+  <p>Результат не диагноз, а повод поспорить с друзьями.</p>
+</footer>
+</div>
+
+<script>
+/* Кровь примархов — данные и чистая логика (без DOM). Версия 2. */
+(function (root) {
+"use strict";
+
+/* Оси характера. Пользователь их не видит. */
+var TRAITS = ["ord","hon","pri","wra","cun","int","fai","car","fre","gri","end","pac","amb","cra"];
+var TRAIT_NAMES = {ord:"порядок",hon:"честность",pri:"гордость",wra:"горячность",cun:"хитрость",int:"любопытство",
+  fai:"вера",car:"забота",fre:"свобода",gri:"мрачность",end:"выносливость",pac:"верность своим",amb:"амбиции",cra:"мастерство"};
+
+/* max — сколько ответов можно выбрать (по умолчанию 1). emp — «имперский» ответ. */
+/* ---------- ВОПРОСЫ: 3 первых, 24 средних, 3 последних ---------- */
+var OPENERS = [
+ {id:"o1", t:"Вечеринка, где ты почти никого не знаешь. Первые полчаса —", a:[
+  {t:"Нахожу хозяйского кота и общаюсь только с ним.", w:{fre:1,car:1}},
+  {t:"Режу салаты на кухне. Это проще, чем знакомиться.", w:{car:2,cra:1}},
+  {t:"Стою у стены с бокалом и вычисляю, кто тут с кем и кто главный.", w:{cun:2,gri:1}},
+  {t:"Уже рассказываю историю, и вокруг смеются.", w:{amb:2,pac:1}},
+  {t:"Держусь за единственного знакомого, как за спасательный круг.", w:{pac:2,end:1}},
+  {t:"Изучаю книжную полку хозяев. Она расскажет о них больше, чем они сами.", w:{int:2,cun:1}},
+  {t:"Тихо проверяю, во сколько последний автобус.", w:{ord:2}}
+ ]},
+ {id:"o2", t:"Суббота, никаких планов. Что происходит к обеду?", a:[
+  {t:"Список дел написан и выполнен наполовину.", w:{ord:2,amb:1}},
+  {t:"Пижама, плед, третья серия подряд. Не трогайте меня.", w:{end:1,fre:1}},
+  {t:"Доделываю начатое на неделе: полку, вязание, модельку.", w:{cra:2,end:1}},
+  {t:"Сижу с кем-то в кафе, хотя с утра планы были совсем другие.", w:{pac:2,fre:1}},
+  {t:"Залипаю на статье про древний Египет. Уже третий час.", w:{int:2,fai:1}},
+  {t:"Еду куда-нибудь. Куда именно, решу по дороге.", w:{fre:2}},
+  {t:"Генеральная уборка. Не потому что надо, а потому что успокаивает.", w:{ord:1,cra:1,end:1}}
+ ]},
+ {id:"o3", t:"Близкий человек пишет в два часа ночи: «не спишь?»", a:[
+  {t:"Сразу звоню. В такое время просто так не пишут.", w:{car:2,pac:1}},
+  {t:"«Не сплю. Выезжать?» — и уже ищу ключи.", w:{pac:2,wra:1,hon:1}},
+  {t:"Отвечаю, но сначала думаю, к чему бы это.", w:{cun:2,gri:1}},
+  {t:"Сплю. Режим — дело святое. Отвечу утром с кофе.", w:{ord:2,end:1}},
+  {t:"Конечно, не сплю. Ночь — моё время.", w:{gri:2,fre:1}},
+  {t:"Читаю и делаю вид, что сплю. Если важно, напишет ещё.", w:{cun:1,end:1,fre:1}}
+ ]}
+];
+
+var MIDDLE = [
+ {id:"m1", t:"Коллега выдаёт твою идею за свою на общей встрече.", a:[
+  {t:"Улыбаюсь. Месть подаётся холодной и в правильный момент.", w:{cun:2,gri:1}},
+  {t:"При всех: «О, знакомая идея. Из моего письма во вторник?»", w:{hon:2,wra:1}},
+  {t:"Да пусть. Лишь бы работало.", w:{car:1,ord:1,end:1}},
+  {t:"Неделю репетирую в душе речь, которую так и не скажу.", w:{pri:1,gri:1,end:1}},
+  {t:"Кидаю в общий чат ссылку на своё письмо с датой. Без комментариев.", w:{ord:2,cun:1}},
+  {t:"Иду к начальству напрямую.", w:{amb:2,hon:1}},
+  {t:"Вечером жалуюсь близким, и отпускает.", w:{pac:2}}
+ ]},
+ {id:"m2", max:2, t:"Ремонт. Кто ты в этой истории?", a:[
+  {t:"Прораб: смета, график, таблица закупок.", w:{ord:2,int:1}},
+  {t:"Руки: шпаклюю, крашу, кладу плитку.", w:{cra:2,pri:1}},
+  {t:"Дизайнер: я знаю, какого цвета будут стены, и это не обсуждается.", w:{pri:2,amb:1}},
+  {t:"Снабженец: нахожу всё в три раза дешевле. Есть свои люди.", w:{cun:2,amb:1}},
+  {t:"Моральная поддержка: пицца, чай и хорошее настроение.", w:{pac:2,car:1}},
+  {t:"Терпение: три месяца живу в пыли и молчу.", w:{end:2}},
+  {t:"Человек, который на время ремонта уехал к маме.", w:{fre:2}}
+ ]},
+ {id:"m3", max:2, t:"Вечер настолок. Ты обычно…", a:[
+  {t:"Играю на победу. Проигрыш портит мне вечер. Немножко.", w:{wra:2,pri:1}},
+  {t:"Объясняю правила и слежу, чтобы их соблюдали.", w:{ord:2,hon:1}},
+  {t:"Договариваюсь с одним, потом с другим, потом выигрываю.", w:{cun:2,amb:1}},
+  {t:"Отвечаю за снеки и атмосферу.", w:{pac:2,car:1}},
+  {t:"Подыгрываю тому, кто проигрывает, чтобы не расстраивался.", w:{car:2}},
+  {t:"Выбираю самую странную стратегию, просто чтобы посмотреть, что будет.", w:{int:1,fre:2}},
+  {t:"Заранее вижу, кто победит, и незаметно делаю так, чтобы всем было интересно.", w:{cun:1,amb:2}, emp:1}
+ ]},
+ {id:"m4", max:3, t:"Что бесит сильнее всего?", a:[
+  {t:"Когда указывают, как мне жить.", w:{fre:2,wra:1}},
+  {t:"«И так сойдёт».", w:{pri:2,cra:1}},
+  {t:"Враньё. Даже мелкое.", w:{hon:2,gri:1}},
+  {t:"Когда сильный обижает слабого, а все молчат.", w:{car:2,wra:1}},
+  {t:"Опоздания.", w:{ord:2}},
+  {t:"Пустая болтовня ни о чём.", w:{int:1,gri:1}},
+  {t:"Когда меня не замечают.", w:{pri:1,amb:2}},
+  {t:"Когда кто-то из моих в беде, а я далеко.", w:{pac:2,car:1}}
+ ]},
+ {id:"m5", t:"На тротуаре лежит кошелёк. Внутри деньги и паспорт.", a:[
+  {t:"Ищу владельца по соцсетям. Это же целый детектив!", w:{int:2,car:1}},
+  {t:"Несу в полицию. Так положено.", w:{ord:2}},
+  {t:"Звоню по визитке, которая лежит внутри, и договариваюсь о встрече.", w:{hon:2,car:1}},
+  {t:"Прохожу мимо. Не моё, и чужие проблемы мне не нужны.", w:{fre:1,gri:1}},
+  {t:"Не трогаю. Хозяин хватится и вернётся. Наверное.", w:{fai:2}},
+  {t:"Документы верну. Насчёт денег… давай не будем об этом.", w:{cun:1,fre:1,gri:1}},
+  {t:"Возвращаю всё до копейки. Иначе совесть сгрызёт меня до костей.", w:{fai:1,hon:2}}
+ ]},
+ {id:"m6", max:2, t:"Отпуск мечты — это…", a:[
+  {t:"Дорога, музыка на полную, никакого плана.", w:{fre:3}},
+  {t:"Старинный город: музеи, кофейни, книжные лавки.", w:{int:2,fai:1}},
+  {t:"Домик в горах с любимыми людьми, и никуда не ехать.", w:{car:2,pac:1}},
+  {t:"Отель «всё включено», шезлонг, и я не двигаюсь неделю.", w:{pri:1,fre:1}},
+  {t:"Поход с палаткой: комары, костёр, счастье.", w:{end:2,pac:1}},
+  {t:"Маршрут на сорок пунктов, и мы успеем все.", w:{ord:2,amb:1}},
+  {t:"Какой отпуск, у меня проект горит.", w:{end:1,amb:1,cra:1}}
+ ]},
+ {id:"m7", t:"Твоя кухня — это…", a:[
+  {t:"Банки подписаны, всё на своих местах.", w:{ord:2,pri:1}},
+  {t:"Творческий хаос. Но я знаю, где что лежит.", w:{fre:1,cun:1,int:1}},
+  {t:"Проходной двор: тут всегда кто-то ест.", w:{car:2,pac:1}},
+  {t:"Моя территория. Без меня сюда не заходят.", w:{pri:1,cra:2}},
+  {t:"Доставка и кетчуп. Плита для красоты.", w:{fre:2}},
+  {t:"Место, где стоит сломанный тостер, который я однажды починю.", w:{cra:1,end:1,fai:1}},
+  {t:"Идеальная чистота. Потому что я тут не готовлю.", w:{ord:1,cun:1}}
+ ]},
+ {id:"m8", t:"Ты и деньги:", a:[
+  {t:"Подушка безопасности на год вперёд. Мир ненадёжен.", w:{end:1,gri:2}},
+  {t:"Инвестирую. Деньги должны работать.", w:{amb:2,int:1}},
+  {t:"Трачу на красивое. Жизнь одна.", w:{pri:2,fre:1}},
+  {t:"Одалживаю всем и не помню, кто сколько должен.", w:{car:1,pac:2}},
+  {t:"Таблица расходов до копейки.", w:{ord:2}},
+  {t:"Приходят и уходят. Держаться за них не вижу смысла.", w:{fre:2,fai:1}},
+  {t:"Коплю на одну большую мечту.", w:{end:2,amb:1}}
+ ]},
+ {id:"m9", t:"Выясняется, что близкий человек годами врёт тебе о чём-то важном.", a:[
+  {t:"Всё. Этот человек для меня закончился.", w:{hon:2,gri:1,pri:1}},
+  {t:"Сначала разберусь почему. Наверное, были причины.", w:{car:2,int:1}},
+  {t:"Ору, плачу, бью подушку, а через неделю прощаю.", w:{wra:2,pac:1}},
+  {t:"Молчу. Но теперь я знаю, как с ним играть.", w:{cun:2,gri:1}},
+  {t:"Делаю вид, что всё нормально. Просто дистанция становится больше.", w:{end:1,cun:1,gri:1}},
+  {t:"Еду выяснять сразу же. В тапках.", w:{wra:1,hon:1,pac:1}},
+  {t:"Я давно в курсе. Просто жду, когда признается сам.", w:{cun:1,end:1,amb:1}, emp:1}
+ ]},
+ {id:"m10", t:"Какое прозвище у тебя было в школе (или могло бы быть)?", a:[
+  {t:"Ботан.", w:{int:2}},
+  {t:"Танк.", w:{end:2,ord:1}},
+  {t:"Жилетка: все приходили ко мне плакаться.", w:{car:2,pac:1}},
+  {t:"Заводила.", w:{amb:1,pac:2}},
+  {t:"Тень. Никто толком не помнит, как я выгляжу.", w:{cun:2,fre:1}},
+  {t:"«Опять родителей в школу». Это не прозвище, но всё понятно.", w:{fre:2,wra:1}},
+  {t:"Перфекционист: пятёрка с минусом — это провал.", w:{pri:2,ord:1}},
+  {t:"Тот, кого зовут, когда не работает проектор.", w:{cra:2,int:1}}
+ ]},
+ {id:"m11", t:"Кем хотелось стать в детстве?", a:[
+  {t:"Изобретателем. Строить машины и мосты.", w:{cra:2,int:1}},
+  {t:"Путешественником, который не вернётся домой.", w:{fre:2,gri:1}},
+  {t:"Врачом или ветеринаром. Лечить всех подряд.", w:{car:2,hon:1}},
+  {t:"Президентом. Минимум.", w:{amb:2,pri:1}},
+  {t:"Звездой. Сцена, свет, аплодисменты.", w:{pri:2,amb:1}},
+  {t:"Детективом. Ловить злодеев.", w:{cun:1,int:1,hon:1}},
+  {t:"Тем, кто однажды объединит всех людей.", w:{amb:2,fai:1}, emp:1}
+ ]},
+ {id:"m12", t:"Ты кормишь ужином большую компанию.", a:[
+  {t:"Меню продумано за неделю, всё по таймингу.", w:{ord:2,pri:1}},
+  {t:"Мангал, дым, громко, все стоят вокруг огня.", w:{pac:2,wra:1}},
+  {t:"Много и просто, чтобы хватило даже незваным.", w:{car:2,end:1}},
+  {t:"Новый сложный рецепт, впервые в жизни. Может не выйти, зато интересно.", w:{int:2,fre:1}},
+  {t:"Заказываю доставку и честно об этом говорю.", w:{hon:1,fre:1}},
+  {t:"Заказываю доставку и перекладываю в свои тарелки.", w:{cun:2}},
+  {t:"Никого не пускаю на кухню и выношу шедевр.", w:{pri:2,cra:1}}
+ ]},
+ {id:"m13", t:"Соседи сверху шумят третью ночь подряд.", a:[
+  {t:"Поднимаюсь и говорю всё, что думаю. Громко.", w:{wra:2,hon:1}},
+  {t:"Вежливо пишу в домовой чат со ссылкой на закон о тишине.", w:{ord:2,int:1}},
+  {t:"В субботу в семь утра у меня по плану перфоратор.", w:{cun:2,gri:1}},
+  {t:"Беруши. Бывало и хуже.", w:{end:2}},
+  {t:"Поднимаюсь с тортиком знакомиться. Через месяц мы дружим.", w:{car:1,pac:2}},
+  {t:"Стучу по батарее. Молча. Каждую ночь.", w:{gri:1,wra:1,end:1}},
+  {t:"Начинаю искать квартиру потише.", w:{fre:2}}
+ ]},
+ {id:"m14", max:2, t:"Старая семейная фотография. Что чувствуешь?", a:[
+  {t:"Тоску по тем, кого уже нет.", w:{gri:1,fai:1,car:1}},
+  {t:"Гордость: это мои корни.", w:{pri:1,hon:1,pac:1}},
+  {t:"Любопытство: кто все эти люди и что они скрывали?", w:{int:2,cun:1}},
+  {t:"Раздражение. Кое-кому из них есть что высказать.", w:{wra:1,gri:2}},
+  {t:"Тепло. Хочется позвонить родным.", w:{car:2,pac:1}},
+  {t:"Смех. Вот это причёски!", w:{pac:1,fre:1}},
+  {t:"Ничего особенного. Моя настоящая семья — это друзья.", w:{fre:2,pac:1}}
+ ]},
+ {id:"m15", t:"Тебя хвалят при всех.", a:[
+  {t:"Приятно. И, честно говоря, заслуженно.", w:{pri:2,amb:1}},
+  {t:"Хочется провалиться сквозь пол.", w:{car:1,cun:1,end:1}},
+  {t:"Подозрительно. Что им от меня нужно?", w:{gri:2,cun:1}},
+  {t:"Сразу говорю, что без команды ничего бы не вышло.", w:{pac:2,hon:1}},
+  {t:"Говорю «спасибо» и мысленно перечисляю, что можно было сделать лучше.", w:{pri:1,cra:1,end:1}},
+  {t:"Запоминаю, кто хвалит. Пригодится.", w:{cun:1,amb:2}}
+ ]},
+ {id:"m16", max:2, t:"Тебе дали свободный год и денег на жизнь. Чем займёшься?", a:[
+  {t:"Выучу то, до чего не доходили руки: язык, философию, физику.", w:{int:2,fai:1}},
+  {t:"Сделаю что-то своими руками: дом, мастерскую, сад.", w:{cra:2,end:1}},
+  {t:"Поеду по миру без обратного билета.", w:{fre:2}},
+  {t:"Запущу своё дело.", w:{amb:2,ord:1}},
+  {t:"Буду волонтёрить там, где нужна помощь.", w:{car:2,fai:1}},
+  {t:"Высплюсь. Первые полгода точно сплю.", w:{end:1,fre:1}},
+  {t:"Поищу смысл. В горах, в монастыре, в себе.", w:{fai:3}},
+  {t:"Напишу план для всего человечества. Год — мало, но для начала сойдёт.", w:{amb:2,int:1}, emp:1}
+ ]},
+ {id:"m17", t:"Как ты споришь?", a:[
+  {t:"Факты, ссылки, скриншоты. До победного.", w:{int:2,pri:1}},
+  {t:"Не спорю. Молча делаю по-своему.", w:{fre:2,end:1}},
+  {t:"Завожусь с полоборота, потом извиняюсь.", w:{wra:2,fai:1}},
+  {t:"Задаю вопросы, пока человек сам не придёт к моему выводу.", w:{cun:2,int:1}},
+  {t:"Уступаю. Мир в доме дороже.", w:{car:2,end:1}},
+  {t:"Включаю сарказм на максимум.", w:{gri:2,pri:1}},
+  {t:"Зову кого-то третьего, пусть рассудит.", w:{ord:1,hon:1,pac:1}}
+ ]},
+ {id:"m18", max:2, t:"Во что ты веришь?", a:[
+  {t:"В людей. Несмотря ни на что.", w:{car:2,fai:1}},
+  {t:"В то, что можно проверить и потрогать.", w:{int:1,cra:2}},
+  {t:"В судьбу и знаки.", w:{fai:3}},
+  {t:"Только в себя.", w:{pri:2,fre:1}},
+  {t:"В своих. Остальные пусть сами разбираются.", w:{pac:3}},
+  {t:"В порядок: если всё делать правильно, всё будет хорошо.", w:{ord:2,hon:1}},
+  {t:"Ни во что. И это даже успокаивает.", w:{gri:2,fre:1}}
+ ]},
+ {id:"m19", t:"Тебе доверили чужую тайну. Что с ней через год?", a:[
+  {t:"Всё ещё при мне. Унесу в могилу.", w:{hon:2,cun:1}},
+  {t:"Я знаю ещё пять тайн этих людей. Они не в курсе.", w:{cun:3}},
+  {t:"Пришлось рассказать: молчание навредило бы человеку.", w:{car:2,hon:1}},
+  {t:"Я сразу предупреждаю: тайны — это не ко мне.", w:{hon:1,wra:1,pac:1}},
+  {t:"Какая тайна? Я забываю их через неделю. Это мой дар.", w:{fre:2}},
+  {t:"Знает ещё один человек. Самый надёжный, честно.", w:{pac:2}}
+ ]},
+ {id:"m20", t:"Твоя комната в пятнадцать лет:", a:[
+  {t:"Плакаты, музыка на всю, бардак.", w:{fre:2,wra:1}},
+  {t:"Книги стопками до потолка.", w:{int:2}},
+  {t:"Провода, детали, разобранная техника или швейная машинка.", w:{cra:2,int:1}},
+  {t:"Аскетично: кровать, стол, турник.", w:{end:2,ord:1}},
+  {t:"Всё подобрано по цвету, даже ручки на столе.", w:{pri:2,ord:1}},
+  {t:"Вечно полна друзей.", w:{pac:2}},
+  {t:"Шторы задёрнуты. Всегда.", w:{gri:2,cun:1}}
+ ]},
+ {id:"m21", t:"Правила на работе для тебя —", a:[
+  {t:"Скелет системы. Без них всё развалится.", w:{ord:3}},
+  {t:"Честные соблюдаю, глупые — нет.", w:{hon:2,fre:1}},
+  {t:"Для тех, кто не умеет думать сам.", w:{pri:1,fre:2}},
+  {t:"Я знаю их лучше всех, поэтому знаю, где их можно обойти.", w:{cun:2,int:1}},
+  {t:"Соблюдаю. Лишь бы меня не трогали.", w:{end:2}},
+  {t:"Если правило мешает людям, его надо менять. Иду и меняю.", w:{car:2,amb:1}},
+  {t:"Правила пишу я. Остальным объясняю потом. Иногда.", w:{amb:2,ord:1}, emp:1}
+ ]},
+ {id:"m22", t:"Близкому человеку нужно сказать неприятную правду.", a:[
+  {t:"Сразу и прямо. Так честнее.", w:{hon:2,wra:1}},
+  {t:"Неделю подбираю слова и момент.", w:{car:2,cun:1}},
+  {t:"Подвожу к тому, чтобы человек сам всё понял.", w:{cun:2,int:1}},
+  {t:"Молчу, коплю, а потом вываливаю всё разом.", w:{gri:1,wra:1,end:1,pri:1}},
+  {t:"Пишу длинное сообщение. Вслух не смогу.", w:{int:1,car:1}},
+  {t:"Говорю, но обязательно с шуткой, чтобы смягчить.", w:{pac:2,car:1}},
+  {t:"Не говорю. Жизнь сама объяснит.", w:{fai:1,end:1,fre:1}}
+ ]},
+ {id:"m23", max:2, t:"Идеальный вечер пятницы:", a:[
+  {t:"Плед, чай, сериал. Никого.", w:{fre:1,end:1}},
+  {t:"Кухня, близкие, разговоры о смысле жизни до утра.", w:{fai:2,pac:1}},
+  {t:"Шумная компания, тосты, караоке.", w:{pac:2,wra:1}},
+  {t:"Ночная прогулка в одиночестве.", w:{gri:2,fre:1}},
+  {t:"Хобби: руки заняты, голова свободна.", w:{cra:2,end:1}},
+  {t:"Ужин, продуманный до мелочей.", w:{ord:1,pri:2}},
+  {t:"Игры до трёх ночи. Ещё одна катка — и спать.", w:{wra:1,fre:1}}
+ ]},
+ {id:"m24", t:"Тебя несправедливо обвинили при всех.", a:[
+  {t:"Спокойно, по пунктам, доказываю, что это не так.", w:{ord:1,int:1,hon:1}},
+  {t:"Ухожу, хлопнув дверью. Оправдываться ниже моего достоинства.", w:{pri:2,wra:1}},
+  {t:"Ищу, кто это устроил. Найду — пожалеет.", w:{gri:2,wra:1}},
+  {t:"Беру вину на себя, если остальным так будет спокойнее.", w:{fai:2,car:1}},
+  {t:"Злюсь или плачу, а потом стыдно за эмоции.", w:{wra:1,fai:1,car:1}},
+  {t:"Молчу. Время всё покажет.", w:{end:2,fai:1}},
+  {t:"Мои люди за меня впишутся. Не сомневаюсь.", w:{pac:2,hon:1}}
+ ]}
+];
+
+var FINALS = [
+ {id:"f1", t:"Последняя страница твоей биографии. Каким тебя запомнят?", a:[
+  {t:"Человеком, на которого всегда можно было положиться.", w:{hon:2,end:1}},
+  {t:"Человеком, после которого осталось что-то работающее.", w:{ord:2,amb:1,cra:1}},
+  {t:"Человеком, которым никто не командовал.", w:{fre:2,wra:1}},
+  {t:"Пусть не запоминают. Лишь бы близким было хорошо.", w:{car:2,fai:1}},
+  {t:"Загадкой. Пусть гадают.", w:{cun:2,int:1}},
+  {t:"Тем, у кого были лучшие вечеринки.", w:{pac:2,fre:1}},
+  {t:"Тем, кто знал больше всех.", w:{int:2,pri:1}}
+ ]},
+ {id:"f2", t:"Тебе предлагают узнать о себе всю правду. Забыть потом не получится.", a:[
+  {t:"Беру. Горькое знание лучше сладкой иллюзии.", w:{int:2,gri:1}},
+  {t:"Нет, спасибо. Я себя знаю, и мне норм.", w:{pri:1,end:2}},
+  {t:"Только если это поможет близким.", w:{car:2,pac:1}},
+  {t:"Беру, но сначала узнаю, кто ещё это услышит.", w:{cun:2,amb:1}},
+  {t:"Беру. Кажется, я уже знаю, что там.", w:{fai:2,gri:1}},
+  {t:"А можно только хорошее?", w:{pac:1,fre:1}}
+ ]},
+ {id:"f3", t:"Тебя внезапно поставили во главе чего-то большого: компании, города, гильдии. Первое решение?", a:[
+  {t:"Разобраться, как тут всё устроено, и записать правила.", w:{ord:2,int:1}},
+  {t:"Пообещать: никто не останется без помощи.", w:{car:2,amb:1}},
+  {t:"Найти тех, кто воровал, пока никто не смотрел.", w:{gri:2,hon:1}},
+  {t:"Передать власть и уйти. Мне это не нужно.", w:{fre:2}},
+  {t:"Собрать друзей в совет директоров.", w:{pac:2,amb:1}},
+  {t:"Починить всё, что сломано. Начать с кофемашины.", w:{cra:2,end:1}},
+  {t:"Достать план на триста лет вперёд. Он давно готов.", w:{amb:2,cun:1}, emp:1}
+ ]}
+];
+
+/* ---------- ПРИМАРХИ ---------- */
+var P = [
+ {id:"lion", n:"Лев Эль’Джонсон", l:"I", leg:"Тёмные Ангелы", ep:"Первый и одинокий", c:"#2f5a40", fate:"loyal",
+  v:{hon:3,ord:2,cun:2,gri:1,end:2,pri:1},
+  cr:"Хранить тайну, даже когда она тяжела.",
+  d:"Ты больше слушаешь, чем говоришь, и замечаешь всё. Люди знают тебя годами и всё равно не до конца понимают, что у тебя в голове. У тебя есть свой внутренний кодекс, и ты живёшь по нему, даже когда никто не смотрит. Объяснять решения не любишь: всё уже обдумано, этого достаточно.",
+  s:["Слово держишь всегда","Видишь план на десять ходов вперёд","В кризисе становишься только спокойнее"],
+  sh:["Секреты копятся, как коробки на балконе","Обиды помнишь дольше, чем признаёшься","Иногда одиночество — не судьба, а просто так удобнее"],
+  sc:"Друзья переезжают. Ты молча выносишь самый тяжёлый шкаф. А через полгода всплывает, что и грузчиков, оказывается, оплатили с твоей карты.",
+  m:"Сказано мало. Сделано всё.",
+  b:"С Леманом Руссом вы однажды подрались на пиру. Оба до сих пор уверены, что победили."},
+ {id:"fulgrim", n:"Фулгрим", l:"III", leg:"Дети Императора", ep:"Тот, кто ищет совершенства", c:"#6b3383", fate:"traitor",
+  v:{pri:3,amb:2,cra:1,fre:1,int:1,car:1},
+  cr:"Сделать прекрасно, даже если это долго.",
+  d:"У тебя чутьё на красивое: шрифт, соус, плейлист, оттенок штор. «И так сойдёт» — это не про тебя. Друзья спрашивают у тебя, что надеть и куда сходить, и уходят немного влюблёнными в твой мир. А если что-то вышло не идеально, это портит тебе день. Иногда два.",
+  s:["Безупречный вкус","Умение вдохновлять","Доводишь всё до блеска"],
+  sh:["«Идеально» — главный враг «готово»","Чужое восхищение нужно тебе чуть больше, чем хочется признавать","Увлечение может завести очень далеко"],
+  sc:"План был простой: макароны. Через четыре часа на столе утиная грудка под ягодным соусом, свечи и отдельный плейлист под десерт. Гости в восторге. Кухня в руинах.",
+  m:"Если делать, то безупречно.",
+  b:"Лучший друг — Феррус Манус. Был. Не спрашивай."},
+ {id:"perturabo", n:"Пертурабо", l:"IV", leg:"Железные Воины", ep:"Мастер осады, которого не ценили", c:"#7d8188", fate:"traitor",
+  v:{cra:3,int:2,gri:2,pri:2,end:2,ord:1,wra:1},
+  cr:"Построить то, что выдержит любой удар.",
+  d:"У тебя инженерный мозг: видишь, как устроена любая вещь, и знаешь, как сделать её лучше. Беда в том, что окружающие это редко замечают. Ты берёшь на себя самое сложное и неблагодарное, а хвалят почему-то тех, кто громче. Это копится. Очень копится.",
+  s:["Решаешь задачи, от которых другие сбегают","Упорство без дна","Цифры вместо эмоций"],
+  sh:["Обиды складываются в ящик, а ящик однажды взрывается","Сравниваешь себя с «везунчиками»","Похвала пролетает мимо, критика остаётся на годы"],
+  sc:"Три месяца ты тащишь самый сложный кусок проекта. На корпоративе грамоту получает тот, кто делал презентацию. Ты хлопаешь, улыбаешься и мысленно пишешь заявление об уходе. Четвёртое за год. Ни одно не отправлено.",
+  m:"Любая стена — это просто задача.",
+  b:"Вечный соперник — Рогал Дорн. Вы оба строите стены, но любимчик почему-то он."},
+ {id:"khan", n:"Джагатай-хан", l:"V", leg:"Белые Шрамы", ep:"Ветер степи", c:"#d8d2c2", fate:"loyal",
+  v:{fre:3,int:1,hon:1,pac:1,wra:1},
+  cr:"Быть свободным, как ветер.",
+  d:"Тебе нужен воздух. Клетки любого вида — офисные, бытовые, «так принято» — нагоняют тоску. Ты быстро решаешь, легко срываешься с места и не любишь объяснять, куда и зачем. При этом у тебя есть своя честь, просто согласовывать её с начальством ты не собираешься.",
+  s:["Решения за секунду","Перемены не пугают, а бодрят","Умеешь быть наедине с собой и не скучать"],
+  sh:["План на год вызывает зевоту","Исчезаешь, когда становится слишком серьёзно","Скорость иногда помогает не думать"],
+  sc:"Пятница. План был лечь пораньше. В субботу утром в общем чате фото из другого города и подпись: «Просто захотелось ехать». Возвращение — в понедельник. Наверное.",
+  m:"Догони, если сможешь.",
+  b:"Тянется к Магнусу: вам обоим интересно то, что другим кажется странным."},
+ {id:"russ", n:"Леман Русс", l:"VI", leg:"Космические Волки", ep:"Король стаи", c:"#6f8295", fate:"loyal",
+  v:{pac:3,wra:2,hon:2,fre:1,car:1},
+  cr:"Стоять за своих, что бы ни случилось.",
+  d:"С тобой громко, весело и надёжно. За своих ты впишешься без раздумий, а взамен просишь одного: не врать. Любой вечер с тобой становится праздником, а любая ссора решается за пять минут. Правда, очень громких пяти минут. Хитрые схемы тебе скучны: проще сказать всё в лицо.",
+  s:["Верность до конца","Душа любой компании","Честность без фильтров"],
+  sh:["Фильтров иногда правда не хватает","Порядок обычно такой: сделать, подумать, извиниться","Трудно признать, что кто-то из своих неправ"],
+  sc:"Подругу обсчитали в автосервисе. Ты молча берёшь куртку. Через час деньги возвращены, у механика моральная травма, а у тебя бесплатная замена масла до конца жизни.",
+  m:"Своих не бросаем.",
+  b:"Со Львом вы однажды подрались на пиру. Победителя так и не выяснили."},
+ {id:"dorn", n:"Рогал Дорн", l:"VII", leg:"Имперские Кулаки", ep:"Стена", c:"#d9ab26", fate:"loyal",
+  v:{ord:2,end:3,hon:2,cra:2,pri:1},
+  cr:"Выдержать, когда все остальные сдались.",
+  d:"На тебе всё держится. Говоришь немного и иногда слишком прямо, зато твоё «сделаю» надёжнее любой расписки. Тебе нравится, когда всё построено на совесть: дом, отношения, бюджет. Ныть ты не умеешь и не понимаешь, зачем это делают другие. Кризис для тебя не повод паниковать, а повод закатать рукава.",
+  s:["Абсолютная надёжность","Терпение на длинной дистанции","Решения без паники"],
+  sh:["Отступать не умеешь, даже когда стоило бы","Шутки иногда доходят со второго раза","Близким порой нужна не стена, а обнимашки"],
+  sc:"Друзья спорят, кто виноват, что палатка протекла. Ты молча перетягиваешь тент, копаешь канавку и ставишь котелок. Спор заканчивается сам собой: все уже греются у твоего костра.",
+  m:"Я выдержу. И вы вместе со мной.",
+  b:"Пертурабо ненавидит тебя за твои стены. Тебе об этом, кажется, никто не сказал."},
+ {id:"curze", n:"Конрад Кёрз", l:"VIII", leg:"Повелители Ночи", ep:"Ночной судья", c:"#24346a", fate:"traitor",
+  v:{gri:3,cun:2,wra:2,hon:1,fre:1},
+  cr:"Чтобы каждый получил по заслугам.",
+  d:"У тебя острое чувство справедливости и очень чёрный юмор. Людей ты видишь насквозь, особенно их слабые места, и бесит тебя, когда подлость сходит с рук. В «всё будет хорошо» ты не веришь и, к сожалению, редко ошибаешься. Лучше всего тебе думается ночью.",
+  s:["Фальшь видна сразу","Не боишься неудобной правды","Ставишь на место одним взглядом"],
+  sh:["Ждёшь худшего и находишь его","Наказание кажется лучшим способом воспитания","Сон короткий, мысли длинные, и не всегда добрые"],
+  sc:"Кто-то из соседей бросает мусор мимо контейнера. Ты вычисляешь виновника по времени и марке пакета. В домовой чат ты ничего не пишешь. Утром пакет аккуратно стоит у его двери.",
+  m:"Я просто показываю людям, кто они.",
+  b:"С Кораксом вам лучше не встречаться в тёмном коридоре. Это взаимно."},
+ {id:"sanguinius", n:"Сангвиний", l:"IX", leg:"Кровавые Ангелы", ep:"Ангел", c:"#a3201f", fate:"loyal",
+  v:{fai:3,car:2,hon:2,pac:1,gri:1,end:1},
+  cr:"Нести свет, даже зная, чем всё кончится.",
+  d:"Рядом с тобой людям становится светлее, даже если вы знакомы пять минут. Ты умеешь поддержать так, что это правда помогает, и веришь, что люди лучше, чем кажутся. Но под этим светом есть тяжесть: часто кажется, что нужно отдать больше, чем у тебя есть, и чужую боль ты молча несёшь как свою.",
+  s:["Вдохновляешь одним присутствием","Сочувствие без снисходительности","Готовность принять удар на себя"],
+  sh:["Берёшь на себя слишком много","Тревога о будущем, которое ещё не наступило","Держишь в себе то, чем стоило бы поделиться"],
+  sc:"На свадьбе друзей твой тост довёл до слёз даже ведущего. А потом до трёх ночи ты сидишь на ступеньках с гостем, которого только что бросили, и он уходит домой почти счастливым.",
+  m:"Даже в темноте есть ради чего стоять.",
+  b:"Лучший друг — Хорус. У этой дружбы очень грустный финал."},
+ {id:"ferrus", n:"Феррус Манус", l:"X", leg:"Железные Руки", ep:"Горгон", c:"#4a4e52", fate:"loyal",
+  v:{cra:3,pri:2,wra:2,end:1,hon:1,int:1},
+  cr:"Не прощать себе слабости.",
+  d:"Ты многого требуешь, от себя в первую очередь, но и другим достаётся. Нытьё и отговорки раздражают почти физически. Тебе нравится работа, результат которой можно потрогать: хорошо сделанная вещь лучше любых слов. Резкость случается, зато твоя похвала стоит дорого, и все это знают.",
+  s:["Мастерство","Упрямство, которое доводит до конца","Честная оценка без лести"],
+  sh:["Вспыльчивость ломает твои же планы","Чужие слабости замечаешь быстрее чужих сильных сторон","Терпеть не можешь, когда поправляют"],
+  sc:"Тебя позвали помочь собрать шкаф. Через пять минут отвёртка у тебя, через двадцать всё переделано, через час шкаф стоит ровнее, чем на картинке. Хозяева благодарны и слегка напуганы.",
+  m:"Плоть слаба. Дай сюда, переделаю.",
+  b:"Лучший друг — Фулгрим. Был. Лучше не спрашивай."},
+ {id:"angron", n:"Ангрон", l:"XII", leg:"Пожиратели Миров", ep:"Неукротимый", c:"#2c5a9c", fate:"traitor",
+  v:{wra:3,fre:2,gri:2,pac:1,end:1},
+  cr:"Никогда больше не быть в цепях.",
+  d:"Внутри у тебя горит. Несправедливость, унижение, чужая власть — и вот уже пожар, который трудно потушить. Зато за тех, кто был рядом в трудные времена, ты встанешь против кого угодно. Тяжелее всего тебе с людьми, которые красиво говорят, но ничего не пережили.",
+  s:["Энергии хватит на троих","Верность тем, кто был рядом в худшие дни","Никогда не сдаёшься"],
+  sh:["Гнев включается быстрее мыслей","Прошлое трудно отпустить","Иногда отталкиваешь тех, кто хочет помочь"],
+  sc:"Начальник при всех отчитывает новенькую за чужую ошибку. Ты встаёшь, и в переговорке становится очень тихо. Новенькая потом рассказывает об этом дне на каждом корпоративе.",
+  m:"Больше никто не будет решать за меня.",
+  b:"Уважает только тех, кто стоял рядом в бою. Таких очень мало."},
+ {id:"guilliman", n:"Робаут Жиллиман", l:"XIII", leg:"Ультрамарины", ep:"Строитель империи", c:"#1f4fa3", fate:"loyal",
+  v:{ord:3,amb:2,int:2,car:1,hon:1,cra:1},
+  cr:"Устроить жизнь так, чтобы всё работало.",
+  d:"У тебя есть план, запасной план и таблица, где они сравниваются. Люди, деньги и время слушаются тебя лучше, чем других, и тебе искренне нравится, когда всё работает как часы. Холодности в этом нет. Просто лучшая забота о людях, по-твоему, — хорошо устроенная жизнь, в которой никто не пропадёт.",
+  s:["План и порядок","Ответственность за людей","Умение учиться на ошибках"],
+  sh:["Можешь написать регламент там, где надо было просто обнять","Спонтанность даётся тяжело","В отпуске рискуешь прослыть занудой"],
+  sc:"Отпуск с друзьями. У тебя общая таблица расходов, маршрут по часам и план Б на случай дождя. Над тобой смеются ровно до того момента, когда начинается дождь.",
+  m:"Сначала план. Потом подвиг.",
+  b:"Почти все братья немного завидуют тому, как у тебя всё устроено."},
+ {id:"mortarion", n:"Мортарион", l:"XIV", leg:"Гвардия Смерти", ep:"Тот, кто выдерживает", c:"#a39d80", fate:"traitor",
+  v:{end:3,gri:2,fre:2,wra:1,cra:1},
+  cr:"Пережить всё, что выпадет.",
+  d:"Выносливости в тебе на троих, упрямства тоже. Жизнь многому научила, и главный вывод такой: рассчитывать можно только на себя. Ты терпеть не можешь тех, кто давит на слабых, но и жалеть себя не позволяешь. Там, где другие сдаются через неделю, ты только разгоняешься.",
+  s:["Выносливость","Не боишься грязной работы","Красивые слова на тебя не действуют"],
+  sh:["Доверие даётся тяжело даже тем, кто его заслужил","Терпишь то, что терпеть не нужно","Твоя мрачность заразна"],
+  sc:"Половина офиса на больничном. Ты закрываешь релиз за всех и заодно чинишь кофемашину. На попытку похвалить отвечаешь: «Ну а кто, если не я».",
+  m:"Переживу и это.",
+  b:"Терпеть не может Магнуса и всё, что связано с колдовством."},
+ {id:"magnus", n:"Магнус Красный", l:"XV", leg:"Тысяча Сынов", ep:"Алый король", c:"#b0302a", fate:"traitor",
+  v:{int:3,pri:2,fai:1,fre:1,cun:1},
+  cr:"Знать, даже если знание опасно.",
+  d:"Тебе нужно знать всё. Мало понять, как устроен мир, нужно понять почему, и желательно раньше всех. Сложные темы затягивают тебя с головой, и говорить о них ты можешь часами. Любое знание кажется полезным, особенно то, о котором просили не спрашивать.",
+  s:["Блестящий ум","Любопытство без границ","Видишь связи, которых не видят другие"],
+  sh:["«Не трогай» звучит как приглашение","Кажется, что знаешь лучше, даже когда не знаешь","Пытаясь помочь, можно разбить что-то очень ценное"],
+  sc:"Тебя просили не лезть в настройки роутера. Через полчаса интернет вдвое быстрее. Через час в доме не работает ничего, включая чайник. Но разгадка уже совсем близко.",
+  m:"Знание стоит любой цены.",
+  b:"С Леманом Руссом отношения… сложные."},
+ {id:"horus", n:"Хорус Луперкаль", l:"XVI", leg:"Сыны Хоруса", ep:"Первый среди братьев", c:"#3f7d73", fate:"traitor",
+  v:{amb:3,pac:2,pri:2,hon:1,wra:1,car:1},
+  cr:"Вести за собой и победить.",
+  d:"Люди тянутся к тебе сами. Тебя слушают, за тобой идут, тебе хотят нравиться. Ты умеешь собрать команду и дать каждому почувствовать себя важным. Масштаб и признание тебе по душе, и, честно говоря, часто заслужены. Главное — следить, кто шепчет тебе на ухо.",
+  s:["Харизма","Умение объединять людей","Решительность"],
+  sh:["Больно, когда недооценивают","Лесть действует сильнее, чем кажется","Обида на «отца» — начальника, наставника, родителя — может увести очень далеко"],
+  sc:"Полгода в новой команде — и вот на твои пятничные посиделки ходит весь отдел, а начальник слегка нервничает, когда ты берёшь слово на планёрке.",
+  m:"Доведу до конца. Чего бы это ни стоило.",
+  b:"Лучший друг — Сангвиний. Финал этой дружбы лучше не вспоминать."},
+ {id:"lorgar", n:"Лоргар Аврелиан", l:"XVII", leg:"Несущие Слово", ep:"Тот, кто ищет смысл", c:"#7a2a30", fate:"traitor",
+  v:{fai:3,car:1,int:1,pac:1,amb:1},
+  cr:"Найти то, во что стоит верить.",
+  d:"Просто жить тебе мало, нужен смысл. Ты много думаешь о вере, судьбе и о том, зачем всё это. В тебе много искренности и страсти, и когда ты говоришь, люди начинают верить вместе с тобой. Но отказ ранит сильнее, чем видно со стороны, особенно отказ от самых близких.",
+  s:["Глубина и искренность","Умение дарить надежду","Сила слова"],
+  sh:["Ищешь одобрения у тех, кто не умеет его давать","Разочарование может развернуть на 180 градусов","Иногда веришь слишком сильно и не в то"],
+  sc:"Ты советуешь подруге книгу. Через месяц её читает половина вашей компании, в чате идут споры, а вы вместе едете на встречу с автором. Ты делаешь вид, что совсем не гордишься.",
+  m:"Если смысла нет, я его найду.",
+  b:"Единственный, кто тебя по-настоящему слушает, — Хорус. Это плохо кончится."},
+ {id:"vulkan", n:"Вулкан", l:"XVIII", leg:"Саламандры", ep:"Кузнец, который любит людей", c:"#2f7a3a", fate:"loyal",
+  v:{car:3,cra:2,end:2,hon:2,pac:1},
+  cr:"Защищать тех, кто слабее.",
+  d:"В тебе редкое сочетание силы и доброты. Руки золотые, сердце большое: ты чинишь вещи, помогаешь соседям и всегда находишь время для тех, кому плохо. Быть в центре внимания не нужно, гораздо важнее, чтобы людям рядом было тепло. Разозлить тебя почти невозможно, поэтому все пугаются, когда это случается.",
+  s:["Доброта без слабости","Мастер на все руки","Терпение к людям"],
+  sh:["Слово «нет» даётся с трудом","Чужие беды проживаешь как свои","Отдых наступает только после того, как устроены все остальные"],
+  sc:"У соседки сломался кран. Через час кран работает, у неё новый смеситель, а у тебя банка варенья и приглашение на все праздники до конца жизни.",
+  m:"Сильный нужен, чтобы защищать.",
+  b:"Дружит с Феррусом и Кораксом. Честно говоря, ты дружишь почти со всеми."},
+ {id:"corax", n:"Коракс", l:"XIX", leg:"Гвардия Ворона", ep:"Освободитель", c:"#3a3a40", fate:"loyal",
+  v:{fre:2,cun:2,car:2,gri:2,hon:1},
+  cr:"Освободить тех, кто в клетке.",
+  d:"Тебя трясёт, когда кто-то давит на людей, от школьного хулигана до начальника-самодура. Прямые стычки — не твой стиль: проще найти обходной путь, тихо всё устроить и исчезнуть до того, как начнут благодарить. Свобода, твоя и чужая, важнее почти всего, а любая власть вызывает подозрение.",
+  s:["Находчивость","Защита слабых","Тихая, но очень точная работа"],
+  sh:["Подозреваешь власть даже там, где её нет","Держишь людей на расстоянии","Ночами прокручиваешь, что можно было сделать лучше"],
+  sc:"Детскую площадку во дворе хотят отдать под парковку. На митинг ты не идёшь. Три ночи читаешь документы, находишь нарушение и отправляешь жалобу. Площадку оставили. Никто не знает, чья это работа.",
+  m:"Ни у кого не должно быть хозяина.",
+  b:"Конрад Кёрз однажды почти попался. Почти."},
+ {id:"alpharius", n:"Альфарий Омегон", l:"XX", leg:"Альфа-Легион", ep:"Альфарий. Или Омегон", c:"#2c7383", fate:"unknown",
+  v:{cun:3,int:2,amb:1,fre:1,ord:1},
+  cr:"Чтобы никто не понял, в чём мой план.",
+  d:"Ты загадка, иногда даже для себя. У тебя всегда есть план, о котором никто не знает, и запасной, о котором не знаешь даже ты. Людей ты понимаешь хорошо и умеешь повернуть ситуацию в нужную сторону, не повышая голоса. Друзья давно не удивляются, что ты «случайно» оказываешься в нужном месте.",
+  s:["Стратегическое мышление","Гибкость","Работа в тени"],
+  sh:["Трудно быть честным без многоходовки","Люди не всегда понимают, на чьей ты стороне","Иногда и ты не понимаешь"],
+  sc:"Друзья выбирают, куда пойти в пятницу. Своё мнение ты не высказываешь. В итоге все идут туда, куда хотелось тебе, и каждый уверен, что это была его идея.",
+  m:"Это не я. Или я.",
+  b:"Брат-близнец есть. Или нет. Ты знаешь."}
+];
+
+var EMPEROR = {id:"emperor", n:"Император Человечества", l:"—", leg:"Повелитель Человечества", ep:"Отец всех двадцати", c:"#c9a14a", fate:"emperor",
+  d:"Этот результат почти никто не видит. В тебе понемногу от каждого брата, а над всем этим — план больше одной жизни. Ты видишь, как всё связано, и принимаешь решения, на которые другие не решаются. Ты знаешь, что лучше для всех, и иногда это даже правда. Только не забывай объяснять людям, что происходит, пока они ещё рядом.",
+  s:["Видишь картину целиком","Ответственность за всех сразу","Терпение длиной в тысячелетия"],
+  sh:["Решения не объясняешь ни детям, ни друзьям","Цель оправдывает почти всё","Легко стать идолом и забыть, что ты человек"],
+  sc:"Ты организуешь друзьям общий отпуск. Как удалось договориться с отелем, перевозчиком и, кажется, с погодой, не знает никто. Половина компании тебя обожает, четверть обижена, а один уже строит план, как всё испортить.",
+  m:"Всё идёт по плану. По моему.",
+  b:"Двадцать сыновей. Двое удалены из всех записей. Ты знаешь почему."};
+
+var EMP_THRESHOLD = 3;
+/* Калибровка: выравнивает частоты результатов при случайных ответах (подобрано симуляцией). */
+var BIAS = {"lion":0.003,"fulgrim":0.023,"perturabo":0.092,"khan":0.021,"russ":-0.041,"dorn":0.058,"curze":-0.059,"sanguinius":-0.019,"ferrus":0.06,"angron":-0.045,"guilliman":0.018,"mortarion":-0.017,"magnus":0.074,"horus":-0.099,"lorgar":-0.08,"vulkan":0.054,"corax":0.006,"alpharius":-0.051};
+
+/* ---------- ЛОГИКА ---------- */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function shuffle(arr, rnd){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+
+/* 1 вводный + 13 случайных из 24 + 1 финальный, порядок ответов перемешан */
+function pickQuestions(rnd){
+  rnd = rnd || Math.random;
+  var o = OPENERS[Math.floor(rnd()*OPENERS.length)];
+  var f = FINALS[Math.floor(rnd()*FINALS.length)];
+  var mid = shuffle(MIDDLE, rnd).slice(0,13);
+  return [o].concat(mid,[f]).map(function(q){
+    return {id:q.id, t:q.t, max:q.max||1, a:shuffle(q.a.map(function(x,i){return {t:x.t,w:x.w,emp:x.emp||0,i:i};}), rnd)};
+  });
+}
+
+function vec(o){return TRAITS.map(function(k){return (o&&o[k])||0;});}
+function pearson(a,b){
+  var n=a.length,ma=0,mb=0,i;for(i=0;i<n;i++){ma+=a[i];mb+=b[i];}ma/=n;mb/=n;
+  var num=0,da=0,db=0;for(i=0;i<n;i++){var x=a[i]-ma,y=b[i]-mb;num+=x*y;da+=x*x;db+=y*y;}
+  return (da&&db)?num/Math.sqrt(da*db):0;
+}
+
+/* picks[i] — выбранный ответ или массив ответов (для вопросов с несколькими вариантами).
+   При нескольких ответах их вес делится поровну, чтобы такой вопрос не весил больше обычного. */
+function evaluate(questions, picks){
+  var raw={},exp={},emp=0;
+  TRAITS.forEach(function(k){raw[k]=0;exp[k]=0;});
+  questions.forEach(function(q){
+    TRAITS.forEach(function(k){var m=0;q.a.forEach(function(a){if(a.w[k]>m)m=a.w[k];});exp[k]+=m;});
+  });
+  picks.forEach(function(pk){
+    var arr = Array.isArray(pk)? pk : (pk? [pk] : []);
+    if(!arr.length) return;
+    var share = 1/arr.length, hasEmp=false;
+    arr.forEach(function(a){ for(var k in a.w) raw[k]+=a.w[k]*share; if(a.emp) hasEmp=true; });
+    if(hasEmp) emp++;
+  });
+  var user = TRAITS.map(function(k){return exp[k]?raw[k]/exp[k]:0;});
+  var ranking = P.map(function(p){
+    var r=pearson(user, vec(p.v))+(BIAS[p.id]||0);
+    return {p:p, r:r, pct:Math.max(1,Math.min(99,Math.round((r+1)*50)))};
+  }).sort(function(a,b){return b.r-a.r;});
+  return {user:user, ranking:ranking, emp:emp, emperor:emp>=EMP_THRESHOLD, tie:(ranking[0].r-ranking[1].r)<0.015};
+}
+
+/* Что общего у человека с примархом и чего меньше. */
+function compare(res, p){
+  var u=res.user, m=u.reduce(function(s,x){return s+x;},0)/u.length, pv=vec(p.v), pm=pv.reduce(function(s,x){return s+x;},0)/pv.length;
+  var same=[], diff=[];
+  TRAITS.forEach(function(k,i){
+    var du=u[i]-m, dp=pv[i]-pm;
+    if(du>0&&dp>0) same.push({k:k,s:du*dp});
+    if(du<0&&dp>0) diff.push({k:k,s:-du*dp});
+  });
+  var nm=function(x){return TRAIT_NAMES[x.k];};
+  return {same:same.sort(function(a,b){return b.s-a.s;}).slice(0,3).map(nm), diff:diff.sort(function(a,b){return b.s-a.s;}).slice(0,2).map(nm)};
+}
+
+var API = {TRAITS:TRAITS, TRAIT_NAMES:TRAIT_NAMES, compare:compare, OPENERS:OPENERS, MIDDLE:MIDDLE, FINALS:FINALS,
+  PRIMARCHS:P, EMPEROR:EMPEROR, BIAS:BIAS, EMP_THRESHOLD:EMP_THRESHOLD,
+  pickQuestions:pickQuestions, evaluate:evaluate, mulberry32:mulberry32, shuffle:shuffle, vec:vec, pearson:pearson};
+if (typeof module!=="undefined" && module.exports) module.exports = API; else root.QUIZ = API;
+})(this);
+
+</script>
+<script>
+(function(){
+"use strict";
+var Q = window.QUIZ;
+var $ = function(id){return document.getElementById(id);};
+var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+var KEY = "krov-primarhov-last";
+var state = {qs:[], idx:0, picks:[], res:null};
+
+function store(get, val){
+  try{ if(get) return JSON.parse(localStorage.getItem(KEY)||"null"); localStorage.setItem(KEY, JSON.stringify(val)); }catch(e){ return null; }
+}
+function show(id){ ["intro","quiz","tie","scan","result"].forEach(function(s){ $(s).hidden = (s!==id); }); window.scrollTo(0,0); }
+
+/* ---------- Спираль геносемени ---------- */
+var helices = [];
+function Helix(canvas, opt){ this.c=canvas; this.o=opt||{}; this.p=0; helices.push(this); }
+Helix.prototype.draw = function(t){
+  var c=this.c, o=this.o; if(!c.offsetParent) return;
+  var dpr=Math.min(window.devicePixelRatio||1,2), w=c.clientWidth, h=c.clientHeight;
+  if(c.width!==Math.round(w*dpr)||c.height!==Math.round(h*dpr)){c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);}
+  var x=c.getContext("2d"); x.setTransform(dpr,0,0,dpr,0,0); x.clearRect(0,0,w,h);
+  var n=o.n||Math.max(18,Math.round(w/16)), mid=h/2, amp=h*0.36, sp=o.speed||0.0006;
+  var gilt="207,167,82", verd="115,168,152";
+  for(var i=0;i<n;i++){
+    var px=(i+0.5)/n*w, ph=t*sp+i*(o.twist||0.42), s=Math.sin(ph), z=Math.cos(ph);
+    var y1=mid+s*amp, y2=mid-s*amp;
+    var lit = o.progress!=null ? (i < this.p) : true;
+    var a = o.progress!=null ? (lit?0.85:0.16) : 0.35;
+    x.strokeStyle="rgba("+(lit?gilt:"162,150,127")+","+(a*0.55)+")"; x.lineWidth=1;
+    x.beginPath(); x.moveTo(px,y1); x.lineTo(px,y2); x.stroke();
+    var r1=2+1.4*(z+1)/2, r2=2+1.4*(1-z)/2;
+    x.fillStyle="rgba("+gilt+","+(lit?0.5+0.5*(z+1)/2:0.25)+")"; x.beginPath(); x.arc(px,y1,r1,0,6.283); x.fill();
+    x.fillStyle="rgba("+verd+","+(lit?0.5+0.5*(1-z)/2:0.22)+")"; x.beginPath(); x.arc(px,y2,r2,0,6.283); x.fill();
+  }
+};
+var hero = new Helix($("helixHero"),{speed:0.00045});
+var strip = new Helix($("helixStrip"),{n:15,progress:0,twist:0.55,speed:0.0009});
+var scanH = new Helix($("helixScan"),{speed:0.004,twist:0.35});
+function loop(t){ helices.forEach(function(h){h.draw(t);}); if(!reduce) requestAnimationFrame(loop); }
+if(reduce){ window.addEventListener("resize",function(){loop(1000);}); }
+function redraw(){ if(reduce) loop(1000); }
+
+/* ---------- Вопросы ---------- */
+function start(){
+  state.qs = Q.pickQuestions(); state.idx=0; state.picks=[]; state.res=null;
+  show("quiz"); renderQ(); redraw();
+}
+function renderQ(){
+  var q=state.qs[state.idx], n=state.qs.length;
+  $("qcount").textContent = "Образец " + String(state.idx+1).padStart(2,"0") + " / " + n;
+  strip.p = state.idx;
+  $("qtext").textContent = q.t;
+  var ul=$("answers"); ul.innerHTML=""; ul.classList.toggle("multi", q.max>1);
+  var cur=state.picks[state.idx]||[];
+  $("qmulti").hidden = q.max<2; $("qmulti").textContent = "Можно выбрать до "+q.max+" вариантов";
+  $("next").hidden = q.max<2;
+  q.a.forEach(function(a,i){
+    var li=document.createElement("li"), b=document.createElement("button");
+    b.type="button"; b.className="ans"; b.innerHTML='<span class="k">'+(i+1)+'</span><span></span>';
+    b.lastChild.textContent=a.t;
+    if(cur.indexOf(a)>=0) b.classList.add("picked");
+    if(q.max>1) b.setAttribute("aria-pressed", cur.indexOf(a)>=0?"true":"false");
+    b.addEventListener("click",function(){choose(i);});
+    li.appendChild(b); ul.appendChild(li);
+  });
+  syncMulti();
+  $("back").style.visibility = state.idx? "visible":"hidden";
+  var card=$("qcard"); card.classList.remove("fade"); void card.offsetWidth; card.classList.add("fade");
+  redraw();
+}
+var busy=false;
+function syncMulti(){
+  var q=state.qs[state.idx]; if(q.max<2) return;
+  var cur=state.picks[state.idx]||[], full=cur.length>=q.max;
+  $("answers").querySelectorAll(".ans").forEach(function(b,i){
+    var on=cur.indexOf(q.a[i])>=0; b.classList.toggle("picked",on); b.setAttribute("aria-pressed",on?"true":"false");
+    b.classList.toggle("off", full && !on);
+  });
+  $("next").disabled = !cur.length;
+  $("next").textContent = state.idx<state.qs.length-1 ? "Дальше" : "Узнать результат";
+}
+function advance(){
+  if(state.idx<state.qs.length-1){ state.idx++; renderQ(); } else finish();
+}
+function choose(i){
+  if(busy) return; var q=state.qs[state.idx]; if(!q.a[i]) return;
+  if(q.max>1){
+    var cur=(state.picks[state.idx]||[]).slice(), j=cur.indexOf(q.a[i]);
+    if(j>=0) cur.splice(j,1); else if(cur.length<q.max) cur.push(q.a[i]);
+    state.picks[state.idx]=cur; syncMulti(); return;
+  }
+  busy=true; state.picks[state.idx]=[q.a[i]];
+  var btns=$("answers").querySelectorAll(".ans"); btns.forEach(function(b){b.classList.remove("picked");}); btns[i].classList.add("picked");
+  setTimeout(function(){
+    busy=false; advance();
+  }, reduce?60:240);
+}
+$("next").addEventListener("click",function(){ if((state.picks[state.idx]||[]).length) advance(); });
+$("back").addEventListener("click",function(){ if(state.idx>0){state.idx--; renderQ();} });
+$("quit").addEventListener("click",function(){ show("intro"); redraw(); });
+document.addEventListener("keydown",function(e){
+  if(e.altKey||e.ctrlKey||e.metaKey) return;
+  if(e.key==="Enter" && !$("quiz").hidden && !$("next").hidden && !$("next").disabled && document.activeElement===document.body){ e.preventDefault(); $("next").click(); return; }
+  var d=parseInt(e.key,10); if(!(d>=1&&d<=8)) return;
+  if(!$("quiz").hidden){ choose(d-1); }
+  else if(!$("tie").hidden){ var b=$("tieAnswers").querySelectorAll("button")[d-1]; if(b) b.click(); }
+});
+
+/* ---------- Подсчёт ---------- */
+function finish(){
+  var res = Q.evaluate(state.qs, state.picks);
+  state.res = res;
+  if(res.tie && !res.emperor){ return showTie(res); }
+  scan();
+}
+function showTie(res){
+  var pair=[res.ranking[0],res.ranking[1]]; if(Math.random()<.5) pair.reverse();
+  var ul=$("tieAnswers"); ul.innerHTML="";
+  pair.forEach(function(item,i){
+    var li=document.createElement("li"), b=document.createElement("button");
+    b.type="button"; b.className="ans"; b.innerHTML='<span class="k">'+(i+1)+'</span><span></span>'; b.lastChild.textContent=item.p.cr;
+    b.addEventListener("click",function(){
+      var rk=res.ranking; var j=rk.indexOf(item);
+      if(j>0){ rk.splice(j,1); rk.unshift(item); if(rk[0].pct<=rk[1].pct) rk[0].pct=Math.min(99,rk[1].pct+1); }
+      scan();
+    });
+    li.appendChild(b); ul.appendChild(li);
+  });
+  show("tie");
+}
+function scan(){
+  show("scan"); redraw();
+  var lines=["Выделение геносемени из образца…","Сравнение с восемнадцатью эталонами…","Эталоны II и XI недоступны. Записи изъяты.","Совпадение найдено."];
+  if(state.res.emperor) lines.splice(3,1,"Обнаружена аномалия: совпадение со всеми эталонами сразу.","Доступ к записи по особому распоряжению…");
+  var ol=$("scanLog"); ol.innerHTML="";
+  lines.forEach(function(t,i){ var li=document.createElement("li"); li.textContent="> "+t; if(/изъяты|аномалия/.test(t)) li.className="warn"; li.style.animationDelay=(reduce?0:i*0.38)+"s"; ol.appendChild(li); });
+  setTimeout(renderResult, reduce?500:lines.length*380+700);
+}
+
+/* ---------- Результат ---------- */
+var ROMAN=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX"];
+function lum(hex){ var n=parseInt(hex.slice(1),16), r=(n>>16&255)/255, g=(n>>8&255)/255, b=(n&255)/255;
+  var f=function(c){return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);}; return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b); }
+function sealSVG(p, emperor){
+  var ticks="", i;
+  for(i=0;i<72;i++){ var a=i*5*Math.PI/180, r1=(i%6===0)?80:85, r2=91;
+    ticks+='<line x1="'+(100+r1*Math.cos(a)).toFixed(2)+'" y1="'+(100+r1*Math.sin(a)).toFixed(2)+'" x2="'+(100+r2*Math.cos(a)).toFixed(2)+'" y2="'+(100+r2*Math.sin(a)).toFixed(2)+'" stroke="#cfa752" stroke-width="'+(i%6===0?1.6:0.8)+'"/>'; }
+  var fill=emperor?"url(#gg)":p.c, txt=emperor?"#1a140a":(lum(p.c)>0.28?"#14110d":"#f3ead6");
+  var label=emperor?"I–XX":p.l, fs=label.length>3?(label.length>4?40:48):(label.length>2?54:62);
+  return '<svg viewBox="0 0 200 200" role="img" aria-label="Печать легиона '+label+'">'+
+    '<defs><radialGradient id="gg" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f0d58e"/><stop offset=".6" stop-color="#cfa752"/><stop offset="1" stop-color="#8f6e2c"/></radialGradient></defs>'+
+    '<circle cx="100" cy="100" r="96" fill="none" stroke="#cfa752" stroke-width="1.4"/>'+ticks+
+    '<circle cx="100" cy="100" r="72" fill="'+fill+'" stroke="#cfa752" stroke-width="2.4"/>'+
+    '<circle cx="100" cy="100" r="64" fill="none" stroke="'+txt+'" stroke-opacity=".35" stroke-width="1"/>'+
+    '<text x="100" y="100" text-anchor="middle" dominant-baseline="central" font-family="Cormorant SC, Georgia, serif" font-weight="700" font-size="'+fs+'" fill="'+txt+'">'+label+'</text></svg>';
+}
+var FATE={loyal:"Остался верен",traitor:"Предал отца",unknown:"Верность неизвестна",emperor:"Золотой Трон"};
+function list(el, arr){ el.innerHTML=""; arr.forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li);}); }
+
+function renderResult(){
+  var res=state.res, rk=res.ranking, top=rk[0], emp=res.emperor;
+  var p = emp? Q.EMPEROR : top.p;
+  $("seal").innerHTML = sealSVG(p, emp);
+  if(ART[p.id]){ var im=document.createElement("img"); im.src=ART[p.id]; im.alt=p.n; im.className="art"; $("seal").innerHTML=""; $("seal").appendChild(im); }
+  $("rLeg").textContent = emp? "Вне легионов" : "Легион "+p.l+" · "+p.leg;
+  $("rName").textContent = p.n;
+  $("rEp").textContent = p.ep;
+  var tags=$("rTags"); tags.innerHTML="";
+  var t1=document.createElement("span"); t1.className="tag "+p.fate; t1.textContent=FATE[p.fate]; tags.appendChild(t1);
+  if(!emp){ var t2=document.createElement("span"); t2.className="tag match mono"; t2.textContent="Совпадение "+top.pct+"%"; tags.appendChild(t2); }
+  $("rSecret").hidden=!emp;
+  if(emp) $("rSecret").textContent="Секретный результат. В тебе понемногу от всех братьев, а ближе всего — "+top.p.n+" ("+top.pct+"%).";
+  $("rDesc").textContent=p.d; list($("rS"),p.s); list($("rSh"),p.sh);
+  $("rScene").textContent=p.sc; $("rMotto").textContent="«"+p.m+"»"; $("rBond").textContent=p.b;
+  var second = emp? rk[0] : rk[1], anti=rk[rk.length-1];
+  $("rSecond").textContent=second.p.n; $("rSecondP").textContent=second.p.leg+" · "+second.pct+"%";
+  $("rAnti").textContent=anti.p.n; $("rAntiP").textContent=anti.p.leg+" · "+anti.pct+"%";
+  renderMap(rk, emp?null:top.p.id);
+  renderBros(rk, emp?null:top.p.id);
+  renderPrint(res, emp?null:top.p);
+  renderThanks();
+  $("cardOut").hidden=true;
+  store(false,{id:p.id,n:p.n,d:Date.now()});
+  $("copied").textContent=""; $("sharebox").hidden=true;
+  show("result");
+}
+function renderMap(rk, meId){
+  var byL={}; rk.forEach(function(x){byL[x.p.l]=x;});
+  var map=$("map"); map.innerHTML="";
+  ROMAN.forEach(function(r){
+    var b=document.createElement("button"); b.type="button"; b.className="cell";
+    var x=byL[r];
+    if(!x){ b.className+=" void"; b.disabled=true; b.setAttribute("aria-label","Легион "+r+": данные изъяты");
+      b.innerHTML='<span class="num">'+r+'</span><span class="pc">Данные изъяты</span>'; map.appendChild(b); return; }
+    if(x.p.id===meId) b.className+=" me";
+    var heat=Math.max(0,(x.pct-30)/70);
+    b.style.background="color-mix(in srgb, #cfa752 "+Math.round(heat*38)+"%, #1d1913)";
+    b.innerHTML='<span class="num">'+r+'</span><span class="pc">'+x.pct+'%</span><span class="bar" style="width:'+x.pct+'%"></span>';
+    b.setAttribute("aria-label",x.p.n+", совпадение "+x.pct+"%");
+    b.addEventListener("click",function(){openBro(x.p.id);});
+    map.appendChild(b);
+  });
+}
+function mk(tag,cls,txt){var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e;}
+var GROUPS=[[0,1,"Твоя кровь"],[1,4,"Сильная кровь"],[4,10,"Есть понемногу"],[10,17,"Почти чужая кровь"],[17,18,"Твой антипод"]];
+function renderBros(rk, meId){
+  var box=$("bros"); box.innerHTML="";
+  var res=state.res;
+  GROUPS.forEach(function(g){
+    box.appendChild(mk("div","bgrp",g[2]));
+    rk.slice(g[0],g[1]).forEach(function(x,k){
+      var i=g[0]+k, p=x.p, d=mk("details","bro"+(p.id===meId?" me":"")+(i===rk.length-1?" anti":""));
+      d.id="bro-"+p.id;
+      if(i===1 || (!meId && i===0)) d.open=true;
+      var s=mk("summary");
+      s.appendChild(mk("span","no",String(i+1)));
+      var dot=mk("span","dot"); dot.style.background=p.c; s.appendChild(dot);
+      var who=mk("span","who"); who.appendChild(mk("b",null,p.n)); who.appendChild(mk("span",null,"Легион "+p.l+" · "+p.leg)); s.appendChild(who);
+      var tr=mk("span","tr"), bar=mk("i"); bar.style.width=x.pct+"%"; tr.appendChild(bar); s.appendChild(tr);
+      s.appendChild(mk("span","v",x.pct+"%")); s.appendChild(mk("span","chev"));
+      d.appendChild(s);
+      var body=mk("div","body");
+      body.appendChild(mk("p","ep",p.ep+". "+FATE[p.fate]+"."));
+      var c=Q.compare(res,p), cmp=mk("div","cmp");
+      if(c.same.length){ cmp.appendChild(mk("span","lab","Общее:")); c.same.forEach(function(t){cmp.appendChild(mk("span","pill",t));}); }
+      else cmp.appendChild(mk("span","lab","Общих черт почти нет."));
+      if(c.diff.length){ var c2=mk("div","cmp"); c2.appendChild(mk("span","lab","В тебе меньше:")); c.diff.forEach(function(t){c2.appendChild(mk("span","pill minus",t));}); body.appendChild(cmp); body.appendChild(c2); }
+      else body.appendChild(cmp);
+      if(p.id===meId){ body.appendChild(mk("p","note-me","Это твой главный результат. Полное описание — в начале страницы.")); }
+      else {
+        body.appendChild(mk("p",null,p.d));
+        var two=mk("div","two"), a=mk("div"), b=mk("div","neg"), ua=mk("ul"), ub=mk("ul");
+        a.appendChild(mk("h4",null,"Сила")); b.appendChild(mk("h4",null,"Тень"));
+        p.s.forEach(function(t){ua.appendChild(mk("li",null,t));}); p.sh.forEach(function(t){ub.appendChild(mk("li",null,t));});
+        a.appendChild(ua); b.appendChild(ub); two.appendChild(a); two.appendChild(b); body.appendChild(two);
+        body.appendChild(mk("p","sc",p.sc));
+        body.appendChild(mk("p","mt","«"+p.m+"»"));
+        body.appendChild(mk("p","bd",p.b));
+      }
+      d.appendChild(body); box.appendChild(d);
+    });
+  });
+}
+function openBro(id){
+  var d=$("bro-"+id); if(!d) return;
+  d.open=true; d.classList.remove("flash"); void d.offsetWidth; d.classList.add("flash");
+  d.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+}
+/* ---------- Свои арты: положи картинку рядом с index.html и впиши имя файла, например lion:"art/lion.webp" ---------- */
+var ART = {};
+
+/* ---------- Благодарность: впиши свои ссылки ---------- */
+var THANKS = {
+  text: "Тест бесплатный и без рекламы. Если он тебе понравился, можно поддержать автора — это мотивирует делать новые тесты.",
+  links: [
+    {label:"Boosty", url:""},
+    {label:"CloudTips", url:""}
+  ]
+};
+function renderThanks(){
+  var box=$("thanksBtns"); box.innerHTML="";
+  $("thanksText").textContent=THANKS.text;
+  THANKS.links.forEach(function(l){
+    var a=document.createElement("a"); a.className="btn small"; a.textContent=l.label;
+    if(l.url){ a.href=l.url; a.target="_blank"; a.rel="noopener"; }
+    else { a.setAttribute("aria-disabled","true"); a.textContent=l.label+" · скоро"; }
+    box.appendChild(a);
+  });
+  $("thanks").hidden=!THANKS.links.length;
+}
+
+/* ---------- Генетический отпечаток ---------- */
+function printSVG(user, pv, size, labels){
+  var T=Q.TRAITS, n=T.length, cx=size/2, cy=size/2, R=size*0.38;
+  var mx=Math.max.apply(null,user)||1, mp=Math.max.apply(null,pv)||1;
+  function pt(i,v){ var a=-Math.PI/2+i*2*Math.PI/n; return [cx+Math.cos(a)*R*v, cy+Math.sin(a)*R*v]; }
+  function poly(vals){ return vals.map(function(v,i){return pt(i,Math.max(0.06,v)).map(function(x){return x.toFixed(1);}).join(",");}).join(" "); }
+  var g="";
+  [0.33,0.66,1].forEach(function(r){ g+='<polygon points="'+poly(T.map(function(){return r;}))+'" fill="none" stroke="#3d3328" stroke-width="1"/>'; });
+  T.forEach(function(k,i){ var e=pt(i,1); g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#3d3328" stroke-width="1"/>'; });
+  if(pv) g+='<polygon points="'+poly(pv.map(function(v){return v/mp;}))+'" fill="rgba(207,167,82,.10)" stroke="#cfa752" stroke-width="2" stroke-linejoin="round"/>';
+  g+='<polygon points="'+poly(user.map(function(v){return v/mx;}))+'" fill="rgba(115,168,152,.28)" stroke="#73a898" stroke-width="2" stroke-linejoin="round"/>';
+  if(labels) T.forEach(function(k,i){
+    var p=pt(i,1.17), anc=Math.abs(p[0]-cx)<8?"middle":(p[0]>cx?"start":"end");
+    g+='<text x="'+p[0].toFixed(1)+'" y="'+(p[1]+4).toFixed(1)+'" text-anchor="'+anc+'" font-family="Alegreya Sans, sans-serif" font-size="'+(size*0.04).toFixed(1)+'" fill="#a2967f">'+Q.TRAIT_NAMES[k]+'</text>';
+  });
+  var pad=labels?size*0.28:4;
+  return '<svg viewBox="'+(-pad)+' '+(-size*0.03)+' '+(size+2*pad)+' '+(size*1.06)+'" role="img" aria-label="Генетический отпечаток">'+g+'</svg>';
+}
+function renderPrint(res, p){ $("print").innerHTML=printSVG(res.user, p?Q.vec(p.v):null, 440, true); }
+
+/* ---------- Карточка для сторис ---------- */
+function makeCard(){
+  var res=state.res, top=res.ranking[0], emp=res.emperor, p=emp?Q.EMPEROR:top.p;
+  var W=1080,H=1350,c=document.createElement("canvas"); c.width=W; c.height=H; var x=c.getContext("2d");
+  var bg=x.createRadialGradient(W/2,-200,50,W/2,200,1100); bg.addColorStop(0,"#2c2318"); bg.addColorStop(1,"#14110d");
+  x.fillStyle=bg; x.fillRect(0,0,W,H);
+  x.strokeStyle="#8f6e2c"; x.lineWidth=3; x.strokeRect(40,40,W-80,H-80);
+  x.strokeStyle="#3d3328"; x.lineWidth=2; x.strokeRect(56,56,W-112,H-112);
+  x.fillStyle="#a2967f"; x.font='500 30px "JetBrains Mono", monospace'; x.textAlign="center";
+  x.fillText("КРОВЬ ПРИМАРХОВ · ГЕНЕТИЧЕСКИЙ АНАЛИЗ", W/2, 130);
+  /* печать */
+  var sx=W/2, sy=330, r=150;
+  x.strokeStyle="#cfa752"; x.lineWidth=3; x.beginPath(); x.arc(sx,sy,r+28,0,7); x.stroke();
+  for(var i=0;i<72;i++){ var a=i*5*Math.PI/180, r1=(i%6===0)?r+6:r+14; x.lineWidth=i%6===0?3:1.5;
+    x.beginPath(); x.moveTo(sx+r1*Math.cos(a),sy+r1*Math.sin(a)); x.lineTo(sx+(r+22)*Math.cos(a),sy+(r+22)*Math.sin(a)); x.stroke(); }
+  if(emp){ var gg=x.createRadialGradient(sx-40,sy-50,10,sx,sy,r); gg.addColorStop(0,"#f0d58e"); gg.addColorStop(.6,"#cfa752"); gg.addColorStop(1,"#8f6e2c"); x.fillStyle=gg; }
+  else x.fillStyle=p.c;
+  x.beginPath(); x.arc(sx,sy,r,0,7); x.fill(); x.lineWidth=5; x.strokeStyle="#cfa752"; x.stroke();
+  var lab=emp?"I–XX":p.l, light=emp||lum(p.c)>0.28;
+  x.fillStyle=light?"#14110d":"#f3ead6"; x.font='700 '+(lab.length>3?110:140)+'px "Cormorant SC", Georgia, serif'; x.textBaseline="middle";
+  x.fillText(lab, sx, sy+6); x.textBaseline="alphabetic";
+  /* имя */
+  x.fillStyle="#a2967f"; x.font='500 30px "JetBrains Mono", monospace';
+  x.fillText(emp?"ВНЕ ЛЕГИОНОВ":("ЛЕГИОН "+p.l+" · "+p.leg.toUpperCase()), W/2, 600);
+  x.fillStyle="#ebe1cc"; var fs=96; x.font='700 '+fs+'px "Cormorant SC", Georgia, serif';
+  while(x.measureText(p.n).width>W-180 && fs>50){ fs-=4; x.font='700 '+fs+'px "Cormorant SC", Georgia, serif'; }
+  x.fillText(p.n, W/2, 700);
+  x.fillStyle="#cfa752"; x.font='italic 40px "Alegreya Sans", sans-serif'; x.fillText(p.ep, W/2, 760);
+  if(!emp){ x.font='500 44px "JetBrains Mono", monospace'; x.fillStyle="#cfa752"; x.fillText("СОВПАДЕНИЕ "+top.pct+"%", W/2, 840); }
+  /* девиз */
+  x.fillStyle="#ebe1cc"; x.font='700 48px "Cormorant SC", Georgia, serif';
+  wrap(x, "«"+p.m+"»", W/2, 940, W-220, 56);
+  /* вторая кровь и антипод */
+  var sec=emp?res.ranking[0]:res.ranking[1], anti=res.ranking[res.ranking.length-1];
+  x.strokeStyle="#3d3328"; x.lineWidth=2; x.beginPath(); x.moveTo(120,1060); x.lineTo(W-120,1060); x.moveTo(W/2,1080); x.lineTo(W/2,1180); x.stroke();
+  x.fillStyle="#a2967f"; x.font='500 26px "JetBrains Mono", monospace';
+  x.fillText("ВТОРАЯ КРОВЬ", W/4+30, 1110); x.fillText("АНТИПОД", 3*W/4-30, 1110);
+  x.fillStyle="#ebe1cc"; x.font='700 40px "Cormorant SC", Georgia, serif';
+  fitText(x, sec.p.n, W/4+30, 1160, W/2-120); fitText(x, anti.p.n, 3*W/4-30, 1160, W/2-120);
+  x.fillStyle="#73a898"; x.font='500 28px "JetBrains Mono", monospace';
+  x.fillText(/^https?:/.test(location.href)? location.host+location.pathname.replace(/index\.html$/,"") : "А чья кровь течёт в тебе?", W/2, H-90);
+  return c.toDataURL("image/png");
+}
+function wrap(x, text, cx, y, maxW, lh){
+  var words=text.split(" "), line="", lines=[];
+  words.forEach(function(w){ var t=line?line+" "+w:w; if(x.measureText(t).width>maxW&&line){lines.push(line);line=w;} else line=t; });
+  lines.push(line); lines.slice(0,2).forEach(function(l,i){ x.fillText(l, cx, y+i*lh); });
+}
+function fitText(x, t, cx, y, maxW){ var f=40; while(x.measureText(t).width>maxW&&f>24){ f-=2; x.font='700 '+f+'px "Cormorant SC", Georgia, serif'; } x.fillText(t,cx,y); x.font='700 40px "Cormorant SC", Georgia, serif'; }
+$("cardBtn").addEventListener("click",function(){
+  var go=function(){
+    var url=makeCard(); $("cardImg").src=url; $("cardOut").hidden=false;
+    var hosted=/^https?:/.test(location.href) && !/claude/.test(location.host);
+    var note=$("cardNote"); note.textContent="";
+    if(hosted){ var a=document.createElement("a"); a.href=url; a.download="krov-primarhov.png"; a.className="btn small"; a.textContent="Скачать картинку"; note.appendChild(a); }
+    else note.textContent="Нажми на картинку и удерживай (или правый клик), чтобы сохранить.";
+  };
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(go); else go();
+});
+
+function shareText(){
+  var res=state.res, top=res.ranking[0], p=res.emperor?Q.EMPEROR:top.p;
+  var s = res.emperor
+    ? "Анализ крови показал аномалию: во мне кровь самого Императора. Ближе всего из сыновей — "+top.p.n+"."
+    : "Во мне кровь примарха "+p.n+" ("+p.l+" легион, "+p.leg+"), совпадение "+top.pct+"%. Вторая кровь — "+res.ranking[1].p.n+", антипод — "+res.ranking[res.ranking.length-1].p.n+".";
+  s += " А чья кровь в тебе? «Кровь примархов» — тест о быте, а не о войне.";
+  if(/^https?:/.test(location.href)) s += " "+location.href.split("#")[0];
+  return s;
+}
+$("copy").addEventListener("click",function(){
+  var t=shareText(), done=function(){ $("copied").textContent="Скопировано. Отправь друзьям."; };
+  var fallback=function(){ var box=$("sharebox"); box.hidden=false; box.value=t; box.focus(); box.select(); $("copied").textContent="Выдели текст и скопируй вручную."; };
+  try{ navigator.clipboard.writeText(t).then(done, fallback); }catch(e){ fallback(); }
+});
+$("again").addEventListener("click",start);
+$("start").addEventListener("click",start);
+
+/* Прошлый результат */
+var last=store(true);
+if(last && last.n){ var el=$("last"); el.hidden=false; el.innerHTML="В прошлый раз в тебе нашли кровь: <b></b>. Вопросы будут другими."; el.querySelector("b").textContent=last.n; $("start").textContent="Пройти анализ снова"; }
+
+if(reduce) loop(1000); else requestAnimationFrame(loop);
+window.addEventListener("resize",redraw);
+})();
+</script>
+
+</body>
+</html>
