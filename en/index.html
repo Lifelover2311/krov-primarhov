@@ -1,0 +1,1316 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta property="og:title" content="Blood of the Primarchs">
+<meta property="og:description" content="A Warhammer 40k quiz about everyday life, not bolters. 15 questions — whose blood runs in you? 18 primarchs and one secret.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lifelover2311.github.io/krov-primarhov/og-en.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<!-- Yandex.Metrika counter -->
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=113669793','ym');ym(113669793,'init',{ssr:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/113669793" style="position:absolute;left:-9999px" alt=""></div></noscript>
+<title>Blood of the Primarchs</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A quiz about everyday life, not bolters: 15 questions from a pool of 30, and the answer to whose blood runs in you. 18 primarchs and one secret result.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Cormorant+SC:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Макет: одна колонна-реликварий ~680px; спираль геносемени — единственный «живой» элемент; рамка с двойной позолоченной линией только у карточки вопроса и печати. */
+:root{
+  --ink:#14110d;        /* фон: копоть и бронза */
+  --vault:#1d1913;      /* поверхность */
+  --vault-2:#272119;    /* приподнятая поверхность */
+  --rule:#3d3328;       /* линии */
+  --bone:#ebe1cc;       /* основной текст: кость */
+  --dust:#a2967f;       /* вторичный текст */
+  --gilt:#cfa752;       /* позолота: акцент */
+  --gilt-deep:#8f6e2c;
+  --verdigris:#73a898;  /* патина: второй цвет спирали */
+  --blood:#c4524a;      /* метка предательства */
+  --on-gilt:#1a140a;
+  --f-display:"Cormorant SC","Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-body:"Alegreya Sans","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --s-1:13px;--s0:16px;--s1:19px;--s2:23px;--s3:30px;--s4:42px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--f-body);font-size:var(--s0);line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background-image:radial-gradient(120% 70% at 50% -10%,#2a2117 0%,transparent 60%),radial-gradient(90% 60% at 50% 110%,#1c1712 0%,transparent 70%);
+  background-attachment:fixed;min-height:100%}
+[hidden]{display:none!important}
+img{max-width:100%}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--gilt);outline-offset:3px}
+.wrap{max-width:680px;margin:0 auto;padding-block:28px 56px}
+.eyebrow{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.14em;text-transform:uppercase;color:var(--dust)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* ---------- Вступление ---------- */
+.hero{position:relative;padding-block:24px 8px}
+.hero canvas{position:absolute;left:0;right:0;top:54px;width:100%;height:150px;opacity:.55;pointer-events:none}
+.hero h1{position:relative;font-family:var(--f-display);font-weight:700;font-size:clamp(52px,12vw,104px);line-height:.92;letter-spacing:.01em;margin:18px 0 22px;text-wrap:balance;color:var(--bone)}
+.hero h1 span{display:block;color:var(--gilt)}
+.lead{position:relative;font-size:var(--s1);max-width:34em;margin:0 0 26px;color:var(--bone)}
+.facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-block:1px solid var(--rule);margin:0 0 28px}
+.facts div{padding:12px 10px 12px 0;min-width:0}
+.facts div + div{padding-left:12px;border-left:1px solid var(--rule)}
+.facts b{display:block;font-family:var(--f-display);font-size:var(--s3);line-height:1;color:var(--gilt);font-weight:700}
+.facts span{font-size:var(--s-1);color:var(--dust);line-height:1.3;display:block;margin-top:4px}
+@media (max-width:520px){.facts{grid-template-columns:repeat(2,minmax(0,1fr))}.facts div:nth-child(3){padding-left:0;border-left:0}.facts div:nth-child(n+3){border-top:1px solid var(--rule)}}
+.note{color:var(--dust);font-size:var(--s-1);margin:14px 0 0;max-width:40em}
+.last{margin:0 0 20px;padding:10px 14px;border-left:2px solid var(--verdigris);background:var(--vault);font-size:15px}
+.last b{color:var(--bone)}
+
+.btn{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--gilt);background:var(--gilt);color:var(--on-gilt);font-family:var(--f-display);font-weight:700;font-size:var(--s2);letter-spacing:.04em;padding:12px 26px 13px;cursor:pointer;transition:background .15s,transform .15s}
+.btn:hover{background:#ddb862}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;color:var(--gilt)}
+.btn.ghost:hover{background:rgba(207,167,82,.1)}
+.btn.small{font-size:var(--s1);padding:8px 16px 9px}
+.link{background:none;border:0;padding:6px 0;color:var(--dust);cursor:pointer;font-size:15px;text-decoration:underline;text-underline-offset:3px}
+.link:hover{color:var(--bone)}
+
+/* ---------- Вопрос ---------- */
+.qhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:8px 0 6px}
+.strip{display:block;width:100%;height:46px;margin:0 0 18px}
+.card{position:relative;background:var(--vault);border:1px solid var(--gilt-deep);outline:1px solid var(--rule);outline-offset:4px;padding:26px 22px 22px;margin:4px}
+.qtext{font-family:var(--f-body);font-weight:500;font-size:clamp(21px,4.6vw,27px);line-height:1.3;margin:0 0 22px;text-wrap:balance}
+.answers{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.ans{display:grid;grid-template-columns:28px minmax(0,1fr);gap:10px;align-items:start;width:100%;text-align:left;background:var(--vault-2);border:1px solid var(--rule);padding:11px 14px;cursor:pointer;font-size:17px;line-height:1.4;transition:border-color .15s,background .15s}
+.ans .k{font-family:var(--f-mono);font-size:13px;color:var(--dust);padding-top:3px}
+.ans:hover{border-color:var(--gilt-deep);background:#2e271e}
+.ans.picked{border-color:var(--gilt);background:#3a2f1f}
+.ans.picked .k{color:var(--gilt)}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:16px;min-height:34px}
+.qfoot .hint{font-size:var(--s-1);color:var(--dust)}
+.qmulti{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--verdigris);margin:-12px 0 16px}
+.answers.multi .ans .k{width:20px;height:20px;border:1px solid var(--dust);display:inline-flex;align-items:center;justify-content:center;padding:0;font-size:11px;margin-top:1px}
+.answers.multi .ans.picked .k{background:var(--gilt);border-color:var(--gilt);color:var(--on-gilt)}
+.answers.multi .ans.off{opacity:.45;cursor:default}
+.next{margin-top:16px}
+.next:disabled{opacity:.4;cursor:default}
+@media (hover:none){.qfoot .hint{display:none}}
+.fade{animation:fade .32s ease both}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ---------- Сканирование ---------- */
+.scan{padding-block:60px}
+.scan canvas{display:block;width:100%;height:120px}
+.scan ol{list-style:none;padding:0;margin:24px 0 0;font-family:var(--f-mono);font-size:14px;color:var(--dust);display:grid;gap:6px}
+.scan li{opacity:0;animation:fade .3s ease forwards}
+.scan li.warn{color:var(--blood)}
+
+/* ---------- Результат ---------- */
+.res-top{display:grid;grid-template-columns:180px minmax(0,1fr);gap:26px;align-items:center;margin:10px 0 26px}
+.seal{width:180px;max-width:100%;aspect-ratio:1}
+.seal svg{display:block;width:100%;height:100%}
+.res-top h2{font-family:var(--f-display);font-weight:700;font-size:clamp(38px,8vw,58px);line-height:.98;margin:8px 0 8px;text-wrap:balance}
+.res-top .ep{font-style:italic;font-size:var(--s1);color:var(--dust);margin:0 0 12px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tag{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--rule);color:var(--dust)}
+.tag.loyal{border-color:var(--verdigris);color:var(--verdigris)}
+.tag.traitor{border-color:var(--blood);color:var(--blood)}
+.tag.unknown{border-color:var(--dust)}
+.tag.emperor,.tag.match{border-color:var(--gilt);color:var(--gilt)}
+@media (max-width:560px){.res-top{grid-template-columns:1fr;gap:14px}.seal{width:150px}}
+.withart .res-top{grid-template-columns:1fr;padding-top:clamp(60px,14vw,170px)}
+.secret{margin:0 0 22px;padding:12px 16px;border:1px solid var(--gilt);background:rgba(207,167,82,.08);font-size:15px}
+.desc{font-size:var(--s1);margin:0 0 28px;max-width:34em}
+.h3{font-family:var(--f-display);font-weight:700;font-size:var(--s2);margin:0 0 10px;color:var(--gilt);letter-spacing:.02em}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin:0 0 30px}
+@media (max-width:560px){.cols{grid-template-columns:1fr}}
+.cols ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.cols li{position:relative;padding-left:18px}
+.cols li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:7px;background:var(--gilt);transform:rotate(45deg)}
+.cols .shadow li::before{background:transparent;border:1px solid var(--blood)}
+.scene{margin:0 0 30px;padding:18px 20px;background:var(--vault);border-left:2px solid var(--gilt)}
+.scene p{margin:0}
+.motto{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,6vw,40px);line-height:1.1;margin:0 0 8px;text-wrap:balance}
+.bond{color:var(--dust);margin:0 0 34px}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-block:1px solid var(--rule);margin:0 0 36px}
+.pair div{padding:14px 12px 14px 0;min-width:0}
+.pair div + div{padding-left:14px;border-left:1px solid var(--rule)}
+.pair b{display:block;font-family:var(--f-display);font-size:var(--s2);line-height:1.15;margin:4px 0 2px}
+.pair span{color:var(--dust);font-size:15px}
+
+.map{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:0 0 12px}
+.cell{position:relative;aspect-ratio:1/1;border:1px solid var(--rule);background:var(--vault);display:flex;flex-direction:column;justify-content:space-between;padding:6px 7px;cursor:pointer;text-align:left;min-width:0}
+.cell .num{font-family:var(--f-display);font-weight:700;font-size:clamp(17px,4.4vw,26px);line-height:1}
+.cell .pc{font-family:var(--f-mono);font-size:11px;color:var(--dust)}
+.cell.me{border:2px solid var(--gilt)}
+.cell.me .pc{color:var(--gilt)}
+.cell.sel{outline:1px solid var(--bone);outline-offset:2px}
+.cell.void{cursor:default;background:repeating-linear-gradient(135deg,var(--vault) 0 6px,#211b14 6px 12px);color:var(--dust)}
+.cell.void .pc{font-size:9px;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}
+.cell .bar{position:absolute;left:0;bottom:0;height:3px;background:var(--gilt);opacity:.8}
+.mapnote{font-size:var(--s-1);color:var(--dust);margin:0 0 14px}
+.bros{display:grid;gap:6px;margin:0 0 36px}
+.bgrp{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.14em;text-transform:uppercase;color:var(--dust);margin:18px 0 4px}
+.bgrp:first-child{margin-top:0}
+.bro{background:var(--vault);border:1px solid var(--rule)}
+.bro[open]{border-color:var(--gilt-deep)}
+.bro.flash{animation:flash 1.2s ease}
+@keyframes flash{0%{border-color:var(--gilt);box-shadow:0 0 0 2px rgba(207,167,82,.35)}100%{box-shadow:none}}
+.bro summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:30px 14px minmax(0,1fr) 72px 3.2em 14px;gap:10px;align-items:center;padding:11px 12px}
+.bro summary::-webkit-details-marker{display:none}
+.bro summary:hover{background:#231e17}
+.bro .no{font-family:var(--f-mono);font-size:13px;color:var(--dust);text-align:right}
+.bro .dot{width:12px;height:12px;border-radius:50%;border:1px solid rgba(235,225,204,.35)}
+.bro .who{min-width:0}
+.bro .who b{display:block;font-family:var(--f-display);font-size:var(--s1);line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bro .who span{display:block;font-size:13px;color:var(--dust);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bro .tr{height:6px;background:var(--vault-2);position:relative}
+.bro .tr i{position:absolute;inset:0 auto 0 0;background:var(--gilt)}
+.bro .v{font-family:var(--f-mono);font-size:14px;text-align:right;color:var(--dust);font-variant-numeric:tabular-nums}
+.bro .chev{width:8px;height:8px;border-right:1.5px solid var(--dust);border-bottom:1.5px solid var(--dust);transform:rotate(45deg);margin-top:-4px;transition:transform .2s}
+.bro[open] .chev{transform:rotate(225deg);margin-top:4px}
+.bro.me .who b,.bro.me .v{color:var(--gilt)}
+.bro.anti .tr i{background:var(--blood)}
+.bro .body{padding:4px 16px 18px 56px;display:grid;gap:14px}
+.bro .body p{margin:0}
+.bro .ep{font-style:italic;color:var(--dust)}
+.bro .cmp{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:14px}
+.bro .cmp .lab{color:var(--dust);margin-right:2px}
+.bro .pill{font-family:var(--f-mono);font-size:12px;padding:3px 7px;border:1px solid var(--verdigris);color:var(--verdigris)}
+.bro .pill.minus{border-color:var(--rule);color:var(--dust)}
+.bro .two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.bro .two h4{font-family:var(--f-display);font-size:var(--s1);color:var(--gilt);margin:0 0 6px}
+.bro .two ul{margin:0;padding:0;list-style:none;display:grid;gap:6px;font-size:15px}
+.bro .two li{position:relative;padding-left:16px}
+.bro .two li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;background:var(--gilt);transform:rotate(45deg)}
+.bro .two .neg li::before{background:transparent;border:1px solid var(--blood)}
+.bro .sc{padding:12px 14px;background:var(--vault-2);border-left:2px solid var(--gilt);font-size:15px}
+.bro .mt{font-family:var(--f-display);font-weight:700;font-size:var(--s2);line-height:1.15}
+.bro .bd{font-size:14px;color:var(--dust)}
+.bro .note-me{font-size:14px;color:var(--dust)}
+@media (max-width:560px){
+  .bro summary{grid-template-columns:24px 12px minmax(0,1fr) 3em 12px;gap:8px}
+  .bro .tr{display:none}
+  .bro .body{padding:4px 14px 16px 14px}
+  .bro .two{grid-template-columns:1fr}
+}
+
+.rank{display:grid;gap:8px;margin:0 0 36px}
+.row{display:grid;grid-template-columns:minmax(0,9.5em) minmax(0,1fr) 3.2em;gap:12px;align-items:center;font-size:15px}
+.row .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .tr{height:8px;background:var(--vault-2);position:relative}
+.row .tr i{position:absolute;inset:0 auto 0 0;background:var(--gilt)}
+.row.me .nm{color:var(--gilt);font-weight:700}
+.row.anti .tr i{background:var(--blood)}
+.row .v{font-family:var(--f-mono);text-align:right;color:var(--dust);font-variant-numeric:tabular-nums}
+.gap{color:var(--dust);font-family:var(--f-mono);font-size:13px;padding-left:2px}
+@media (max-width:420px){.row{grid-template-columns:minmax(0,7.5em) minmax(0,1fr) 3em}}
+
+.share{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 12px}
+.copied{font-size:15px;color:var(--verdigris)}
+.sharebox{width:100%;min-height:96px;background:var(--vault);color:var(--bone);border:1px solid var(--rule);padding:10px;font:15px/1.4 var(--f-body);margin-top:8px}
+footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--rule);font-size:13px;color:var(--dust)}
+footer p{margin:0 0 6px}
+
+/* ---------- Арты ---------- */
+html{overflow-x:clip}
+#result{position:relative}
+#result > *:not(.rart){position:relative;z-index:1}
+.rart{position:absolute;z-index:0;top:-28px;left:calc(50% - 50vw);width:100vw;height:clamp(380px,62vw,640px);background-size:cover;background-position:center;
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0%,rgba(0,0,0,.42) 45%,transparent 100%);mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0%,rgba(0,0,0,.42) 45%,transparent 100%)}
+.bro .dot.art{width:26px;height:26px;border-radius:3px;background-size:cover;background-position:center;border:1px solid var(--rule)}
+.bro.hasart summary{grid-template-columns:30px 30px minmax(0,1fr) 72px 3.2em 14px}
+@media (max-width:560px){.bro.hasart summary{grid-template-columns:22px 28px minmax(0,1fr) 3em 12px}}
+.mosaic{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px;margin:0 0 26px}
+.mosaic span{display:block;aspect-ratio:1;background-size:cover;background-position:center;filter:saturate(.9) brightness(.85)}
+.mosaic span.empty{opacity:.18}
+@media (max-width:520px){.mosaic{grid-template-columns:repeat(6,minmax(0,1fr))}}
+
+/* ---------- Отпечаток, карточка, благодарность ---------- */
+.seal img.art{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid var(--gilt)}
+.print{margin:0 0 34px;display:flex;justify-content:center}
+.print svg{width:100%;max-width:520px;height:auto;overflow:visible}
+.cardout{margin:14px 0 0}
+.cardout img{display:block;width:100%;max-width:360px;border:1px solid var(--rule)}
+.note.lang{margin-top:6px}.note.lang a{color:var(--gilt)}
+.thanks{margin:34px 0 0;padding:20px;border:1px solid var(--gilt-deep);background:var(--vault)}
+.thanks p{margin:0 0 14px;max-width:34em}
+.thanks .btn[aria-disabled="true"]{opacity:.45;cursor:default;pointer-events:none}
+
+/* ---------- Ничья ---------- */
+.tie h2{font-family:var(--f-display);font-size:var(--s4);line-height:1;margin:10px 0 12px}
+.tie p{margin:0 0 22px;color:var(--dust)}
+
+@media (prefers-reduced-motion:reduce){.fade,.scan li{animation:none;opacity:1}.btn{transition:none}}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ВСТУПЛЕНИЕ -->
+<section id="intro" class="hero" aria-labelledby="t">
+  <canvas id="helixHero" aria-hidden="true"></canvas>
+  <div class="eyebrow">Genetic analysis · Terra, M31</div>
+  <h1 id="t">Blood of the <span>Primarchs</span></h1>
+  <p class="lead">The Emperor created twenty sons, and each inherited a part of His nature. Answer questions about perfectly ordinary life: friends, home, arguments and weekends. The analysis will reveal whose blood runs in you.</p>
+  <div class="facts">
+    <div><b>15</b><span>questions per run</span></div>
+    <div><b>30</b><span>in the pool, different every time</span></div>
+    <div><b>18</b><span>primarchs; II and XI expunged</span></div>
+    <div><b>1</b><span>secret result</span></div>
+  </div>
+  <p class="last" id="last" hidden></p>
+  <button class="btn" id="start" type="button">Begin analysis</button>
+  <p class="note">No questions about bolters or chainswords here. Answer as you really are, not as you’d like to be. About four minutes.</p>
+  <p class="note lang"><a href="../">Русская версия</a></p>
+</section>
+
+<!-- ВОПРОС -->
+<section id="quiz" hidden aria-live="polite">
+  <div class="qhead">
+    <span class="eyebrow" id="qcount">Sample 01 / 15</span>
+    <button class="link" id="quit" type="button">Start over</button>
+  </div>
+  <canvas id="helixStrip" class="strip" aria-hidden="true"></canvas>
+  <div class="card" id="qcard">
+    <p class="qtext" id="qtext"></p>
+    <p class="qmulti" id="qmulti" hidden></p>
+    <ul class="answers" id="answers"></ul>
+    <button class="btn small next" id="next" type="button" hidden>Next</button>
+  </div>
+  <div class="qfoot">
+    <button class="link" id="back" type="button">← Back</button>
+    <span class="hint">You can answer with keys 1–8</span>
+  </div>
+</section>
+
+<!-- НИЧЬЯ -->
+<section id="tie" class="tie" hidden>
+  <div class="eyebrow">The analysis is inconclusive</div>
+  <h2>Two bloodlines, almost equal</h2>
+  <p>You are equally close to two brothers. One last question will decide whose blood is stronger. Which is closer to you?</p>
+  <ul class="answers" id="tieAnswers"></ul>
+</section>
+
+<!-- СКАНИРОВАНИЕ -->
+<section id="scan" class="scan" hidden aria-live="polite">
+  <canvas id="helixScan" aria-hidden="true"></canvas>
+  <ol id="scanLog"></ol>
+</section>
+
+<!-- РЕЗУЛЬТАТ -->
+<section id="result" hidden>
+  <div class="rart" id="rArt" hidden></div>
+  <div class="eyebrow">Analysis result</div>
+  <div class="res-top">
+    <div class="seal" id="seal"></div>
+    <div>
+      <div class="eyebrow" id="rLeg"></div>
+      <h2 id="rName"></h2>
+      <p class="ep" id="rEp"></p>
+      <div class="tags" id="rTags"></div>
+    </div>
+  </div>
+  <p class="secret" id="rSecret" hidden></p>
+  <p class="desc" id="rDesc"></p>
+  <div class="cols">
+    <div><h3 class="h3">Strength</h3><ul id="rS"></ul></div>
+    <div class="shadow"><h3 class="h3">Shadow</h3><ul id="rSh"></ul></div>
+  </div>
+  <h3 class="h3">A scene from your life</h3>
+  <div class="scene"><p id="rScene"></p></div>
+  <p class="motto" id="rMotto"></p>
+  <p class="bond" id="rBond"></p>
+
+  <div class="pair">
+    <div><span class="eyebrow">Second bloodline</span><b id="rSecond"></b><span id="rSecondP"></span></div>
+    <div><span class="eyebrow">Your antithesis</span><b id="rAnti"></b><span id="rAntiP"></span></div>
+  </div>
+
+  <h3 class="h3">Genetic fingerprint</h3>
+  <p class="mapnote">Your traits based on your answers (green) and your primarch’s traits (gold outline). The more the shapes overlap, the stronger the blood.</p>
+  <div class="print" id="print"></div>
+
+  <h3 class="h3">Genetic map</h3>
+  <p class="mapnote">Your match with each of the twenty Legions. Tap a numeral to open that primarch’s dossier below.</p>
+  <div class="map" id="map"></div>
+
+  <h3 class="h3">Every brother in your blood</h3>
+  <p class="mapnote">All eighteen primarchs, ranked by similarity. Open any of them to see what you share and where you differ.</p>
+  <div class="bros" id="bros"></div>
+
+  <h3 class="h3">Share</h3>
+  <div class="share">
+    <button class="btn small" id="copy" type="button">Copy result</button>
+    <button class="btn small ghost" id="cardBtn" type="button">Image for stories</button>
+    <button class="btn small ghost" id="again" type="button">Take it again</button>
+    <span class="copied" id="copied" role="status"></span>
+  </div>
+  <textarea class="sharebox" id="sharebox" readonly hidden aria-label="Result text"></textarea>
+  <div class="cardout" id="cardOut" hidden>
+    <img id="cardImg" alt="Quiz result card">
+    <p class="note" id="cardNote"></p>
+  </div>
+
+  <div class="thanks" id="thanks" hidden>
+    <h3 class="h3">Support the author</h3>
+    <p id="thanksText"></p>
+    <div class="share" id="thanksBtns"></div>
+  </div>
+  <p class="note">Take it again and you’ll get different questions. Only a handful of people ever get the secret result.</p>
+</section>
+
+<footer>
+  <p>A non-commercial fan quiz. Warhammer, the Horus Heresy, and the names of the primarchs and Legions belong to Games Workshop.</p>
+  <p>Your result is not a diagnosis — just an excuse to argue with your friends.</p>
+</footer>
+</div>
+
+<script>
+/* Blood of the Primarchs — English data + logic (generated from core.js by en_build). */
+(function (root) {
+"use strict";
+
+/* Оси характера. Пользователь их не видит. */
+var TRAITS = ["ord","hon","pri","wra","cun","int","fai","car","fre","gri","end","pac","amb","cra"];
+var TRAIT_NAMES = {ord:"order",hon:"honour",pri:"pride",wra:"temper",cun:"cunning",int:"curiosity",
+  fai:"faith",car:"compassion",fre:"freedom",gri:"gloom",end:"endurance",pac:"loyalty",amb:"ambition",cra:"craft"};
+
+/* max — сколько ответов можно выбрать (по умолчанию 1). emp — «имперский» ответ. */
+/* ---------- ВОПРОСЫ: 3 первых, 24 средних, 3 последних ---------- */
+var OPENERS = [
+ {id:"o1", t:"A party where you barely know anyone. For the first half hour, you're…", a:[
+  {t:"Finding the host's cat and talking only to it.", w:{fre:1,car:1}},
+  {t:"Chopping salad in the kitchen. Easier than small talk.", w:{car:2,cra:1}},
+  {t:"Leaning on the wall with a drink, working out who's with whom and who's really in charge.", w:{cun:2,gri:1}},
+  {t:"Already telling a story, and people around me are laughing.", w:{amb:2,pac:1}},
+  {t:"Clinging to the one person I know like a life raft.", w:{pac:2,end:1}},
+  {t:"Studying the hosts' bookshelf. It'll tell me more about them than they will.", w:{int:2,cun:1}},
+  {t:"Quietly checking when the last bus leaves.", w:{ord:2}}
+ ]},
+ {id:"o2", t:"Saturday, no plans. Where are you by lunchtime?", a:[
+  {t:"A to-do list, written and half done.", w:{ord:2,amb:1}},
+  {t:"Pyjamas, blanket, third episode in a row. Leave me alone.", w:{end:1,fre:1}},
+  {t:"Finishing something I started during the week: a shelf, a scarf, a half-painted miniature.", w:{cra:2,end:1}},
+  {t:"In a café with someone, even though this morning's plans were completely different.", w:{pac:2,fre:1}},
+  {t:"Three hours deep into an article about ancient Egypt.", w:{int:2,fai:1}},
+  {t:"Driving somewhere. I'll decide where on the way.", w:{fre:2}},
+  {t:"Deep-cleaning the flat. Not because it needs it — it just calms me down.", w:{ord:1,cra:1,end:1}}
+ ]},
+ {id:"o3", t:"Someone close to you messages at 2 a.m.: “Are you awake?”", a:[
+  {t:"I call straight away. Nobody writes at this hour for no reason.", w:{car:2,pac:1}},
+  {t:"“Awake. Should I come over?” — and I'm already looking for my keys.", w:{pac:2,wra:1,hon:1}},
+  {t:"I reply, but first I wonder what this is really about.", w:{cun:2,gri:1}},
+  {t:"Asleep. My sleep schedule is sacred. I'll answer in the morning over coffee.", w:{ord:2,end:1}},
+  {t:"Of course I'm awake. The night is my time.", w:{gri:2,fre:1}},
+  {t:"I read it and pretend to be asleep. If it's important, they'll write again.", w:{cun:1,end:1,fre:1}}
+ ]}
+];
+
+var MIDDLE = [
+ {id:"m1", t:"A colleague presents your idea as their own in a team meeting.", a:[
+  {t:"I smile. Revenge is a dish best served cold, and at the right moment.", w:{cun:2,gri:1}},
+  {t:"In front of everyone: “Oh, that sounds familiar. From my email on Tuesday?”", w:{hon:2,wra:1}},
+  {t:"Let them. As long as it works.", w:{car:1,ord:1,end:1}},
+  {t:"Spend a week rehearsing a speech in the shower that I'll never give.", w:{pri:1,gri:1,end:1}},
+  {t:"Drop a link to my dated email in the team chat. No comment.", w:{ord:2,cun:1}},
+  {t:"Go straight to the boss.", w:{amb:2,hon:1}},
+  {t:"Vent to my people in the evening, and let it go.", w:{pac:2}}
+ ]},
+ {id:"m2", max:2, t:"Renovation time. Who are you in this story?", a:[
+  {t:"The foreman: budget, schedule, a spreadsheet of purchases.", w:{ord:2,int:1}},
+  {t:"The hands: plastering, painting, laying tiles.", w:{cra:2,pri:1}},
+  {t:"The designer: I know what colour the walls will be, and it's not up for discussion.", w:{pri:2,amb:1}},
+  {t:"The supplier: I find everything at a third of the price. I know people.", w:{cun:2,amb:1}},
+  {t:"Moral support: pizza, tea and good vibes.", w:{pac:2,car:1}},
+  {t:"Patience: three months living in dust without a word of complaint.", w:{end:2}},
+  {t:"The one who went to stay with their mum until it's all over.", w:{fre:2}}
+ ]},
+ {id:"m3", max:2, t:"Board game night. You usually…", a:[
+  {t:"Play to win. Losing ruins my evening. A little.", w:{wra:2,pri:1}},
+  {t:"Explain the rules and make sure everyone follows them.", w:{ord:2,hon:1}},
+  {t:"Make a deal with one player, then another, then win.", w:{cun:2,amb:1}},
+  {t:"Take charge of snacks and atmosphere.", w:{pac:2,car:1}},
+  {t:"Quietly help whoever's losing so they don't get upset.", w:{car:2}},
+  {t:"Pick the weirdest strategy just to see what happens.", w:{int:1,fre:2}},
+  {t:"See early on who's going to win, and subtly keep it interesting for everyone.", w:{cun:1,amb:2}, emp:1}
+ ]},
+ {id:"m4", max:3, t:"What drives you up the wall the most?", a:[
+  {t:"Being told how to live my life.", w:{fre:2,wra:1}},
+  {t:"“Good enough.”", w:{pri:2,cra:1}},
+  {t:"Lies. Even small ones.", w:{hon:2,gri:1}},
+  {t:"When the strong pick on the weak and everyone stays silent.", w:{car:2,wra:1}},
+  {t:"Lateness.", w:{ord:2}},
+  {t:"Empty chatter about nothing.", w:{int:1,gri:1}},
+  {t:"Being overlooked.", w:{pri:1,amb:2}},
+  {t:"When one of my people is in trouble and I'm far away.", w:{pac:2,car:1}}
+ ]},
+ {id:"m5", t:"A wallet on the pavement. Inside: cash and a passport.", a:[
+  {t:"I track the owner down on social media. It's a whole detective story!", w:{int:2,car:1}},
+  {t:"Take it to the police. That's the proper thing to do.", w:{ord:2}},
+  {t:"Call the number on the business card inside and arrange to meet.", w:{hon:2,car:1}},
+  {t:"Walk past. Not mine, and I don't need other people's problems.", w:{fre:1,gri:1}},
+  {t:"Leave it. The owner will notice and come back for it. Probably.", w:{fai:2}},
+  {t:"I'll return the documents. As for the cash… let's not talk about that.", w:{cun:1,fre:1,gri:1}},
+  {t:"Return every last penny. Otherwise my conscience will gnaw me to the bone.", w:{fai:1,hon:2}}
+ ]},
+ {id:"m6", max:2, t:"A dream holiday is…", a:[
+  {t:"The open road, music up loud, no plan at all.", w:{fre:3}},
+  {t:"An old city: museums, coffee shops, bookshops.", w:{int:2,fai:1}},
+  {t:"A cabin in the mountains with my favourite people, and nowhere to be.", w:{car:2,pac:1}},
+  {t:"An all-inclusive resort, a sun lounger, and I don't move for a week.", w:{pri:1,fre:1}},
+  {t:"Camping: mosquitoes, a campfire, pure happiness.", w:{end:2,pac:1}},
+  {t:"A forty-stop itinerary, and we will make every single one.", w:{ord:2,amb:1}},
+  {t:"What holiday? My project is on fire.", w:{end:1,amb:1,cra:1}}
+ ]},
+ {id:"m7", t:"Your kitchen is…", a:[
+  {t:"Labelled jars, everything in its place.", w:{ord:2,pri:1}},
+  {t:"Creative chaos. But I know where everything is.", w:{fre:1,cun:1,int:1}},
+  {t:"A train station: someone's always eating here.", w:{car:2,pac:1}},
+  {t:"My territory. Nobody comes in without me.", w:{pri:1,cra:2}},
+  {t:"Takeaway and ketchup. The cooker is decorative.", w:{fre:2}},
+  {t:"Home to a broken toaster I'll fix one day.", w:{cra:1,end:1,fai:1}},
+  {t:"Spotless. Because I never cook in it.", w:{ord:1,cun:1}}
+ ]},
+ {id:"m8", t:"You and money:", a:[
+  {t:"A year's worth of savings. The world is unreliable.", w:{end:1,gri:2}},
+  {t:"I invest. Money should work for me.", w:{amb:2,int:1}},
+  {t:"I spend it on beautiful things. You only live once.", w:{pri:2,fre:1}},
+  {t:"I lend to everyone and never remember who owes what.", w:{car:1,pac:2}},
+  {t:"A spreadsheet of expenses, down to the last penny.", w:{ord:2}},
+  {t:"It comes and goes. I see no point in clinging to it.", w:{fre:2,fai:1}},
+  {t:"Saving up for one big dream.", w:{end:2,amb:1}}
+ ]},
+ {id:"m9", t:"You find out someone close to you has been lying to you about something important for years.", a:[
+  {t:"That's it. This person is dead to me.", w:{hon:2,gri:1,pri:1}},
+  {t:"First I'll find out why. There must have been reasons.", w:{car:2,int:1}},
+  {t:"I scream, cry, punch a pillow — and forgive them a week later.", w:{wra:2,pac:1}},
+  {t:"I say nothing. But now I know how to play them.", w:{cun:2,gri:1}},
+  {t:"I act like everything's fine. There's just a little more distance between us.", w:{end:1,cun:1,gri:1}},
+  {t:"I go to have it out right away. In my slippers.", w:{wra:1,hon:1,pac:1}},
+  {t:"I've known for ages. I'm just waiting for them to confess.", w:{cun:1,end:1,amb:1}, emp:1}
+ ]},
+ {id:"m10", t:"What was your nickname at school (or what could it have been)?", a:[
+  {t:"Nerd.", w:{int:2}},
+  {t:"Tank.", w:{end:2,ord:1}},
+  {t:"Agony aunt: everyone came to me to cry.", w:{car:2,pac:1}},
+  {t:"Ringleader.", w:{amb:1,pac:2}},
+  {t:"Shadow. Nobody can quite remember what I look like.", w:{cun:2,fre:1}},
+  {t:"“Your parents, to the head's office. Again.” Not a nickname, but you get the idea.", w:{fre:2,wra:1}},
+  {t:"Perfectionist: an A-minus is a failure.", w:{pri:2,ord:1}},
+  {t:"The one they call when the projector stops working.", w:{cra:2,int:1}}
+ ]},
+ {id:"m11", t:"What did you want to be as a child?", a:[
+  {t:"An inventor. Building machines and bridges.", w:{cra:2,int:1}},
+  {t:"An explorer who never comes home.", w:{fre:2,gri:1}},
+  {t:"A doctor or a vet. Healing everyone and everything.", w:{car:2,hon:1}},
+  {t:"President. At the very least.", w:{amb:2,pri:1}},
+  {t:"A star. Stage, lights, applause.", w:{pri:2,amb:1}},
+  {t:"A detective. Catching villains.", w:{cun:1,int:1,hon:1}},
+  {t:"The one who would someday unite all of humanity.", w:{amb:2,fai:1}, emp:1}
+ ]},
+ {id:"m12", t:"You're cooking dinner for a big group.", a:[
+  {t:"The menu was planned a week ago, and everything is timed to the minute.", w:{ord:2,pri:1}},
+  {t:"A barbecue, smoke, noise, everyone gathered round the fire.", w:{pac:2,wra:1}},
+  {t:"Lots of simple food, so there's enough even for people nobody invited.", w:{car:2,end:1}},
+  {t:"A complicated new recipe, first time ever. It might flop, but it's fun.", w:{int:2,fre:1}},
+  {t:"I order takeaway and say so honestly.", w:{hon:1,fre:1}},
+  {t:"I order takeaway and move it onto my own plates.", w:{cun:2}},
+  {t:"Nobody's allowed in the kitchen, and I bring out a masterpiece.", w:{pri:2,cra:1}}
+ ]},
+ {id:"m13", t:"The upstairs neighbours have been loud for three nights straight.", a:[
+  {t:"I go up and tell them exactly what I think. Loudly.", w:{wra:2,hon:1}},
+  {t:"A polite post in the building chat, with a link to the noise regulations.", w:{ord:2,int:1}},
+  {t:"Saturday, 7 a.m.: I have a hammer drill on my schedule.", w:{cun:2,gri:1}},
+  {t:"Earplugs. I've had worse.", w:{end:2}},
+  {t:"I go up with a cake to say hello. A month later we're friends.", w:{car:1,pac:2}},
+  {t:"I bang on the radiator. Silently. Every night.", w:{gri:1,wra:1,end:1}},
+  {t:"I start looking for a quieter flat.", w:{fre:2}}
+ ]},
+ {id:"m14", max:2, t:"An old family photo. What do you feel?", a:[
+  {t:"Longing for those who are gone.", w:{gri:1,fai:1,car:1}},
+  {t:"Pride: these are my roots.", w:{pri:1,hon:1,pac:1}},
+  {t:"Curiosity: who were all these people, and what were they hiding?", w:{int:2,cun:1}},
+  {t:"Irritation. I have a few things to say to some of them.", w:{wra:1,gri:2}},
+  {t:"Warmth. I want to call my family.", w:{car:2,pac:1}},
+  {t:"Laughter. Look at those haircuts!", w:{pac:1,fre:1}},
+  {t:"Nothing special. My real family is my friends.", w:{fre:2,pac:1}}
+ ]},
+ {id:"m15", t:"Someone praises you in front of everyone.", a:[
+  {t:"Feels good. And, honestly, well deserved.", w:{pri:2,amb:1}},
+  {t:"I want the floor to swallow me up.", w:{car:1,cun:1,end:1}},
+  {t:"Suspicious. What do they want from me?", w:{gri:2,cun:1}},
+  {t:"I immediately say none of it would have happened without the team.", w:{pac:2,hon:1}},
+  {t:"I say “thank you” while mentally listing everything I could have done better.", w:{pri:1,cra:1,end:1}},
+  {t:"I make a note of who's praising me. Might come in handy.", w:{cun:1,amb:2}}
+ ]},
+ {id:"m16", max:2, t:"You've been given a free year and enough money to live on. What do you do?", a:[
+  {t:"Learn what I never had time for: a language, philosophy, physics.", w:{int:2,fai:1}},
+  {t:"Build something with my own hands: a house, a workshop, a garden.", w:{cra:2,end:1}},
+  {t:"Travel the world without a return ticket.", w:{fre:2}},
+  {t:"Start my own business.", w:{amb:2,ord:1}},
+  {t:"Volunteer wherever help is needed.", w:{car:2,fai:1}},
+  {t:"Sleep. The first six months, definitely sleep.", w:{end:1,fre:1}},
+  {t:"Look for meaning. In the mountains, in a monastery, within myself.", w:{fai:3}},
+  {t:"Write a plan for all of humanity. A year isn't much, but it'll do for a start.", w:{amb:2,int:1}, emp:1}
+ ]},
+ {id:"m17", t:"How do you argue?", a:[
+  {t:"Facts, links, screenshots. Until I win.", w:{int:2,pri:1}},
+  {t:"I don't argue. I quietly do it my way.", w:{fre:2,end:1}},
+  {t:"I flare up in a second and apologise later.", w:{wra:2,fai:1}},
+  {t:"I ask questions until the other person reaches my conclusion on their own.", w:{cun:2,int:1}},
+  {t:"I give in. Peace at home is worth more.", w:{car:2,end:1}},
+  {t:"Sarcasm, turned all the way up.", w:{gri:2,pri:1}},
+  {t:"I bring in a third person to settle it.", w:{ord:1,hon:1,pac:1}}
+ ]},
+ {id:"m18", max:2, t:"What do you believe in?", a:[
+  {t:"People. Despite everything.", w:{car:2,fai:1}},
+  {t:"What I can test and touch.", w:{int:1,cra:2}},
+  {t:"Fate and signs.", w:{fai:3}},
+  {t:"Only myself.", w:{pri:2,fre:1}},
+  {t:"My own people. Everyone else can sort themselves out.", w:{pac:3}},
+  {t:"Order: if you do everything right, everything will be fine.", w:{ord:2,hon:1}},
+  {t:"Nothing. And that's oddly comforting.", w:{gri:2,fre:1}}
+ ]},
+ {id:"m19", t:"Someone trusted you with a secret. Where is it a year later?", a:[
+  {t:"Still with me. I'll take it to my grave.", w:{hon:2,cun:1}},
+  {t:"I now know five more of their secrets. They have no idea.", w:{cun:3}},
+  {t:"I had to tell: keeping quiet would have hurt them.", w:{car:2,hon:1}},
+  {t:"I warn people up front: secrets aren't my thing.", w:{hon:1,wra:1,pac:1}},
+  {t:"What secret? I forget them within a week. It's a gift.", w:{fre:2}},
+  {t:"One other person knows. The most trustworthy one, honest.", w:{pac:2}}
+ ]},
+ {id:"m20", t:"Your room at fifteen:", a:[
+  {t:"Posters, music blasting, a mess.", w:{fre:2,wra:1}},
+  {t:"Books stacked to the ceiling.", w:{int:2}},
+  {t:"Wires, parts, half-dismantled gadgets or a sewing machine.", w:{cra:2,int:1}},
+  {t:"Spartan: bed, desk, pull-up bar.", w:{end:2,ord:1}},
+  {t:"Everything colour-coordinated, even the pens on the desk.", w:{pri:2,ord:1}},
+  {t:"Always full of friends.", w:{pac:2}},
+  {t:"Curtains drawn. Always.", w:{gri:2,cun:1}}
+ ]},
+ {id:"m21", t:"To you, rules at work are…", a:[
+  {t:"The skeleton of the system. Without them, everything collapses.", w:{ord:3}},
+  {t:"I follow the fair ones, not the stupid ones.", w:{hon:2,fre:1}},
+  {t:"For people who can't think for themselves.", w:{pri:1,fre:2}},
+  {t:"I know them better than anyone, so I know where to get around them.", w:{cun:2,int:1}},
+  {t:"I follow them. As long as I'm left alone.", w:{end:2}},
+  {t:"If a rule hurts people, it needs changing. So I go and change it.", w:{car:2,amb:1}},
+  {t:"I write the rules. I explain them to everyone else later. Sometimes.", w:{amb:2,ord:1}, emp:1}
+ ]},
+ {id:"m22", t:"You need to tell someone close to you an unpleasant truth.", a:[
+  {t:"Straight away, straight out. It's more honest.", w:{hon:2,wra:1}},
+  {t:"I spend a week choosing the words and the moment.", w:{car:2,cun:1}},
+  {t:"I lead them to work it out for themselves.", w:{cun:2,int:1}},
+  {t:"I keep quiet, let it build up, then dump everything at once.", w:{gri:1,wra:1,end:1,pri:1}},
+  {t:"I write a long message. I couldn't say it out loud.", w:{int:1,car:1}},
+  {t:"I say it, but always with a joke to soften the blow.", w:{pac:2,car:1}},
+  {t:"I don't. Life will explain it to them.", w:{fai:1,end:1,fre:1}}
+ ]},
+ {id:"m23", max:2, t:"The perfect Friday night:", a:[
+  {t:"Blanket, tea, a series. Nobody else.", w:{fre:1,end:1}},
+  {t:"Kitchen table, close friends, talking about the meaning of life till dawn.", w:{fai:2,pac:1}},
+  {t:"A noisy crowd, toasts, karaoke.", w:{pac:2,wra:1}},
+  {t:"A night walk alone.", w:{gri:2,fre:1}},
+  {t:"A hobby: hands busy, mind free.", w:{cra:2,end:1}},
+  {t:"A dinner planned down to the last detail.", w:{ord:1,pri:2}},
+  {t:"Gaming till 3 a.m. One more match and then bed.", w:{wra:1,fre:1}}
+ ]},
+ {id:"m24", t:"You've been unfairly accused in front of everyone.", a:[
+  {t:"Calmly, point by point, I prove it isn't true.", w:{ord:1,int:1,hon:1}},
+  {t:"I walk out and slam the door. Justifying myself is beneath me.", w:{pri:2,wra:1}},
+  {t:"I find out who set this up. When I do, they'll regret it.", w:{gri:2,wra:1}},
+  {t:"I take the blame if it makes things easier for everyone else.", w:{fai:2,car:1}},
+  {t:"I get angry or cry, then feel ashamed of the emotions.", w:{wra:1,fai:1,car:1}},
+  {t:"I say nothing. Time will tell.", w:{end:2,fai:1}},
+  {t:"My people will stand up for me. No doubt about it.", w:{pac:2,hon:1}}
+ ]}
+];
+
+var FINALS = [
+ {id:"f1", t:"The last page of your biography. How will you be remembered?", a:[
+  {t:"As someone you could always count on.", w:{hon:2,end:1}},
+  {t:"As someone who left behind something that works.", w:{ord:2,amb:1,cra:1}},
+  {t:"As someone nobody ever gave orders to.", w:{fre:2,wra:1}},
+  {t:"Don't remember me. Just let my loved ones be well.", w:{car:2,fai:1}},
+  {t:"As a mystery. Let them guess.", w:{cun:2,int:1}},
+  {t:"As the one who threw the best parties.", w:{pac:2,fre:1}},
+  {t:"As the one who knew more than anyone.", w:{int:2,pri:1}}
+ ]},
+ {id:"f2", t:"You're offered the whole truth about yourself. You won't be able to forget it.", a:[
+  {t:"I'll take it. Bitter knowledge beats a sweet illusion.", w:{int:2,gri:1}},
+  {t:"No thanks. I know myself, and I'm fine.", w:{pri:1,end:2}},
+  {t:"Only if it would help the people close to me.", w:{car:2,pac:1}},
+  {t:"I'll take it, but first I want to know who else will hear it.", w:{cun:2,amb:1}},
+  {t:"I'll take it. I think I already know what it says.", w:{fai:2,gri:1}},
+  {t:"Can I have just the good parts?", w:{pac:1,fre:1}}
+ ]},
+ {id:"f3", t:"You're suddenly put in charge of something big: a company, a city, a guild. Your first decision?", a:[
+  {t:"Figure out how everything works here, and write down the rules.", w:{ord:2,int:1}},
+  {t:"Promise that nobody will be left without help.", w:{car:2,amb:1}},
+  {t:"Find whoever was stealing while nobody was looking.", w:{gri:2,hon:1}},
+  {t:"Hand over power and leave. I don't need this.", w:{fre:2}},
+  {t:"Put my friends on the board of directors.", w:{pac:2,amb:1}},
+  {t:"Fix everything that's broken. Starting with the coffee machine.", w:{cra:2,end:1}},
+  {t:"Pull out a three-hundred-year plan. It's been ready for ages.", w:{amb:2,cun:1}, emp:1}
+ ]}
+];
+
+/* ---------- ПРИМАРХИ ---------- */
+var P = [
+ {id:"lion", n:"Lion El'Jonson", l:"I", leg:"Dark Angels", ep:"The First, and the Loneliest", c:"#2f5a40", fate:"loyal",
+  v:{hon:3,ord:2,cun:2,gri:1,end:2,pri:1},
+  cr:"To keep a secret, even when it weighs heavy.",
+  d:"You listen more than you speak, and you notice everything. People can know you for years and still not quite understand what's going on in your head. You have your own inner code, and you live by it even when no one is watching. You don't like explaining your decisions: you've already thought them through, and that should be enough.",
+  s:["You always keep your word","You see the plan ten moves ahead","A crisis only makes you calmer"],
+  sh:["Secrets pile up like boxes in the attic","You hold grudges longer than you admit","Sometimes solitude isn't fate — it's just more convenient"],
+  sc:"Your friends are moving house. Without a word, you carry out the heaviest wardrobe. Six months later it turns out the removal men were paid from your card, too.",
+  m:"Little said. Everything done.",
+  b:"You and Leman Russ once brawled at a feast. You're both still sure you won."},
+ {id:"fulgrim", n:"Fulgrim", l:"III", leg:"Emperor's Children", ep:"He Who Seeks Perfection", c:"#6b3383", fate:"traitor",
+  v:{pri:3,amb:2,cra:1,fre:1,int:1,car:1},
+  cr:"To make it beautiful, however long it takes.",
+  d:"You have a nose for beauty: a typeface, a sauce, a playlist, the shade of the curtains. “Good enough” isn't in your vocabulary. Friends ask you what to wear and where to go, and leave a little in love with your world. And if something comes out less than perfect, it ruins your day. Sometimes two.",
+  s:["Impeccable taste","A gift for inspiring others","You polish everything until it shines"],
+  sh:["“Perfect” is the sworn enemy of “done”","You need other people's admiration a little more than you'd like to admit","A passion can lead you very far astray"],
+  sc:"The plan was simple: pasta. Four hours later the table holds duck breast in a berry sauce, candles, and a separate playlist for dessert. The guests are delighted. The kitchen is in ruins.",
+  m:"If it's worth doing, it's worth doing flawlessly.",
+  b:"Best friend: Ferrus Manus. Was. Don't ask."},
+ {id:"perturabo", n:"Perturabo", l:"IV", leg:"Iron Warriors", ep:"The Siege Master No One Thanked", c:"#7d8188", fate:"traitor",
+  v:{cra:3,int:2,gri:2,pri:2,end:2,ord:1,wra:1},
+  cr:"To build something that can withstand any blow.",
+  d:"You have an engineer's brain: you see how anything works and know how to make it better. The trouble is, people rarely notice. You take on the hardest, most thankless jobs, and somehow it's always the loudest people who get the praise. It builds up. It really builds up.",
+  s:["You solve problems others run away from","Bottomless persistence","Numbers instead of feelings"],
+  sh:["Grudges go into a box, and one day the box explodes","You compare yourself to the “lucky ones”","Praise flies right past you; criticism stays for years"],
+  sc:"For three months you carry the hardest part of the project. At the office party, the award goes to the person who made the slides. You clap, smile, and mentally draft your resignation letter. The fourth this year. None of them sent.",
+  m:"Every wall is just a problem to solve.",
+  b:"Eternal rival: Rogal Dorn. You both build walls, but somehow he's the favourite."},
+ {id:"khan", n:"Jaghatai Khan", l:"V", leg:"White Scars", ep:"Wind of the Steppe", c:"#d8d2c2", fate:"loyal",
+  v:{fre:3,int:1,hon:1,pac:1,wra:1},
+  cr:"To be as free as the wind.",
+  d:"You need air. Cages of any kind — the office, the household routine, “that's just how it's done” — make you restless. You decide fast, take off easily, and don't like explaining where you're going or why. You do have your own code of honour; you just have no intention of clearing it with management.",
+  s:["Decisions in a heartbeat","Change doesn't scare you — it wakes you up","You can be alone with yourself and never get bored"],
+  sh:["A one-year plan makes you yawn","You vanish when things get too serious","Speed sometimes helps you avoid thinking"],
+  sc:"Friday. The plan was an early night. On Saturday morning the group chat gets a photo from another city, captioned: “Just felt like driving.” Back on Monday. Probably.",
+  m:"Catch me if you can.",
+  b:"You're drawn to Magnus: you're both fascinated by what others find strange."},
+ {id:"russ", n:"Leman Russ", l:"VI", leg:"Space Wolves", ep:"King of the Pack", c:"#6f8295", fate:"loyal",
+  v:{pac:3,wra:2,hon:2,fre:1,car:1},
+  cr:"To stand by my own, no matter what.",
+  d:"Life with you is loud, fun and dependable. You'll go to bat for your people without a second thought, and in return you ask just one thing: don't lie to you. Any evening with you turns into a celebration, and any quarrel is settled in five minutes. Very loud five minutes, admittedly. Clever schemes bore you: it's simpler to say it to someone's face.",
+  s:["Loyalty to the end","The life and soul of any party","Honesty with no filter"],
+  sh:["Sometimes the filter really is missing","Your usual order: act, think, apologise","It's hard to admit one of your own is in the wrong"],
+  sc:"A friend gets overcharged at the garage. You silently pick up your jacket. An hour later the money's back, the mechanic is emotionally scarred, and you've got free oil changes for life.",
+  m:"We don't leave our own behind.",
+  b:"You and the Lion once brawled at a feast. The winner was never decided."},
+ {id:"dorn", n:"Rogal Dorn", l:"VII", leg:"Imperial Fists", ep:"The Wall", c:"#d9ab26", fate:"loyal",
+  v:{ord:2,end:3,hon:2,cra:2,pri:1},
+  cr:"To hold the line when everyone else has given up.",
+  d:"Everything rests on you. You don't say much, and sometimes you're too blunt, but your “I'll do it” is worth more than any signed contract. You like things built to last: a house, a relationship, a budget. You don't know how to whine and don't understand why others do. A crisis isn't a reason to panic — it's a reason to roll up your sleeves.",
+  s:["Absolute reliability","Patience for the long haul","Decisions without panic"],
+  sh:["You don't know how to retreat, even when you should","Jokes sometimes land on the second try","Sometimes the people close to you need a hug, not a wall"],
+  sc:"Your friends are arguing over whose fault it is that the tent leaked. Without a word, you re-pitch the flysheet, dig a drainage trench and put the kettle on. The argument ends on its own: everyone's already warming up by your fire.",
+  m:"I will endure. And you will endure with me.",
+  b:"Perturabo hates you for your walls. Nobody seems to have told you."},
+ {id:"curze", n:"Konrad Curze", l:"VIII", leg:"Night Lords", ep:"The Night Haunter", c:"#24346a", fate:"traitor",
+  v:{gri:3,cun:2,wra:2,hon:1,fre:1},
+  cr:"That everyone gets what they deserve.",
+  d:"You have a sharp sense of justice and a very dark sense of humour. You see right through people, especially their weak spots, and it infuriates you when cruelty goes unpunished. You don't believe that “everything will be fine” — and, unfortunately, you're rarely wrong. You think best at night.",
+  s:["You spot a fake instantly","You're not afraid of an awkward truth","One look is enough to put someone in their place"],
+  sh:["You expect the worst, and you find it","Punishment seems like the best way to teach a lesson","Short sleep, long thoughts — and not always kind ones"],
+  sc:"One of the neighbours keeps leaving rubbish next to the bins. You identify the culprit by the time of day and the brand of bin bag. You don't say a word in the building chat. In the morning, the bag is sitting neatly outside their door.",
+  m:"I only show people what they are.",
+  b:"You and Corax had better not meet in a dark corridor. The feeling is mutual."},
+ {id:"sanguinius", n:"Sanguinius", l:"IX", leg:"Blood Angels", ep:"The Angel", c:"#a3201f", fate:"loyal",
+  v:{fai:3,car:2,hon:2,pac:1,gri:1,end:1},
+  cr:"To carry the light, even knowing how it all ends.",
+  d:"People feel lighter around you, even if you met five minutes ago. You know how to support someone in a way that actually helps, and you believe people are better than they seem. But beneath that light there is a weight: you often feel you must give more than you have, and you silently carry other people's pain as your own.",
+  s:["You inspire just by being there","Compassion without condescension","Ready to take the blow yourself"],
+  sh:["You take on far too much","Anxiety about a future that hasn't happened yet","You keep inside what you should share"],
+  sc:"At a friends' wedding, your toast brought even the host to tears. Then you sat on the steps until 3 a.m. with a guest who'd just been dumped, and they went home almost happy.",
+  m:"Even in the dark, there is something worth standing for.",
+  b:"Best friend: Horus. That friendship has a very sad ending."},
+ {id:"ferrus", n:"Ferrus Manus", l:"X", leg:"Iron Hands", ep:"The Gorgon", c:"#4a4e52", fate:"loyal",
+  v:{cra:3,pri:2,wra:2,end:1,hon:1,int:1},
+  cr:"To never forgive myself for weakness.",
+  d:"You demand a lot — of yourself first, but others get their share too. Whining and excuses irritate you almost physically. You love work whose result you can touch: a well-made thing beats any words. You can be harsh, but your praise is worth a great deal, and everyone knows it.",
+  s:["Mastery","Stubbornness that sees things through","Honest judgement, no flattery"],
+  sh:["Your temper wrecks your own plans","You notice people's weaknesses faster than their strengths","You can't stand being corrected"],
+  sc:"You were asked to help put together a wardrobe. Five minutes later you have the screwdriver, twenty minutes later it's all been redone, and an hour later the wardrobe stands straighter than in the picture. The owners are grateful and slightly scared.",
+  m:"The flesh is weak. Give it here, I'll redo it.",
+  b:"Best friend: Fulgrim. Was. Better not ask."},
+ {id:"angron", n:"Angron", l:"XII", leg:"World Eaters", ep:"The Unbowed", c:"#2c5a9c", fate:"traitor",
+  v:{wra:3,fre:2,gri:2,pac:1,end:1},
+  cr:"To never be in chains again.",
+  d:"Something is burning inside you. Injustice, humiliation, someone else's power over you — and suddenly there's a fire that's hard to put out. But for those who stood by you in hard times, you'll face down anyone. You struggle most with people who talk a good game but have never been through anything.",
+  s:["Energy enough for three","Loyalty to those who were there on your worst days","You never give up"],
+  sh:["Anger switches on faster than thought","The past is hard to let go of","Sometimes you push away the people trying to help"],
+  sc:"The boss is tearing into the new hire in front of everyone for someone else's mistake. You stand up, and the meeting room goes very quiet. The new hire has told the story of that day at every office party since.",
+  m:"No one will ever decide for me again.",
+  b:"You respect only those who stood beside you in battle. There are very few."},
+ {id:"guilliman", n:"Roboute Guilliman", l:"XIII", leg:"Ultramarines", ep:"Builder of Empires", c:"#1f4fa3", fate:"loyal",
+  v:{ord:3,amb:2,int:2,car:1,hon:1,cra:1},
+  cr:"To arrange life so that everything works.",
+  d:"You have a plan, a backup plan, and a spreadsheet comparing them. People, money and time obey you better than they obey others, and you genuinely love it when everything runs like clockwork. There's nothing cold about it. You simply believe the best way to care for people is a well-ordered life in which no one falls through the cracks.",
+  s:["Plans and order","Responsibility for people","Learning from mistakes"],
+  sh:["You might write a procedure where a hug was all that was needed","Spontaneity doesn't come easily","On holiday, you risk being labelled a bore"],
+  sc:"A holiday with friends. You've got a shared expenses spreadsheet, an hour-by-hour itinerary and a plan B in case of rain. Everyone laughs at you — right up until it starts to rain.",
+  m:"First the plan. Then the glory.",
+  b:"Almost all your brothers are a little jealous of how well you've got everything set up."},
+ {id:"mortarion", n:"Mortarion", l:"XIV", leg:"Death Guard", ep:"He Who Endures", c:"#a39d80", fate:"traitor",
+  v:{end:3,gri:2,fre:2,wra:1,cra:1},
+  cr:"To survive whatever comes.",
+  d:"You have the stamina of three people, and the stubbornness too. Life has taught you a lot, and the main lesson is this: you can only rely on yourself. You can't stand people who push the weak around, but you won't let yourself wallow in self-pity either. Where others give up after a week, you're just getting started.",
+  s:["Endurance","Unafraid of dirty work","Pretty words don't work on you"],
+  sh:["Trust comes hard, even for those who've earned it","You put up with things you shouldn't have to","Your gloom is contagious"],
+  sc:"Half the office is off sick. You ship the release for everyone and fix the coffee machine while you're at it. When someone tries to thank you, you shrug: “Well, who else was going to do it?”",
+  m:"I'll survive this too.",
+  b:"You can't stand Magnus, or anything to do with sorcery."},
+ {id:"magnus", n:"Magnus the Red", l:"XV", leg:"Thousand Sons", ep:"The Crimson King", c:"#b0302a", fate:"traitor",
+  v:{int:3,pri:2,fai:1,fre:1,cun:1},
+  cr:"To know, even if knowledge is dangerous.",
+  d:"You need to know everything. It's not enough to understand how the world works — you need to understand why, and preferably before anyone else. Complex subjects swallow you whole, and you can talk about them for hours. All knowledge seems useful, especially the kind you were asked not to look into.",
+  s:["A brilliant mind","Boundless curiosity","You see connections others miss"],
+  sh:["“Don't touch” sounds like an invitation","You think you know better, even when you don't","Trying to help, you can break something very precious"],
+  sc:"You were asked not to mess with the router settings. Half an hour later the internet is twice as fast. An hour later nothing in the house works, including the kettle. But you're very close to cracking it.",
+  m:"Knowledge is worth any price.",
+  b:"Things with Leman Russ are… complicated."},
+ {id:"horus", n:"Horus Lupercal", l:"XVI", leg:"Sons of Horus", ep:"First Among Brothers", c:"#3f7d73", fate:"traitor",
+  v:{amb:3,pac:2,pri:2,hon:1,wra:1,car:1},
+  cr:"To lead others, and to win.",
+  d:"People are drawn to you on their own. They listen to you, follow you, want you to like them. You know how to bring a team together and make everyone feel important. You enjoy scale and recognition — and, honestly, you often deserve them. Just keep an eye on who's whispering in your ear.",
+  s:["Charisma","Bringing people together","Decisiveness"],
+  sh:["It hurts to be underestimated","Flattery works on you more than you think","A grudge against a “father” — a boss, a mentor, a parent — can take you to very dark places"],
+  sc:"Six months in a new team, and the whole department comes to your Friday drinks — while the boss gets slightly nervous whenever you speak up in a meeting.",
+  m:"I'll see it through. Whatever the cost.",
+  b:"Best friend: Sanguinius. Better not to think about how that friendship ends."},
+ {id:"lorgar", n:"Lorgar Aurelian", l:"XVII", leg:"Word Bearers", ep:"Seeker of Meaning", c:"#7a2a30", fate:"traitor",
+  v:{fai:3,car:1,int:1,pac:1,amb:1},
+  cr:"To find something worth believing in.",
+  d:"Just living isn't enough for you — you need meaning. You think a lot about faith, fate and what it's all for. There's a great deal of sincerity and passion in you, and when you speak, people start to believe along with you. But rejection hurts more than anyone can see, especially rejection from those closest to you.",
+  s:["Depth and sincerity","A gift for giving people hope","The power of words"],
+  sh:["You seek approval from people who don't know how to give it","Disappointment can turn you around a full 180 degrees","Sometimes you believe too hard, and in the wrong thing"],
+  sc:"You recommend a book to a friend. A month later half your circle is reading it, the group chat is full of debates, and you're all going to meet the author together. You pretend you're not proud at all.",
+  m:"If there is no meaning, I will find one.",
+  b:"The only one who truly listens to you is Horus. This won't end well."},
+ {id:"vulkan", n:"Vulkan", l:"XVIII", leg:"Salamanders", ep:"The Smith with a Human Heart", c:"#2f7a3a", fate:"loyal",
+  v:{car:3,cra:2,end:2,hon:2,pac:1},
+  cr:"To protect those who are weaker.",
+  d:"You have a rare combination of strength and kindness. Golden hands, a big heart: you fix things, help the neighbours and always find time for those who are struggling. You don't need to be the centre of attention — what matters far more is that the people around you feel warm. It's almost impossible to make you angry, which is why everyone gets scared when it happens.",
+  s:["Kindness without weakness","A jack of all trades","Patience with people"],
+  sh:["Saying “no” is hard for you","You live through other people's troubles as if they were your own","You only rest once everyone else is taken care of"],
+  sc:"Your neighbour's tap breaks. An hour later the tap works, she has a brand-new mixer, and you have a jar of homemade jam and an invitation to every holiday for the rest of your life.",
+  m:"Strength exists to protect.",
+  b:"Friends with Ferrus and Corax. Honestly, you're friends with almost everyone."},
+ {id:"corax", n:"Corax", l:"XIX", leg:"Raven Guard", ep:"The Liberator", c:"#3a3a40", fate:"loyal",
+  v:{fre:2,cun:2,car:2,gri:2,hon:1},
+  cr:"To free those who are caged.",
+  d:"It makes you shake with anger when someone pushes people around, from a school bully to a petty tyrant of a boss. Head-on fights aren't your style: it's easier to find a way around, quietly fix everything and disappear before anyone starts thanking you. Freedom — yours and other people's — matters more than almost anything, and any kind of power makes you suspicious.",
+  s:["Resourcefulness","Protecting the weak","Quiet but very precise work"],
+  sh:["You suspect a power play even where there isn't one","You keep people at arm's length","At night you replay what you could have done better"],
+  sc:"They want to turn the playground in your courtyard into a car park. You don't go to the protest. You spend three nights reading the paperwork, find a violation and file a complaint. The playground stays. Nobody knows whose work it was.",
+  m:"No one should have a master.",
+  b:"Konrad Curze almost got caught once. Almost."},
+ {id:"alpharius", n:"Alpharius Omegon", l:"XX", leg:"Alpha Legion", ep:"Alpharius. Or Omegon", c:"#2c7383", fate:"unknown",
+  v:{cun:3,int:2,amb:1,fre:1,ord:1},
+  cr:"So that no one ever figures out what my plan is.",
+  d:"You're an enigma, sometimes even to yourself. You always have a plan no one knows about, and a backup plan that even you don't know about. You understand people well and can steer a situation where you want it without ever raising your voice. Your friends stopped being surprised long ago that you “just happen” to be in the right place.",
+  s:["Strategic thinking","Flexibility","Working in the shadows"],
+  sh:["It's hard to be honest without a twelve-step scheme","People aren't always sure whose side you're on","Sometimes neither are you"],
+  sc:"Your friends are deciding where to go on Friday. You don't give your opinion. In the end, everyone goes exactly where you wanted, and each of them is sure it was their idea.",
+  m:"It wasn't me. Or it was.",
+  b:"You have a twin brother. Or you don't. You know."}
+];
+
+var EMPEROR = {id:"emperor", n:"The Emperor of Mankind", l:"—", leg:"Master of Mankind", ep:"Father of All Twenty", c:"#c9a14a", fate:"emperor",
+  d:"Almost no one ever sees this result. There's a little of every brother in you, and above it all, a plan bigger than one lifetime. You see how everything connects, and you make decisions others don't dare to make. You know what's best for everyone, and sometimes that's even true. Just don't forget to explain to people what's going on — while they're still around.",
+  s:["You see the whole picture","Responsibility for everyone at once","Patience measured in millennia"],
+  sh:["You explain your decisions to neither your children nor your friends","The end justifies almost everything","It's easy to become an idol and forget you're human"],
+  sc:"You organise a group holiday for your friends. Nobody knows how you managed to negotiate with the hotel, the airline and, apparently, the weather. Half the group adores you, a quarter are offended, and one is already plotting how to ruin everything.",
+  m:"Everything is going according to plan. Mine.",
+  b:"Twenty sons. Two erased from every record. You know why."};
+
+var EMP_THRESHOLD = 3;
+/* Калибровка: выравнивает частоты результатов по реальным ответам (Метрика, 19.10.2026, ~6000 прохождений), с запасом, чтобы не ломать узнаваемость. */
+var BIAS = {"lion":-0.066,"fulgrim":0.147,"perturabo":0.061,"khan":-0.024,"russ":-0.016,"dorn":0.023,"curze":-0.106,"sanguinius":0.001,"ferrus":0.017,"angron":-0.038,"guilliman":0.062,"mortarion":-0.036,"magnus":0.051,"horus":0.079,"lorgar":0.033,"vulkan":0.055,"corax":-0.023,"alpharius":-0.055};
+
+/* ---------- ЛОГИКА ---------- */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function shuffle(arr, rnd){var a=arr.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1));var x=a[i];a[i]=a[j];a[j]=x;}return a;}
+
+/* 1 вводный + 13 случайных из 24 + 1 финальный, порядок ответов перемешан */
+function pickQuestions(rnd){
+  rnd = rnd || Math.random;
+  var o = OPENERS[Math.floor(rnd()*OPENERS.length)];
+  var f = FINALS[Math.floor(rnd()*FINALS.length)];
+  var mid = shuffle(MIDDLE, rnd).slice(0,13);
+  return [o].concat(mid,[f]).map(function(q){
+    return {id:q.id, t:q.t, max:q.max||1, a:shuffle(q.a.map(function(x,i){return {t:x.t,w:x.w,emp:x.emp||0,i:i};}), rnd)};
+  });
+}
+
+function vec(o){return TRAITS.map(function(k){return (o&&o[k])||0;});}
+function pearson(a,b){
+  var n=a.length,ma=0,mb=0,i;for(i=0;i<n;i++){ma+=a[i];mb+=b[i];}ma/=n;mb/=n;
+  var num=0,da=0,db=0;for(i=0;i<n;i++){var x=a[i]-ma,y=b[i]-mb;num+=x*y;da+=x*x;db+=y*y;}
+  return (da&&db)?num/Math.sqrt(da*db):0;
+}
+
+/* picks[i] — выбранный ответ или массив ответов (для вопросов с несколькими вариантами).
+   При нескольких ответах их вес делится поровну, чтобы такой вопрос не весил больше обычного. */
+function evaluate(questions, picks){
+  var raw={},exp={},emp=0;
+  TRAITS.forEach(function(k){raw[k]=0;exp[k]=0;});
+  questions.forEach(function(q){
+    TRAITS.forEach(function(k){var m=0;q.a.forEach(function(a){if(a.w[k]>m)m=a.w[k];});exp[k]+=m;});
+  });
+  picks.forEach(function(pk){
+    var arr = Array.isArray(pk)? pk : (pk? [pk] : []);
+    if(!arr.length) return;
+    var share = 1/arr.length, hasEmp=false;
+    arr.forEach(function(a){ for(var k in a.w) raw[k]+=a.w[k]*share; if(a.emp) hasEmp=true; });
+    if(hasEmp) emp++;
+  });
+  var user = TRAITS.map(function(k){return exp[k]?raw[k]/exp[k]:0;});
+  var ranking = P.map(function(p){
+    var r=pearson(user, vec(p.v))+(BIAS[p.id]||0);
+    return {p:p, r:r, pct:Math.max(1,Math.min(99,Math.round((r+1)*50)))};
+  }).sort(function(a,b){return b.r-a.r;});
+  return {user:user, ranking:ranking, emp:emp, emperor:emp>=EMP_THRESHOLD, tie:(ranking[0].r-ranking[1].r)<0.015};
+}
+
+/* Что общего у человека с примархом и чего меньше. */
+function compare(res, p){
+  var u=res.user, m=u.reduce(function(s,x){return s+x;},0)/u.length, pv=vec(p.v), pm=pv.reduce(function(s,x){return s+x;},0)/pv.length;
+  var same=[], diff=[];
+  TRAITS.forEach(function(k,i){
+    var du=u[i]-m, dp=pv[i]-pm;
+    if(du>0&&dp>0) same.push({k:k,s:du*dp});
+    if(du<0&&dp>0) diff.push({k:k,s:-du*dp});
+  });
+  var nm=function(x){return TRAIT_NAMES[x.k];};
+  return {same:same.sort(function(a,b){return b.s-a.s;}).slice(0,3).map(nm), diff:diff.sort(function(a,b){return b.s-a.s;}).slice(0,2).map(nm)};
+}
+
+var API = {TRAITS:TRAITS, TRAIT_NAMES:TRAIT_NAMES, compare:compare, OPENERS:OPENERS, MIDDLE:MIDDLE, FINALS:FINALS,
+  PRIMARCHS:P, EMPEROR:EMPEROR, BIAS:BIAS, EMP_THRESHOLD:EMP_THRESHOLD,
+  pickQuestions:pickQuestions, evaluate:evaluate, mulberry32:mulberry32, shuffle:shuffle, vec:vec, pearson:pearson};
+if (typeof module!=="undefined" && module.exports) module.exports = API; else root.QUIZ = API;
+})(this);
+
+</script>
+<script>
+(function(){
+"use strict";
+var Q = window.QUIZ;
+var $ = function(id){return document.getElementById(id);};
+var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+var KEY = "krov-primarhov-last-en";
+var state = {qs:[], idx:0, picks:[], res:null};
+
+function store(get, val){
+  try{ if(get) return JSON.parse(localStorage.getItem(KEY)||"null"); localStorage.setItem(KEY, JSON.stringify(val)); }catch(e){ return null; }
+}
+function show(id){ ["intro","quiz","tie","scan","result"].forEach(function(s){ $(s).hidden = (s!==id); }); window.scrollTo(0,0); }
+
+/* ---------- Спираль геносемени ---------- */
+var helices = [];
+function Helix(canvas, opt){ this.c=canvas; this.o=opt||{}; this.p=0; helices.push(this); }
+Helix.prototype.draw = function(t){
+  var c=this.c, o=this.o; if(!c.offsetParent) return;
+  var dpr=Math.min(window.devicePixelRatio||1,2), w=c.clientWidth, h=c.clientHeight;
+  if(c.width!==Math.round(w*dpr)||c.height!==Math.round(h*dpr)){c.width=Math.round(w*dpr);c.height=Math.round(h*dpr);}
+  var x=c.getContext("2d"); x.setTransform(dpr,0,0,dpr,0,0); x.clearRect(0,0,w,h);
+  var n=o.n||Math.max(18,Math.round(w/16)), mid=h/2, amp=h*0.36, sp=o.speed||0.0006;
+  var gilt="207,167,82", verd="115,168,152";
+  for(var i=0;i<n;i++){
+    var px=(i+0.5)/n*w, ph=t*sp+i*(o.twist||0.42), s=Math.sin(ph), z=Math.cos(ph);
+    var y1=mid+s*amp, y2=mid-s*amp;
+    var lit = o.progress!=null ? (i < this.p) : true;
+    var a = o.progress!=null ? (lit?0.85:0.16) : 0.35;
+    x.strokeStyle="rgba("+(lit?gilt:"162,150,127")+","+(a*0.55)+")"; x.lineWidth=1;
+    x.beginPath(); x.moveTo(px,y1); x.lineTo(px,y2); x.stroke();
+    var r1=2+1.4*(z+1)/2, r2=2+1.4*(1-z)/2;
+    x.fillStyle="rgba("+gilt+","+(lit?0.5+0.5*(z+1)/2:0.25)+")"; x.beginPath(); x.arc(px,y1,r1,0,6.283); x.fill();
+    x.fillStyle="rgba("+verd+","+(lit?0.5+0.5*(1-z)/2:0.22)+")"; x.beginPath(); x.arc(px,y2,r2,0,6.283); x.fill();
+  }
+};
+var hero = new Helix($("helixHero"),{speed:0.00045});
+var strip = new Helix($("helixStrip"),{n:15,progress:0,twist:0.55,speed:0.0009});
+var scanH = new Helix($("helixScan"),{speed:0.004,twist:0.35});
+function loop(t){ helices.forEach(function(h){h.draw(t);}); if(!reduce) requestAnimationFrame(loop); }
+if(reduce){ window.addEventListener("resize",function(){loop(1000);}); }
+function redraw(){ if(reduce) loop(1000); }
+
+/* ---------- Вопросы ---------- */
+function start(){ track("start");
+  state.qs = Q.pickQuestions(); state.idx=0; state.picks=[]; state.res=null;
+  show("quiz"); renderQ(); redraw();
+}
+function renderQ(){
+  var q=state.qs[state.idx], n=state.qs.length; trackProgress();
+  $("qcount").textContent = "Sample " + String(state.idx+1).padStart(2,"0") + " / " + n;
+  strip.p = state.idx;
+  $("qtext").textContent = q.t;
+  var ul=$("answers"); ul.innerHTML=""; ul.classList.toggle("multi", q.max>1);
+  var cur=state.picks[state.idx]||[];
+  $("qmulti").hidden = q.max<2; $("qmulti").textContent = "Choose up to "+q.max+" answers";
+  $("next").hidden = q.max<2;
+  q.a.forEach(function(a,i){
+    var li=document.createElement("li"), b=document.createElement("button");
+    b.type="button"; b.className="ans"; b.innerHTML='<span class="k">'+(i+1)+'</span><span></span>';
+    b.lastChild.textContent=a.t;
+    if(cur.indexOf(a)>=0) b.classList.add("picked");
+    if(q.max>1) b.setAttribute("aria-pressed", cur.indexOf(a)>=0?"true":"false");
+    b.addEventListener("click",function(){choose(i);});
+    li.appendChild(b); ul.appendChild(li);
+  });
+  syncMulti();
+  $("back").style.visibility = state.idx? "visible":"hidden";
+  var card=$("qcard"); card.classList.remove("fade"); void card.offsetWidth; card.classList.add("fade");
+  redraw();
+}
+var busy=false;
+function syncMulti(){
+  var q=state.qs[state.idx]; if(q.max<2) return;
+  var cur=state.picks[state.idx]||[], full=cur.length>=q.max;
+  $("answers").querySelectorAll(".ans").forEach(function(b,i){
+    var on=cur.indexOf(q.a[i])>=0; b.classList.toggle("picked",on); b.setAttribute("aria-pressed",on?"true":"false");
+    b.classList.toggle("off", full && !on);
+  });
+  $("next").disabled = !cur.length;
+  $("next").textContent = state.idx<state.qs.length-1 ? "Next" : "See my result";
+}
+function advance(){
+  trackAnswer();
+  if(state.idx<state.qs.length-1){ state.idx++; renderQ(); } else finish();
+}
+function choose(i){
+  if(busy) return; var q=state.qs[state.idx]; if(!q.a[i]) return;
+  if(q.max>1){
+    var cur=(state.picks[state.idx]||[]).slice(), j=cur.indexOf(q.a[i]);
+    if(j>=0) cur.splice(j,1); else if(cur.length<q.max) cur.push(q.a[i]);
+    state.picks[state.idx]=cur; syncMulti(); return;
+  }
+  busy=true; state.picks[state.idx]=[q.a[i]];
+  var btns=$("answers").querySelectorAll(".ans"); btns.forEach(function(b){b.classList.remove("picked");}); btns[i].classList.add("picked");
+  setTimeout(function(){
+    busy=false; advance();
+  }, reduce?60:240);
+}
+$("next").addEventListener("click",function(){ if((state.picks[state.idx]||[]).length) advance(); });
+$("back").addEventListener("click",function(){ if(state.idx>0){state.idx--; renderQ();} });
+$("quit").addEventListener("click",function(){ show("intro"); redraw(); });
+document.addEventListener("keydown",function(e){
+  if(e.altKey||e.ctrlKey||e.metaKey) return;
+  if(e.key==="Enter" && !$("quiz").hidden && !$("next").hidden && !$("next").disabled && document.activeElement===document.body){ e.preventDefault(); $("next").click(); return; }
+  var d=parseInt(e.key,10); if(!(d>=1&&d<=8)) return;
+  if(!$("quiz").hidden){ choose(d-1); }
+  else if(!$("tie").hidden){ var b=$("tieAnswers").querySelectorAll("button")[d-1]; if(b) b.click(); }
+});
+
+/* ---------- Подсчёт ---------- */
+function finish(){
+  var res = Q.evaluate(state.qs, state.picks);
+  state.res = res;
+  if(res.tie && !res.emperor){ return showTie(res); }
+  scan();
+}
+function showTie(res){
+  var pair=[res.ranking[0],res.ranking[1]]; if(Math.random()<.5) pair.reverse();
+  var ul=$("tieAnswers"); ul.innerHTML="";
+  pair.forEach(function(item,i){
+    var li=document.createElement("li"), b=document.createElement("button");
+    b.type="button"; b.className="ans"; b.innerHTML='<span class="k">'+(i+1)+'</span><span></span>'; b.lastChild.textContent=item.p.cr;
+    b.addEventListener("click",function(){
+      var rk=res.ranking; var j=rk.indexOf(item);
+      if(j>0){ rk.splice(j,1); rk.unshift(item); if(rk[0].pct<=rk[1].pct) rk[0].pct=Math.min(99,rk[1].pct+1); }
+      scan();
+    });
+    li.appendChild(b); ul.appendChild(li);
+  });
+  show("tie");
+}
+function scan(){
+  show("scan"); redraw();
+  var lines=["Extracting gene-seed from sample…","Comparing against eighteen reference samples…","References II and XI unavailable. Records expunged.","Match found."];
+  if(state.res.emperor) lines.splice(3,1,"Anomaly detected: the sample matches every reference at once.","Accessing record by special decree…");
+  var ol=$("scanLog"); ol.innerHTML="";
+  lines.forEach(function(t,i){ var li=document.createElement("li"); li.textContent="> "+t; if(/expunged|Anomaly/.test(t)) li.className="warn"; li.style.animationDelay=(reduce?0:i*0.38)+"s"; ol.appendChild(li); });
+  setTimeout(renderResult, reduce?500:lines.length*380+700);
+}
+
+/* ---------- Результат ---------- */
+var ROMAN=["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII","XIV","XV","XVI","XVII","XVIII","XIX","XX"];
+function lum(hex){ var n=parseInt(hex.slice(1),16), r=(n>>16&255)/255, g=(n>>8&255)/255, b=(n&255)/255;
+  var f=function(c){return c<=0.03928?c/12.92:Math.pow((c+0.055)/1.055,2.4);}; return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b); }
+function sealSVG(p, emperor){
+  var ticks="", i;
+  for(i=0;i<72;i++){ var a=i*5*Math.PI/180, r1=(i%6===0)?80:85, r2=91;
+    ticks+='<line x1="'+(100+r1*Math.cos(a)).toFixed(2)+'" y1="'+(100+r1*Math.sin(a)).toFixed(2)+'" x2="'+(100+r2*Math.cos(a)).toFixed(2)+'" y2="'+(100+r2*Math.sin(a)).toFixed(2)+'" stroke="#cfa752" stroke-width="'+(i%6===0?1.6:0.8)+'"/>'; }
+  var fill=emperor?"url(#gg)":p.c, txt=emperor?"#1a140a":(lum(p.c)>0.28?"#14110d":"#f3ead6");
+  var label=emperor?"I–XX":p.l, fs=label.length>3?(label.length>4?40:48):(label.length>2?54:62);
+  return '<svg viewBox="0 0 200 200" role="img" aria-label="Legion seal '+label+'">'+
+    '<defs><radialGradient id="gg" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f0d58e"/><stop offset=".6" stop-color="#cfa752"/><stop offset="1" stop-color="#8f6e2c"/></radialGradient></defs>'+
+    '<circle cx="100" cy="100" r="96" fill="none" stroke="#cfa752" stroke-width="1.4"/>'+ticks+
+    '<circle cx="100" cy="100" r="72" fill="'+fill+'" stroke="#cfa752" stroke-width="2.4"/>'+
+    '<circle cx="100" cy="100" r="64" fill="none" stroke="'+txt+'" stroke-opacity=".35" stroke-width="1"/>'+
+    '<text x="100" y="100" text-anchor="middle" dominant-baseline="central" font-family="Cormorant SC, Georgia, serif" font-weight="700" font-size="'+fs+'" fill="'+txt+'">'+label+'</text></svg>';
+}
+var FATE={loyal:"Remained loyal",traitor:"Betrayed his father",unknown:"Allegiance unknown",emperor:"The Golden Throne"};
+function list(el, arr){ el.innerHTML=""; arr.forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li);}); }
+
+function renderResult(){
+  var res=state.res, rk=res.ranking, top=rk[0], emp=res.emperor;
+  var p = emp? Q.EMPEROR : top.p;
+  track("result",{primarch:p.id});
+  $("seal").innerHTML = sealSVG(p, emp);
+  var ra=$("rArt"); ra.hidden=!ART[p.id]; if(ART[p.id]) ra.style.backgroundImage="url('"+ART[p.id]+"')";
+  $("seal").hidden=!!ART[p.id]; $("result").classList.toggle("withart",!!ART[p.id]);
+  $("rLeg").textContent = emp? "Beyond the Legions" : "Legion "+p.l+" · "+p.leg;
+  $("rName").textContent = p.n;
+  $("rEp").textContent = p.ep;
+  var tags=$("rTags"); tags.innerHTML="";
+  var t1=document.createElement("span"); t1.className="tag "+p.fate; t1.textContent=FATE[p.fate]; tags.appendChild(t1);
+  if(!emp){ var t2=document.createElement("span"); t2.className="tag match mono"; t2.textContent="Match "+top.pct+"%"; tags.appendChild(t2); }
+  $("rSecret").hidden=!emp;
+  if(emp) $("rSecret").textContent="Secret result. There is a little of every brother in you, and the closest is "+top.p.n+" ("+top.pct+"%).";
+  $("rDesc").textContent=p.d; list($("rS"),p.s); list($("rSh"),p.sh);
+  $("rScene").textContent=p.sc; $("rMotto").textContent="“"+p.m+"”"; $("rBond").textContent=p.b;
+  var second = emp? rk[0] : rk[1], anti=rk[rk.length-1];
+  $("rSecond").textContent=second.p.n; $("rSecondP").textContent=second.p.leg+" · "+second.pct+"%";
+  $("rAnti").textContent=anti.p.n; $("rAntiP").textContent=anti.p.leg+" · "+anti.pct+"%";
+  renderMap(rk, emp?null:top.p.id);
+  renderBros(rk, emp?null:top.p.id);
+  renderPrint(res, emp?null:top.p);
+  renderThanks();
+  $("cardOut").hidden=true;
+  store(false,{id:p.id,n:p.n,d:Date.now()});
+  $("copied").textContent=""; $("sharebox").hidden=true;
+  show("result");
+}
+function renderMap(rk, meId){
+  var byL={}; rk.forEach(function(x){byL[x.p.l]=x;});
+  var map=$("map"); map.innerHTML="";
+  ROMAN.forEach(function(r){
+    var b=document.createElement("button"); b.type="button"; b.className="cell";
+    var x=byL[r];
+    if(!x){ b.className+=" void"; b.disabled=true; b.setAttribute("aria-label","Legion "+r+": records expunged");
+      b.innerHTML='<span class="num">'+r+'</span><span class="pc">Expunged</span>'; map.appendChild(b); return; }
+    if(x.p.id===meId) b.className+=" me";
+    var heat=Math.max(0,(x.pct-30)/70);
+    b.style.background="color-mix(in srgb, #cfa752 "+Math.round(heat*38)+"%, #1d1913)";
+    b.innerHTML='<span class="num">'+r+'</span><span class="pc">'+x.pct+'%</span><span class="bar" style="width:'+x.pct+'%"></span>';
+    b.setAttribute("aria-label",x.p.n+", match "+x.pct+"%");
+    b.addEventListener("click",function(){openBro(x.p.id);});
+    map.appendChild(b);
+  });
+}
+function mk(tag,cls,txt){var e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e;}
+var GROUPS=[[0,1,"Your blood"],[1,4,"Strong blood"],[4,10,"A trace"],[10,17,"Barely kin"],[17,18,"Your antithesis"]];
+function renderBros(rk, meId){
+  var box=$("bros"); box.innerHTML="";
+  var res=state.res;
+  GROUPS.forEach(function(g){
+    box.appendChild(mk("div","bgrp",g[2]));
+    rk.slice(g[0],g[1]).forEach(function(x,k){
+      var i=g[0]+k, p=x.p, d=mk("details","bro"+(p.id===meId?" me":"")+(i===rk.length-1?" anti":"")+(Object.keys(ART).length?" hasart":""));
+      d.id="bro-"+p.id;
+      if(i===1 || (!meId && i===0)) d.open=true;
+      var s=mk("summary");
+      s.appendChild(mk("span","no",String(i+1)));
+      var dot=mk("span","dot"+(ART[p.id]?" art":"")); if(ART[p.id]) dot.style.backgroundImage="url('"+ART[p.id]+"')"; else dot.style.background=p.c; s.appendChild(dot);
+      var who=mk("span","who"); who.appendChild(mk("b",null,p.n)); who.appendChild(mk("span",null,"Legion "+p.l+" · "+p.leg)); s.appendChild(who);
+      var tr=mk("span","tr"), bar=mk("i"); bar.style.width=x.pct+"%"; tr.appendChild(bar); s.appendChild(tr);
+      s.appendChild(mk("span","v",x.pct+"%")); s.appendChild(mk("span","chev"));
+      d.appendChild(s);
+      var body=mk("div","body");
+      body.appendChild(mk("p","ep",p.ep+". "+FATE[p.fate]+"."));
+      var c=Q.compare(res,p), cmp=mk("div","cmp");
+      if(c.same.length){ cmp.appendChild(mk("span","lab","In common:")); c.same.forEach(function(t){cmp.appendChild(mk("span","pill",t));}); }
+      else cmp.appendChild(mk("span","lab","Almost nothing in common."));
+      if(c.diff.length){ var c2=mk("div","cmp"); c2.appendChild(mk("span","lab","Less of it in you:")); c.diff.forEach(function(t){c2.appendChild(mk("span","pill minus",t));}); body.appendChild(cmp); body.appendChild(c2); }
+      else body.appendChild(cmp);
+      if(p.id===meId){ body.appendChild(mk("p","note-me","This is your main result. The full dossier is at the top of the page.")); }
+      else {
+        body.appendChild(mk("p",null,p.d));
+        var two=mk("div","two"), a=mk("div"), b=mk("div","neg"), ua=mk("ul"), ub=mk("ul");
+        a.appendChild(mk("h4",null,"Strength")); b.appendChild(mk("h4",null,"Shadow"));
+        p.s.forEach(function(t){ua.appendChild(mk("li",null,t));}); p.sh.forEach(function(t){ub.appendChild(mk("li",null,t));});
+        a.appendChild(ua); b.appendChild(ub); two.appendChild(a); two.appendChild(b); body.appendChild(two);
+        body.appendChild(mk("p","sc",p.sc));
+        body.appendChild(mk("p","mt","“"+p.m+"”"));
+        body.appendChild(mk("p","bd",p.b));
+      }
+      d.appendChild(body); box.appendChild(d);
+    });
+  });
+}
+function openBro(id){
+  var d=$("bro-"+id); if(!d) return;
+  d.open=true; d.classList.remove("flash"); void d.offsetWidth; d.classList.add("flash");
+  d.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+}
+/* ---------- Свои арты: положи картинку рядом с index.html и впиши имя файла, например lion:"art/lion.webp" ---------- */
+/* ---------- Статистика (Яндекс Метрика). Шлёт только на боевом сайте, без личных данных ---------- */
+var LANG = "en";
+function track(n,pr){ try{ if(window.ym && /github\.io$/.test(location.hostname)){ ym(113669793,"reachGoal",n,pr||{}); var st={}; st[n]=1; var pa={steps:st}; if(pr&&pr.primarch) pa.primarch=pr.primarch; if(n==="start") pa.lang=LANG; ym(113669793,"params",pa); } }catch(e){} }
+/* Аналитика вопросов: какой вопрос показан и какие варианты выбирают (без личных данных) */
+var ALLQ=Q.OPENERS.concat(Q.MIDDLE,Q.FINALS);
+function pad2(n){ return (n<10?"0":"")+n; }
+function qid(q){ for(var i=0;i<ALLQ.length;i++) if(ALLQ[i].t===q.t) return i+1; return 0; }
+function tp(o){ try{ if(window.ym && /github\.io$/.test(location.hostname)) ym(113669793,"params",o); }catch(e){} }
+function trackProgress(){ var o={}, k="n"+pad2(state.idx+1); o[k]=1; tp({progress:o}); }
+function trackAnswer(){
+  var q=state.qs[state.idx], pk=state.picks[state.idx]||[], id=qid(q); if(!id) return;
+  var src=ALLQ[id-1], inner={};
+  pk.forEach(function(a){ for(var j=0;j<src.a.length;j++) if(src.a[j].t===a.t){ inner["a"+(j+1)]=1; break; } });
+  var o={}; o["q"+pad2(id)]=inner; tp({answers:o});
+}
+var ART = {emperor:"../art/emperor.jpg",lion:"../art/lion.jpg",fulgrim:"../art/fulgrim.jpg",perturabo:"../art/perturabo.jpg",khan:"../art/khan.jpg",russ:"../art/russ.jpg",dorn:"../art/dorn.jpg",curze:"../art/curze.jpg",sanguinius:"../art/sanguinius.jpg",ferrus:"../art/ferrus.jpg",angron:"../art/angron.jpg",guilliman:"../art/guilliman.jpg",mortarion:"../art/mortarion.jpg",magnus:"../art/magnus.jpg",horus:"../art/horus.jpg",lorgar:"../art/lorgar.jpg",vulkan:"../art/vulkan.jpg",corax:"../art/corax.jpg",alpharius:"../art/alpharius.jpg"};
+
+/* ---------- Благодарность: впиши свои ссылки ---------- */
+var THANKS = {
+  text: "I made this quiz on my own: the questions, the maths, the art — all in the evenings after work. If you enjoyed it, you can support me, and that’s how the next one gets made.",
+  links: [
+    {label:"Support the author", url:"https://boosty.to/lifelover2311/donate"}
+  ]
+};
+function renderThanks(){
+  var box=$("thanksBtns"); box.innerHTML="";
+  $("thanksText").textContent=THANKS.text;
+  THANKS.links.forEach(function(l){
+    var a=document.createElement("a"); a.className="btn small"; a.textContent=l.label;
+    if(l.url){ a.href=l.url; a.target="_blank"; a.rel="noopener"; a.addEventListener("click",function(){ track("donate"); }); }
+    else { a.setAttribute("aria-disabled","true"); a.textContent=l.label+" · soon"; }
+    box.appendChild(a);
+  });
+  $("thanks").hidden=!THANKS.links.length;
+}
+
+/* ---------- Генетический отпечаток ---------- */
+function printSVG(user, pv, size, labels){
+  var T=Q.TRAITS, n=T.length, cx=size/2, cy=size/2, R=size*0.38;
+  var mx=Math.max.apply(null,user)||1, mp=Math.max.apply(null,pv)||1;
+  function pt(i,v){ var a=-Math.PI/2+i*2*Math.PI/n; return [cx+Math.cos(a)*R*v, cy+Math.sin(a)*R*v]; }
+  function poly(vals){ return vals.map(function(v,i){return pt(i,Math.max(0.06,v)).map(function(x){return x.toFixed(1);}).join(",");}).join(" "); }
+  var g="";
+  [0.33,0.66,1].forEach(function(r){ g+='<polygon points="'+poly(T.map(function(){return r;}))+'" fill="none" stroke="#3d3328" stroke-width="1"/>'; });
+  T.forEach(function(k,i){ var e=pt(i,1); g+='<line x1="'+cx+'" y1="'+cy+'" x2="'+e[0].toFixed(1)+'" y2="'+e[1].toFixed(1)+'" stroke="#3d3328" stroke-width="1"/>'; });
+  if(pv) g+='<polygon points="'+poly(pv.map(function(v){return v/mp;}))+'" fill="rgba(207,167,82,.10)" stroke="#cfa752" stroke-width="2" stroke-linejoin="round"/>';
+  g+='<polygon points="'+poly(user.map(function(v){return v/mx;}))+'" fill="rgba(115,168,152,.28)" stroke="#73a898" stroke-width="2" stroke-linejoin="round"/>';
+  if(labels) T.forEach(function(k,i){
+    var p=pt(i,1.17), anc=Math.abs(p[0]-cx)<8?"middle":(p[0]>cx?"start":"end");
+    g+='<text x="'+p[0].toFixed(1)+'" y="'+(p[1]+4).toFixed(1)+'" text-anchor="'+anc+'" font-family="Alegreya Sans, sans-serif" font-size="'+(size*0.04).toFixed(1)+'" fill="#a2967f">'+Q.TRAIT_NAMES[k]+'</text>';
+  });
+  var pad=labels?size*0.28:4;
+  return '<svg viewBox="'+(-pad)+' '+(-size*0.03)+' '+(size+2*pad)+' '+(size*1.06)+'" role="img" aria-label="Genetic fingerprint">'+g+'</svg>';
+}
+function renderPrint(res, p){ $("print").innerHTML=printSVG(res.user, p?Q.vec(p.v):null, 440, true); }
+
+/* ---------- Карточка для сторис ---------- */
+function makeCard(artImg){
+  var res=state.res, top=res.ranking[0], emp=res.emperor, p=emp?Q.EMPEROR:top.p;
+  var W=1080,H=1350,c=document.createElement("canvas"); c.width=W; c.height=H; var x=c.getContext("2d");
+  var bg=x.createRadialGradient(W/2,-200,50,W/2,200,1100); bg.addColorStop(0,"#2c2318"); bg.addColorStop(1,"#14110d");
+  x.fillStyle=bg; x.fillRect(0,0,W,H);
+  if(artImg){
+    var sc=Math.max(W/artImg.width,H/artImg.height), iw=artImg.width*sc, ih=artImg.height*sc;
+    x.drawImage(artImg,(W-iw)/2,(H-ih)/2,iw,ih);
+    var ov=x.createLinearGradient(0,0,0,H); ov.addColorStop(0,"rgba(20,17,13,.55)"); ov.addColorStop(.35,"rgba(20,17,13,.45)"); ov.addColorStop(.55,"rgba(20,17,13,.82)"); ov.addColorStop(1,"rgba(20,17,13,.96)");
+    x.fillStyle=ov; x.fillRect(0,0,W,H);
+  }
+  x.strokeStyle="#8f6e2c"; x.lineWidth=3; x.strokeRect(40,40,W-80,H-80);
+  x.strokeStyle="#3d3328"; x.lineWidth=2; x.strokeRect(56,56,W-112,H-112);
+  x.fillStyle="#a2967f"; x.font='500 30px "JetBrains Mono", monospace'; x.textAlign="center";
+  x.fillText("BLOOD OF THE PRIMARCHS · GENETIC ANALYSIS", W/2, 130);
+  /* печать */
+  var sx=W/2, sy=330, r=150;
+  if(!artImg){
+  x.strokeStyle="#cfa752"; x.lineWidth=3; x.beginPath(); x.arc(sx,sy,r+28,0,7); x.stroke();
+  for(var i=0;i<72;i++){ var a=i*5*Math.PI/180, r1=(i%6===0)?r+6:r+14; x.lineWidth=i%6===0?3:1.5;
+    x.beginPath(); x.moveTo(sx+r1*Math.cos(a),sy+r1*Math.sin(a)); x.lineTo(sx+(r+22)*Math.cos(a),sy+(r+22)*Math.sin(a)); x.stroke(); }
+  if(emp){ var gg=x.createRadialGradient(sx-40,sy-50,10,sx,sy,r); gg.addColorStop(0,"#f0d58e"); gg.addColorStop(.6,"#cfa752"); gg.addColorStop(1,"#8f6e2c"); x.fillStyle=gg; }
+  else x.fillStyle=p.c;
+  x.beginPath(); x.arc(sx,sy,r,0,7); x.fill(); x.lineWidth=5; x.strokeStyle="#cfa752"; x.stroke();
+  var lab=emp?"I–XX":p.l, light=emp||lum(p.c)>0.28;
+  x.fillStyle=light?"#14110d":"#f3ead6"; x.font='700 '+(lab.length>3?110:140)+'px "Cormorant SC", Georgia, serif'; x.textBaseline="middle";
+  x.fillText(lab, sx, sy+6); x.textBaseline="alphabetic";
+  }
+  /* имя */
+  x.fillStyle="#a2967f"; x.font='500 30px "JetBrains Mono", monospace';
+  x.fillText(emp?"BEYOND THE LEGIONS":("LEGION "+p.l+" · "+p.leg.toUpperCase()), W/2, 600);
+  x.fillStyle="#ebe1cc"; var fs=96; x.font='700 '+fs+'px "Cormorant SC", Georgia, serif';
+  while(x.measureText(p.n).width>W-180 && fs>50){ fs-=4; x.font='700 '+fs+'px "Cormorant SC", Georgia, serif'; }
+  x.fillText(p.n, W/2, 700);
+  x.fillStyle="#cfa752"; x.font='italic 40px "Alegreya Sans", sans-serif'; x.fillText(p.ep, W/2, 760);
+  if(!emp){ x.font='500 44px "JetBrains Mono", monospace'; x.fillStyle="#cfa752"; x.fillText("MATCH "+top.pct+"%", W/2, 840); }
+  /* девиз */
+  x.fillStyle="#ebe1cc"; x.font='700 48px "Cormorant SC", Georgia, serif';
+  wrap(x, "“"+p.m+"”", W/2, 940, W-220, 56);
+  /* вторая кровь и антипод */
+  var sec=emp?res.ranking[0]:res.ranking[1], anti=res.ranking[res.ranking.length-1];
+  x.strokeStyle="#3d3328"; x.lineWidth=2; x.beginPath(); x.moveTo(120,1060); x.lineTo(W-120,1060); x.moveTo(W/2,1080); x.lineTo(W/2,1180); x.stroke();
+  x.fillStyle="#a2967f"; x.font='500 26px "JetBrains Mono", monospace';
+  x.fillText("SECOND BLOODLINE", W/4+30, 1110); x.fillText("ANTITHESIS", 3*W/4-30, 1110);
+  x.fillStyle="#ebe1cc"; x.font='700 40px "Cormorant SC", Georgia, serif';
+  fitText(x, sec.p.n, W/4+30, 1160, W/2-120); fitText(x, anti.p.n, 3*W/4-30, 1160, W/2-120);
+  x.fillStyle="#73a898"; x.font='500 28px "JetBrains Mono", monospace';
+  x.fillText("Whose blood runs in you?", W/2, H-90);
+  return c.toDataURL("image/png");
+}
+function wrap(x, text, cx, y, maxW, lh){
+  var words=text.split(" "), line="", lines=[];
+  words.forEach(function(w){ var t=line?line+" "+w:w; if(x.measureText(t).width>maxW&&line){lines.push(line);line=w;} else line=t; });
+  lines.push(line); lines.slice(0,2).forEach(function(l,i){ x.fillText(l, cx, y+i*lh); });
+}
+function fitText(x, t, cx, y, maxW){ var f=40; while(x.measureText(t).width>maxW&&f>24){ f-=2; x.font='700 '+f+'px "Cormorant SC", Georgia, serif'; } x.fillText(t,cx,y); x.font='700 40px "Cormorant SC", Georgia, serif'; }
+$("cardBtn").addEventListener("click",function(){ track("card");
+  var res0=state.res, p0=res0.emperor?null:res0.ranking[0].p;
+  var go=function(){
+    if(p0&&ART[p0.id]){ var im=new Image(); im.onload=function(){done(makeCard(im));}; im.onerror=function(){done(makeCard(null));}; im.src=ART[p0.id]; }
+    else done(makeCard(null));
+  };
+  var done=function(url){
+    $("cardImg").src=url; $("cardOut").hidden=false;
+    var hosted=/^https?:/.test(location.href) && !/claude/.test(location.host);
+    var note=$("cardNote"); note.textContent="";
+    if(hosted){ var a=document.createElement("a"); a.href=url; a.download="blood-of-the-primarchs.png"; a.className="btn small"; a.textContent="Download image"; note.appendChild(a); }
+    else note.textContent="Tap and hold the image (or right-click) to save it.";
+  };
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(go); else go();
+});
+
+function shareText(){
+  var res=state.res, top=res.ranking[0], p=res.emperor?Q.EMPEROR:top.p;
+  var s = res.emperor
+    ? "My blood test showed an anomaly: the blood of the Emperor Himself runs in me. Closest of His sons: "+top.p.n+"."
+    : "The blood of "+p.n+" runs in me (Legion "+p.l+", "+p.leg+"), "+top.pct+"% match. Second bloodline: "+res.ranking[1].p.n+". Antithesis: "+res.ranking[res.ranking.length-1].p.n+".";
+  s += " Whose blood runs in you? “Blood of the Primarchs” is a quiz about everyday life, not war.";
+  if(/^https?:/.test(location.href)) s += " "+location.href.split("#")[0];
+  return s;
+}
+$("copy").addEventListener("click",function(){ track("copy");
+  var t=shareText(), done=function(){ $("copied").textContent="Copied. Send it to your friends."; };
+  var fallback=function(){ var box=$("sharebox"); box.hidden=false; box.value=t; box.focus(); box.select(); $("copied").textContent="Select the text and copy it manually."; };
+  try{ navigator.clipboard.writeText(t).then(done, fallback); }catch(e){ fallback(); }
+});
+$("again").addEventListener("click",start);
+$("start").addEventListener("click",start);
+
+/* Прошлый результат */
+var last=store(true);
+if(last && last.n){ var el=$("last"); el.hidden=false; el.innerHTML="Last time, your blood matched: <b></b>. The questions will be different."; el.querySelector("b").textContent=last.n; $("start").textContent="Run the analysis again"; }
+
+if(reduce) loop(1000); else requestAnimationFrame(loop);
+window.addEventListener("resize",redraw);
+})();
+</script>
+
+</body>
+</html>

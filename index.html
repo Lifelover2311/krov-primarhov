@@ -235,6 +235,7 @@ html{overflow-x:clip}
 .print svg{width:100%;max-width:520px;height:auto;overflow:visible}
 .cardout{margin:14px 0 0}
 .cardout img{display:block;width:100%;max-width:360px;border:1px solid var(--rule)}
+.note.lang{margin-top:6px}.note.lang a{color:var(--gilt)}
 .thanks{margin:34px 0 0;padding:20px;border:1px solid var(--gilt-deep);background:var(--vault)}
 .thanks p{margin:0 0 14px;max-width:34em}
 .thanks .btn[aria-disabled="true"]{opacity:.45;cursor:default;pointer-events:none}
@@ -266,6 +267,7 @@ html{overflow-x:clip}
   <p class="last" id="last" hidden></p>
   <button class="btn" id="start" type="button">Начать анализ</button>
   <p class="note">Здесь нет вопросов про болтеры и цепные мечи. Отвечай, как есть на самом деле, а не как хотелось бы. Около четырёх минут.</p>
+  <p class="note lang"><a href="en/">English version</a></p>
 </section>
 
 <!-- ВОПРОС -->
@@ -1156,7 +1158,8 @@ function openBro(id){
 }
 /* ---------- Свои арты: положи картинку рядом с index.html и впиши имя файла, например lion:"art/lion.webp" ---------- */
 /* ---------- Статистика (Яндекс Метрика). Шлёт только на боевом сайте, без личных данных ---------- */
-function track(n,pr){ try{ if(window.ym && /github\.io$/.test(location.hostname)){ ym(113669793,"reachGoal",n,pr||{}); var st={}; st[n]=1; var pa={steps:st}; if(pr&&pr.primarch) pa.primarch=pr.primarch; ym(113669793,"params",pa); } }catch(e){} }
+var LANG = "ru";
+function track(n,pr){ try{ if(window.ym && /github\.io$/.test(location.hostname)){ ym(113669793,"reachGoal",n,pr||{}); var st={}; st[n]=1; var pa={steps:st}; if(pr&&pr.primarch) pa.primarch=pr.primarch; if(n==="start") pa.lang=LANG; ym(113669793,"params",pa); } }catch(e){} }
 /* Аналитика вопросов: какой вопрос показан и какие варианты выбирают (без личных данных) */
 var ALLQ=Q.OPENERS.concat(Q.MIDDLE,Q.FINALS);
 function pad2(n){ return (n<10?"0":"")+n; }
