@@ -114,6 +114,7 @@ button{font:inherit;color:inherit}
 .tag.unknown{border-color:var(--dust)}
 .tag.emperor,.tag.match{border-color:var(--gilt);color:var(--gilt)}
 @media (max-width:560px){.res-top{grid-template-columns:1fr;gap:14px}.seal{width:150px}}
+.withart .res-top{grid-template-columns:1fr;padding-top:clamp(60px,14vw,170px)}
 .secret{margin:0 0 22px;padding:12px 16px;border:1px solid var(--gilt);background:rgba(207,167,82,.08);font-size:15px}
 .desc{font-size:var(--s1);margin:0 0 28px;max-width:34em}
 .h3{font-family:var(--f-display);font-weight:700;font-size:var(--s2);margin:0 0 10px;color:var(--gilt);letter-spacing:.02em}
@@ -207,6 +208,20 @@ button{font:inherit;color:inherit}
 footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--rule);font-size:13px;color:var(--dust)}
 footer p{margin:0 0 6px}
 
+/* ---------- Арты ---------- */
+html{overflow-x:clip}
+#result{position:relative}
+#result > *:not(.rart){position:relative;z-index:1}
+.rart{position:absolute;z-index:0;top:-28px;left:calc(50% - 50vw);width:100vw;height:clamp(380px,62vw,640px);background-size:cover;background-position:center;
+  -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0%,rgba(0,0,0,.42) 45%,transparent 100%);mask-image:linear-gradient(to bottom,rgba(0,0,0,.55) 0%,rgba(0,0,0,.42) 45%,transparent 100%)}
+.bro .dot.art{width:26px;height:26px;border-radius:3px;background-size:cover;background-position:center;border:1px solid var(--rule)}
+.bro.hasart summary{grid-template-columns:30px 30px minmax(0,1fr) 72px 3.2em 14px}
+@media (max-width:560px){.bro.hasart summary{grid-template-columns:22px 28px minmax(0,1fr) 3em 12px}}
+.mosaic{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px;margin:0 0 26px}
+.mosaic span{display:block;aspect-ratio:1;background-size:cover;background-position:center;filter:saturate(.9) brightness(.85)}
+.mosaic span.empty{opacity:.18}
+@media (max-width:520px){.mosaic{grid-template-columns:repeat(6,minmax(0,1fr))}}
+
 /* ---------- Отпечаток, карточка, благодарность ---------- */
 .seal img.art{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid var(--gilt)}
 .print{margin:0 0 34px;display:flex;justify-content:center}
@@ -222,7 +237,6 @@ footer p{margin:0 0 6px}
 .tie p{margin:0 0 22px;color:var(--dust)}
 
 @media (prefers-reduced-motion:reduce){.fade,.scan li{animation:none;opacity:1}.btn{transition:none}}
-
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 </style>
 </head>
@@ -282,6 +296,7 @@ footer p{margin:0 0 6px}
 
 <!-- РЕЗУЛЬТАТ -->
 <section id="result" hidden>
+  <div class="rart" id="rArt" hidden></div>
   <div class="eyebrow">Результат анализа</div>
   <div class="res-top">
     <div class="seal" id="seal"></div>
@@ -1044,7 +1059,8 @@ function renderResult(){
   var res=state.res, rk=res.ranking, top=rk[0], emp=res.emperor;
   var p = emp? Q.EMPEROR : top.p;
   $("seal").innerHTML = sealSVG(p, emp);
-  if(ART[p.id]){ var im=document.createElement("img"); im.src=ART[p.id]; im.alt=p.n; im.className="art"; $("seal").innerHTML=""; $("seal").appendChild(im); }
+  var ra=$("rArt"); ra.hidden=!ART[p.id]; if(ART[p.id]) ra.style.backgroundImage="url('"+ART[p.id]+"')";
+  $("seal").hidden=!!ART[p.id]; $("result").classList.toggle("withart",!!ART[p.id]);
   $("rLeg").textContent = emp? "Вне легионов" : "Легион "+p.l+" · "+p.leg;
   $("rName").textContent = p.n;
   $("rEp").textContent = p.ep;
@@ -1092,12 +1108,12 @@ function renderBros(rk, meId){
   GROUPS.forEach(function(g){
     box.appendChild(mk("div","bgrp",g[2]));
     rk.slice(g[0],g[1]).forEach(function(x,k){
-      var i=g[0]+k, p=x.p, d=mk("details","bro"+(p.id===meId?" me":"")+(i===rk.length-1?" anti":""));
+      var i=g[0]+k, p=x.p, d=mk("details","bro"+(p.id===meId?" me":"")+(i===rk.length-1?" anti":"")+(Object.keys(ART).length?" hasart":""));
       d.id="bro-"+p.id;
       if(i===1 || (!meId && i===0)) d.open=true;
       var s=mk("summary");
       s.appendChild(mk("span","no",String(i+1)));
-      var dot=mk("span","dot"); dot.style.background=p.c; s.appendChild(dot);
+      var dot=mk("span","dot"+(ART[p.id]?" art":"")); if(ART[p.id]) dot.style.backgroundImage="url('"+ART[p.id]+"')"; else dot.style.background=p.c; s.appendChild(dot);
       var who=mk("span","who"); who.appendChild(mk("b",null,p.n)); who.appendChild(mk("span",null,"Легион "+p.l+" · "+p.leg)); s.appendChild(who);
       var tr=mk("span","tr"), bar=mk("i"); bar.style.width=x.pct+"%"; tr.appendChild(bar); s.appendChild(tr);
       s.appendChild(mk("span","v",x.pct+"%")); s.appendChild(mk("span","chev"));
@@ -1130,7 +1146,7 @@ function openBro(id){
   d.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
 }
 /* ---------- Свои арты: положи картинку рядом с index.html и впиши имя файла, например lion:"art/lion.webp" ---------- */
-var ART = {};
+var ART = {lion:"art/lion.jpg",fulgrim:"art/fulgrim.jpg",perturabo:"art/perturabo.jpg",khan:"art/khan.jpg",russ:"art/russ.jpg",dorn:"art/dorn.jpg",curze:"art/curze.jpg",sanguinius:"art/sanguinius.jpg",ferrus:"art/ferrus.jpg",angron:"art/angron.jpg",guilliman:"art/guilliman.jpg",mortarion:"art/mortarion.jpg",magnus:"art/magnus.jpg",horus:"art/horus.jpg",lorgar:"art/lorgar.jpg",vulkan:"art/vulkan.jpg",corax:"art/corax.jpg",alpharius:"art/alpharius.jpg"};
 
 /* ---------- Благодарность: впиши свои ссылки ---------- */
 var THANKS = {
@@ -1172,17 +1188,24 @@ function printSVG(user, pv, size, labels){
 function renderPrint(res, p){ $("print").innerHTML=printSVG(res.user, p?Q.vec(p.v):null, 440, true); }
 
 /* ---------- Карточка для сторис ---------- */
-function makeCard(){
+function makeCard(artImg){
   var res=state.res, top=res.ranking[0], emp=res.emperor, p=emp?Q.EMPEROR:top.p;
   var W=1080,H=1350,c=document.createElement("canvas"); c.width=W; c.height=H; var x=c.getContext("2d");
   var bg=x.createRadialGradient(W/2,-200,50,W/2,200,1100); bg.addColorStop(0,"#2c2318"); bg.addColorStop(1,"#14110d");
   x.fillStyle=bg; x.fillRect(0,0,W,H);
+  if(artImg){
+    var sc=Math.max(W/artImg.width,H/artImg.height), iw=artImg.width*sc, ih=artImg.height*sc;
+    x.drawImage(artImg,(W-iw)/2,(H-ih)/2,iw,ih);
+    var ov=x.createLinearGradient(0,0,0,H); ov.addColorStop(0,"rgba(20,17,13,.55)"); ov.addColorStop(.35,"rgba(20,17,13,.45)"); ov.addColorStop(.55,"rgba(20,17,13,.82)"); ov.addColorStop(1,"rgba(20,17,13,.96)");
+    x.fillStyle=ov; x.fillRect(0,0,W,H);
+  }
   x.strokeStyle="#8f6e2c"; x.lineWidth=3; x.strokeRect(40,40,W-80,H-80);
   x.strokeStyle="#3d3328"; x.lineWidth=2; x.strokeRect(56,56,W-112,H-112);
   x.fillStyle="#a2967f"; x.font='500 30px "JetBrains Mono", monospace'; x.textAlign="center";
   x.fillText("КРОВЬ ПРИМАРХОВ · ГЕНЕТИЧЕСКИЙ АНАЛИЗ", W/2, 130);
   /* печать */
   var sx=W/2, sy=330, r=150;
+  if(!artImg){
   x.strokeStyle="#cfa752"; x.lineWidth=3; x.beginPath(); x.arc(sx,sy,r+28,0,7); x.stroke();
   for(var i=0;i<72;i++){ var a=i*5*Math.PI/180, r1=(i%6===0)?r+6:r+14; x.lineWidth=i%6===0?3:1.5;
     x.beginPath(); x.moveTo(sx+r1*Math.cos(a),sy+r1*Math.sin(a)); x.lineTo(sx+(r+22)*Math.cos(a),sy+(r+22)*Math.sin(a)); x.stroke(); }
@@ -1192,6 +1215,7 @@ function makeCard(){
   var lab=emp?"I–XX":p.l, light=emp||lum(p.c)>0.28;
   x.fillStyle=light?"#14110d":"#f3ead6"; x.font='700 '+(lab.length>3?110:140)+'px "Cormorant SC", Georgia, serif'; x.textBaseline="middle";
   x.fillText(lab, sx, sy+6); x.textBaseline="alphabetic";
+  }
   /* имя */
   x.fillStyle="#a2967f"; x.font='500 30px "JetBrains Mono", monospace';
   x.fillText(emp?"ВНЕ ЛЕГИОНОВ":("ЛЕГИОН "+p.l+" · "+p.leg.toUpperCase()), W/2, 600);
@@ -1221,8 +1245,13 @@ function wrap(x, text, cx, y, maxW, lh){
 }
 function fitText(x, t, cx, y, maxW){ var f=40; while(x.measureText(t).width>maxW&&f>24){ f-=2; x.font='700 '+f+'px "Cormorant SC", Georgia, serif'; } x.fillText(t,cx,y); x.font='700 40px "Cormorant SC", Georgia, serif'; }
 $("cardBtn").addEventListener("click",function(){
+  var res0=state.res, p0=res0.emperor?null:res0.ranking[0].p;
   var go=function(){
-    var url=makeCard(); $("cardImg").src=url; $("cardOut").hidden=false;
+    if(p0&&ART[p0.id]){ var im=new Image(); im.onload=function(){done(makeCard(im));}; im.onerror=function(){done(makeCard(null));}; im.src=ART[p0.id]; }
+    else done(makeCard(null));
+  };
+  var done=function(url){
+    $("cardImg").src=url; $("cardOut").hidden=false;
     var hosted=/^https?:/.test(location.href) && !/claude/.test(location.host);
     var note=$("cardNote"); note.textContent="";
     if(hosted){ var a=document.createElement("a"); a.href=url; a.download="krov-primarhov.png"; a.className="btn small"; a.textContent="Скачать картинку"; note.appendChild(a); }
