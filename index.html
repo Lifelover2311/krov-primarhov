@@ -1173,9 +1173,9 @@ var ART = {emperor:"art/emperor.jpg",lion:"art/lion.jpg",fulgrim:"art/fulgrim.jp
 
 /* ---------- Благодарность: впиши свои ссылки ---------- */
 var THANKS = {
-  text: "Тест бесплатный и без рекламы. Если он тебе понравился, можно поддержать автора — это мотивирует делать новые тесты.",
+  text: "Я сделал этот тест один: вопросы, расчёт, арты — всё по вечерам после работы. Если он тебе понравился, можешь поддержать меня — так выйдет следующий.",
   links: [
-    {label:"Поддержать на Boosty", url:"https://boosty.to/lifelover2311/donate"}
+    {label:"Поддержать автора", url:"https://boosty.to/lifelover2311/donate"}
   ]
 };
 function renderThanks(){
@@ -1183,7 +1183,7 @@ function renderThanks(){
   $("thanksText").textContent=THANKS.text;
   THANKS.links.forEach(function(l){
     var a=document.createElement("a"); a.className="btn small"; a.textContent=l.label;
-    if(l.url){ a.href=l.url; a.target="_blank"; a.rel="noopener"; }
+    if(l.url){ a.href=l.url; a.target="_blank"; a.rel="noopener"; a.addEventListener("click",function(){ track("donate"); }); }
     else { a.setAttribute("aria-disabled","true"); a.textContent=l.label+" · скоро"; }
     box.appendChild(a);
   });
