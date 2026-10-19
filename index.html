@@ -6,6 +6,9 @@
 <meta property="og:title" content="Кровь примархов">
 <meta property="og:description" content="Тест о быте, а не о болтерах. 15 вопросов из 30 — чья кровь течёт в тебе? 18 примархов и один секрет.">
 <meta property="og:type" content="website">
+<!-- Yandex.Metrika counter -->
+<script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js?id=113669793','ym');ym(113669793,'init',{ssr:true,clickmap:true,referrer:document.referrer,url:location.href,accurateTrackBounce:true,trackLinks:true});</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/113669793" style="position:absolute;left:-9999px" alt=""></div></noscript>
 <title>Кровь примархов</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Тест о быте, а не о болтерах: 15 вопросов из 30 и ответ, чья кровь течёт в тебе. 18 примархов и один секретный результат.">
@@ -939,7 +942,7 @@ if(reduce){ window.addEventListener("resize",function(){loop(1000);}); }
 function redraw(){ if(reduce) loop(1000); }
 
 /* ---------- Вопросы ---------- */
-function start(){
+function start(){ track("start");
   state.qs = Q.pickQuestions(); state.idx=0; state.picks=[]; state.res=null;
   show("quiz"); renderQ(); redraw();
 }
@@ -1058,6 +1061,7 @@ function list(el, arr){ el.innerHTML=""; arr.forEach(function(t){var li=document
 function renderResult(){
   var res=state.res, rk=res.ranking, top=rk[0], emp=res.emperor;
   var p = emp? Q.EMPEROR : top.p;
+  track("result",{primarch:p.id});
   $("seal").innerHTML = sealSVG(p, emp);
   var ra=$("rArt"); ra.hidden=!ART[p.id]; if(ART[p.id]) ra.style.backgroundImage="url('"+ART[p.id]+"')";
   $("seal").hidden=!!ART[p.id]; $("result").classList.toggle("withart",!!ART[p.id]);
@@ -1146,6 +1150,8 @@ function openBro(id){
   d.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
 }
 /* ---------- Свои арты: положи картинку рядом с index.html и впиши имя файла, например lion:"art/lion.webp" ---------- */
+/* ---------- Статистика (Яндекс Метрика). Шлёт только на боевом сайте, без личных данных ---------- */
+function track(n,pr){ try{ if(window.ym && /github\.io$/.test(location.hostname)){ ym(113669793,"reachGoal",n,pr||{}); if(pr&&pr.primarch) ym(113669793,"params",{primarch:pr.primarch}); } }catch(e){} }
 var ART = {lion:"art/lion.jpg",fulgrim:"art/fulgrim.jpg",perturabo:"art/perturabo.jpg",khan:"art/khan.jpg",russ:"art/russ.jpg",dorn:"art/dorn.jpg",curze:"art/curze.jpg",sanguinius:"art/sanguinius.jpg",ferrus:"art/ferrus.jpg",angron:"art/angron.jpg",guilliman:"art/guilliman.jpg",mortarion:"art/mortarion.jpg",magnus:"art/magnus.jpg",horus:"art/horus.jpg",lorgar:"art/lorgar.jpg",vulkan:"art/vulkan.jpg",corax:"art/corax.jpg",alpharius:"art/alpharius.jpg"};
 
 /* ---------- Благодарность: впиши свои ссылки ---------- */
@@ -1244,7 +1250,7 @@ function wrap(x, text, cx, y, maxW, lh){
   lines.push(line); lines.slice(0,2).forEach(function(l,i){ x.fillText(l, cx, y+i*lh); });
 }
 function fitText(x, t, cx, y, maxW){ var f=40; while(x.measureText(t).width>maxW&&f>24){ f-=2; x.font='700 '+f+'px "Cormorant SC", Georgia, serif'; } x.fillText(t,cx,y); x.font='700 40px "Cormorant SC", Georgia, serif'; }
-$("cardBtn").addEventListener("click",function(){
+$("cardBtn").addEventListener("click",function(){ track("card");
   var res0=state.res, p0=res0.emperor?null:res0.ranking[0].p;
   var go=function(){
     if(p0&&ART[p0.id]){ var im=new Image(); im.onload=function(){done(makeCard(im));}; im.onerror=function(){done(makeCard(null));}; im.src=ART[p0.id]; }
@@ -1269,7 +1275,7 @@ function shareText(){
   if(/^https?:/.test(location.href)) s += " "+location.href.split("#")[0];
   return s;
 }
-$("copy").addEventListener("click",function(){
+$("copy").addEventListener("click",function(){ track("copy");
   var t=shareText(), done=function(){ $("copied").textContent="Скопировано. Отправь друзьям."; };
   var fallback=function(){ var box=$("sharebox"); box.hidden=false; box.value=t; box.focus(); box.select(); $("copied").textContent="Выдели текст и скопируй вручную."; };
   try{ navigator.clipboard.writeText(t).then(done, fallback); }catch(e){ fallback(); }
