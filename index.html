@@ -951,7 +951,7 @@ function start(){ track("start");
   show("quiz"); renderQ(); redraw();
 }
 function renderQ(){
-  var q=state.qs[state.idx], n=state.qs.length;
+  var q=state.qs[state.idx], n=state.qs.length; trackProgress();
   $("qcount").textContent = "Образец " + String(state.idx+1).padStart(2,"0") + " / " + n;
   strip.p = state.idx;
   $("qtext").textContent = q.t;
@@ -985,6 +985,7 @@ function syncMulti(){
   $("next").textContent = state.idx<state.qs.length-1 ? "Дальше" : "Узнать результат";
 }
 function advance(){
+  trackAnswer();
   if(state.idx<state.qs.length-1){ state.idx++; renderQ(); } else finish();
 }
 function choose(i){
@@ -1156,6 +1157,18 @@ function openBro(id){
 /* ---------- Свои арты: положи картинку рядом с index.html и впиши имя файла, например lion:"art/lion.webp" ---------- */
 /* ---------- Статистика (Яндекс Метрика). Шлёт только на боевом сайте, без личных данных ---------- */
 function track(n,pr){ try{ if(window.ym && /github\.io$/.test(location.hostname)){ ym(113669793,"reachGoal",n,pr||{}); var st={}; st[n]=1; var pa={steps:st}; if(pr&&pr.primarch) pa.primarch=pr.primarch; ym(113669793,"params",pa); } }catch(e){} }
+/* Аналитика вопросов: какой вопрос показан и какие варианты выбирают (без личных данных) */
+var ALLQ=Q.OPENERS.concat(Q.MIDDLE,Q.FINALS);
+function pad2(n){ return (n<10?"0":"")+n; }
+function qid(q){ for(var i=0;i<ALLQ.length;i++) if(ALLQ[i].t===q.t) return i+1; return 0; }
+function tp(o){ try{ if(window.ym && /github\.io$/.test(location.hostname)) ym(113669793,"params",o); }catch(e){} }
+function trackProgress(){ var o={}, k="n"+pad2(state.idx+1); o[k]=1; tp({progress:o}); }
+function trackAnswer(){
+  var q=state.qs[state.idx], pk=state.picks[state.idx]||[], id=qid(q); if(!id) return;
+  var src=ALLQ[id-1], inner={};
+  pk.forEach(function(a){ for(var j=0;j<src.a.length;j++) if(src.a[j].t===a.t){ inner["a"+(j+1)]=1; break; } });
+  var o={}; o["q"+pad2(id)]=inner; tp({answers:o});
+}
 var ART = {emperor:"art/emperor.jpg",lion:"art/lion.jpg",fulgrim:"art/fulgrim.jpg",perturabo:"art/perturabo.jpg",khan:"art/khan.jpg",russ:"art/russ.jpg",dorn:"art/dorn.jpg",curze:"art/curze.jpg",sanguinius:"art/sanguinius.jpg",ferrus:"art/ferrus.jpg",angron:"art/angron.jpg",guilliman:"art/guilliman.jpg",mortarion:"art/mortarion.jpg",magnus:"art/magnus.jpg",horus:"art/horus.jpg",lorgar:"art/lorgar.jpg",vulkan:"art/vulkan.jpg",corax:"art/corax.jpg",alpharius:"art/alpharius.jpg"};
 
 /* ---------- Благодарность: впиши свои ссылки ---------- */
