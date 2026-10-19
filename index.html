@@ -1235,7 +1235,7 @@ function makeCard(artImg){
   x.fillStyle="#ebe1cc"; x.font='700 40px "Cormorant SC", Georgia, serif';
   fitText(x, sec.p.n, W/4+30, 1160, W/2-120); fitText(x, anti.p.n, 3*W/4-30, 1160, W/2-120);
   x.fillStyle="#73a898"; x.font='500 28px "JetBrains Mono", monospace';
-  x.fillText(/^https?:/.test(location.href)? location.host+location.pathname.replace(/index\.html$/,"") : "А чья кровь течёт в тебе?", W/2, H-90);
+  x.fillText("А чья кровь течёт в тебе?", W/2, H-90);
   return c.toDataURL("image/png");
 }
 function wrap(x, text, cx, y, maxW, lh){
