@@ -119,6 +119,11 @@ button{font:inherit;color:inherit}
 .tag.loyal{border-color:var(--verdigris);color:var(--verdigris)}
 .tag.traitor{border-color:var(--blood);color:var(--blood)}
 .tag.unknown{border-color:var(--dust)}
+.tag.egg{cursor:pointer;user-select:none}
+.tag.egg:hover,.tag.egg:focus-visible{background:rgba(176,48,42,.12)}
+.tag.egg.on{border-color:var(--gilt);color:var(--gilt)}
+.tag.egg s{color:var(--blood);opacity:.8}
+.tag.egg b{font-weight:600}
 .tag.emperor,.tag.match{border-color:var(--gilt);color:var(--gilt)}
 @media (max-width:560px){.res-top{grid-template-columns:1fr;gap:14px}.seal{width:150px}}
 .withart .res-top{grid-template-columns:1fr;padding-top:clamp(60px,14vw,170px)}
@@ -1090,6 +1095,7 @@ function renderResult(){
   $("rEp").textContent = p.ep;
   var tags=$("rTags"); tags.innerHTML="";
   var t1=document.createElement("span"); t1.className="tag "+p.fate; t1.textContent=FATE[p.fate]; tags.appendChild(t1);
+  if(p.id==="magnus"){ (function(el){ var base=el.textContent, on=false; el.classList.add("egg"); el.setAttribute("role","button"); el.tabIndex=0; el.title="Нажми, если не согласен"; var flip=function(){ on=!on; el.innerHTML=""; if(on){ var st=document.createElement("s"); st.textContent=base; var b=document.createElement("b"); b.textContent="Не предавал. Просто хотел предупредить."; el.appendChild(st); el.appendChild(document.createTextNode(" ")); el.appendChild(b); el.classList.add("on"); if(!state.view) track("magnus_egg"); } else { el.textContent=base; el.classList.remove("on"); } }; el.addEventListener("click",flip); el.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); } }); })(t1); }
   if(!emp){ var t2=document.createElement("span"); t2.className="tag match mono"; t2.textContent="Совпадение "+top.pct+"%"; tags.appendChild(t2); }
   $("rSecret").hidden=!emp;
   if(emp) $("rSecret").textContent="Секретный результат. В тебе понемногу от всех братьев, а ближе всего — "+top.p.n+" ("+top.pct+"%).";
