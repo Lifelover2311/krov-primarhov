@@ -119,6 +119,8 @@ button{font:inherit;color:inherit}
 .tag.loyal{border-color:var(--verdigris);color:var(--verdigris)}
 .tag.traitor{border-color:var(--blood);color:var(--blood)}
 .tag.unknown{border-color:var(--dust)}
+.eggtile{cursor:pointer;user-select:none}
+.eggtile.on span{color:var(--blood)}
 .tag.egg{cursor:pointer;user-select:none}
 .tag.egg:hover,.tag.egg:focus-visible{background:rgba(176,48,42,.12)}
 .tag.egg.on{border-color:var(--gilt);color:var(--gilt)}
@@ -273,7 +275,7 @@ html{overflow-x:clip}
   <div class="facts">
     <div><b>15</b><span>вопросов за раз</span></div>
     <div><b>30</b><span>в пуле: каждый раз другие</span></div>
-    <div><b>18</b><span>примархов, II и XI изъяты</span></div>
+    <div><b>18</b><span id="eggTile">примархов, II и XI изъяты</span></div>
     <div><b>1</b><span>секретный результат</span></div>
   </div>
   <p class="last" id="last" hidden></p>
@@ -372,6 +374,7 @@ html{overflow-x:clip}
     <p class="note" id="cardNote"></p>
   </div>
 
+  <p class="note" id="eggNote"></p>
   <div id="histRes" hidden></div>
 
   <div class="thanks" id="thanks" hidden>
@@ -1057,6 +1060,8 @@ function scan(){
   show("scan"); redraw();
   var lines=["Выделение геносемени из образца…","Сравнение с восемнадцатью эталонами…","Эталоны II и XI недоступны. Записи изъяты.","Совпадение найдено."];
   if(state.res.emperor) lines.splice(3,1,"Обнаружена аномалия: совпадение со всеми эталонами сразу.","Доступ к записи по особому распоряжению…");
+  if(Math.random()<1/15){ lines.splice(1,0,EGG.servitor); found("servitor"); }
+  if(!state.res.emperor && state.res.ranking[0].p.id==="curze"){ lines.splice(lines.length-1,0,EGG.curze); found("curze"); }
   var ol=$("scanLog"); ol.innerHTML="";
   lines.forEach(function(t,i){ var li=document.createElement("li"); li.textContent="> "+t; if(/изъяты|аномалия/.test(t)) li.className="warn"; li.style.animationDelay=(reduce?0:i*0.38)+"s"; ol.appendChild(li); });
   setTimeout(renderResult, reduce?500:lines.length*380+700);
@@ -1095,15 +1100,17 @@ function renderResult(){
   $("rEp").textContent = p.ep;
   var tags=$("rTags"); tags.innerHTML="";
   var t1=document.createElement("span"); t1.className="tag "+p.fate; t1.textContent=FATE[p.fate]; tags.appendChild(t1);
-  if(p.id==="magnus"){ (function(el){ var base=el.textContent, on=false; el.classList.add("egg"); el.setAttribute("role","button"); el.tabIndex=0; el.title="Нажми, если не согласен"; var flip=function(){ on=!on; el.innerHTML=""; if(on){ var st=document.createElement("s"); st.textContent=base; var b=document.createElement("b"); b.textContent="Не предавал. Просто хотел предупредить."; el.appendChild(st); el.appendChild(document.createTextNode(" ")); el.appendChild(b); el.classList.add("on"); if(!state.view) track("magnus_egg"); } else { el.textContent=base; el.classList.remove("on"); } }; el.addEventListener("click",flip); el.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); } }); })(t1); }
   if(!emp){ var t2=document.createElement("span"); t2.className="tag match mono"; t2.textContent="Совпадение "+top.pct+"%"; tags.appendChild(t2); }
+  applyTagEggs(p, t1, emp?null:t2);
   $("rSecret").hidden=!emp;
   if(emp) $("rSecret").textContent="Секретный результат. В тебе понемногу от всех братьев, а ближе всего — "+top.p.n+" ("+top.pct+"%).";
   $("rDesc").textContent=p.d; list($("rS"),p.s); list($("rSh"),p.sh);
   $("rScene").textContent=p.sc; $("rMotto").textContent="«"+p.m+"»"; $("rBond").textContent=p.b;
   var second = emp? rk[0] : rk[1], anti=rk[rk.length-1];
   $("rSecond").textContent=second.p.n; $("rSecondP").textContent=second.p.leg+" · "+second.pct+"%";
-  $("rAnti").textContent=anti.p.n; $("rAntiP").textContent=anti.p.leg+" · "+anti.pct+"%";
+  $("rAnti").textContent=anti.p.n; $("rAntiP").textContent=anti.p.leg+" · "+anti.pct+"%"+(anti.p.id==="perturabo"?". "+EGG.perturabo:"");
+  if(anti.p.id==="perturabo") found("perturabo");
+  eggNote();
   renderMap(rk, emp?null:top.p.id);
   renderBros(rk, emp?null:top.p.id);
   renderPrint(res, emp?null:top.p);
@@ -1338,6 +1345,39 @@ $("start").addEventListener("click",start);
 /* Прошлый результат */
 var last=store(true);
 if(last && last.n && !loadHist().length){ var el=$("last"); el.hidden=false; el.innerHTML="В прошлый раз в тебе нашли кровь: <b></b>. Вопросы будут другими."; el.querySelector("b").textContent=last.n; $("start").textContent="Пройти анализ снова"; }
+
+/* ---------- Пасхалки ---------- */
+var EGG = {"tile": "[ДАННЫЕ УДАЛЕНЫ] Инквизиция уже выехала. Вы этого не видели.", "servitor": "Сервитор уронил пробирку. Берём образец заново…", "curze": "Что-то многовато Кёрзов в РФ.", "magnus": "Не предавал. Просто хотел предупредить.", "horus": "Хорус был прав.", "lion": "Наверное. Он не помнит, он спал.", "alpharius": "…или нет. Гидра доминатус.", "perturabo": "Даже здесь его поставили последним. Типично.", "hint": "Нажми, если не согласен", "note": "В тесте спрятано {T} пасхалок. Найдено: {N}."};
+var EGG_ALL = ["tile","servitor","curze","magnus","horus","lion","alpharius","perturabo"];
+var EKEY = KEY+"-eggs";
+function eggsFound(){ try{ var a=JSON.parse(localStorage.getItem(EKEY)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function eggNote(){ var el=$("eggNote"); if(el) el.textContent=EGG.note.replace("{T}",EGG_ALL.length).replace("{N}",eggsFound().length); }
+function found(k){
+  var a=eggsFound(); if(a.indexOf(k)<0){ a.push(k); try{ localStorage.setItem(EKEY, JSON.stringify(a)); }catch(e){} if(!state.view) track("egg_"+k); }
+  eggNote();
+}
+function eggTag(el, k, strike){
+  var base=el.textContent, on=false;
+  el.classList.add("egg"); el.setAttribute("role","button"); el.tabIndex=0; el.title=EGG.hint;
+  var flip=function(){ on=!on; el.innerHTML="";
+    if(on){ if(strike){ var st=document.createElement("s"); st.textContent=base; el.appendChild(st); } else el.appendChild(document.createTextNode(base));
+      el.appendChild(document.createTextNode(" ")); var b=document.createElement("b"); b.textContent=EGG[k]; el.appendChild(b); el.classList.add("on"); found(k); }
+    else { el.textContent=base; el.classList.remove("on"); } };
+  el.addEventListener("click",flip);
+  el.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); } });
+}
+function applyTagEggs(p, t1, t2){
+  if(p.id==="magnus") eggTag(t1,"magnus",true);
+  else if(p.id==="horus") eggTag(t1,"horus",true);
+  else if(p.id==="lion") eggTag(t1,"lion",false);
+  else if(p.id==="alpharius" && t2) eggTag(t2,"alpharius",false);
+}
+(function(){ var sp=$("eggTile"); if(!sp) return; var base=sp.textContent, on=false, box=sp.parentNode;
+  box.classList.add("eggtile"); box.setAttribute("role","button"); box.tabIndex=0;
+  var flip=function(){ on=!on; sp.textContent=on?EGG.tile:base; box.classList.toggle("on",on); if(on) found("tile"); };
+  box.addEventListener("click",flip);
+  box.addEventListener("keydown",function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); } });
+})();
 
 /* ---------- Ссылка на результат, история, «Поделиться» ---------- */
 var TX = {"histTitle": "Твои прошлые результаты", "again": "Пройти анализ снова", "friend": "Это результат друга. А чья кровь в тебе?", "selfStart": "Пройти самому", "histFrom": "Твой результат от ", "newRun": "Пройти заново", "againBtn": "Пройти ещё раз", "linkCopied": "Ссылка на твой результат скопирована. Отправь друзьям.", "manual": "Выдели текст и скопируй вручную.", "file": "krov-primarhov.png", "title": "Кровь примархов", "shareBtn": "Поделиться результатом", "loc": "ru-RU", "shareH": "Поделиться"};
