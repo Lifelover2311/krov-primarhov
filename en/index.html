@@ -233,6 +233,13 @@ html{overflow-x:clip}
 .seal img.art{display:block;width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid var(--gilt)}
 .print{margin:0 0 34px;display:flex;justify-content:center}
 .print svg{width:100%;max-width:520px;height:auto;overflow:visible}
+.viewnote{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;margin:0 0 18px;padding:10px 14px;border-left:2px solid var(--gilt);background:var(--vault);font-size:15px;position:relative;z-index:1}
+.hist{display:flex;flex-direction:column;gap:6px}
+.histh{font-size:14px;color:var(--bone);margin:0 0 2px}
+.histi{text-align:left;background:transparent;border:1px solid var(--rule);color:var(--gilt);font:15px/1.3 var(--f-body);padding:7px 12px;cursor:pointer}
+.histi:hover,.histi:focus-visible{background:rgba(207,167,82,.1)}
+#histRes{margin:18px 0 0}
+#histIntro{margin:18px 0 0}
 .cardout{margin:14px 0 0}
 .cardout img{display:block;width:100%;max-width:360px;border:1px solid var(--rule)}
 .note.lang{margin-top:6px}.note.lang a{color:var(--gilt)}
@@ -266,6 +273,7 @@ html{overflow-x:clip}
   </div>
   <p class="last" id="last" hidden></p>
   <button class="btn" id="start" type="button">Begin analysis</button>
+  <div id="histIntro" hidden></div>
   <p class="note">No questions about bolters or chainswords here. Answer as you really are, not as you’d like to be. About four minutes.</p>
   <p class="note lang"><a href="../">Русская версия</a></p>
 </section>
@@ -305,6 +313,7 @@ html{overflow-x:clip}
 
 <!-- РЕЗУЛЬТАТ -->
 <section id="result" hidden>
+  <div class="viewnote" id="viewNote" hidden><span id="viewText"></span><button class="btn small" id="viewStart" type="button"></button></div>
   <div class="rart" id="rArt" hidden></div>
   <div class="eyebrow">Analysis result</div>
   <div class="res-top">
@@ -344,9 +353,10 @@ html{overflow-x:clip}
   <p class="mapnote">All eighteen primarchs, ranked by similarity. Open any of them to see what you share and where you differ.</p>
   <div class="bros" id="bros"></div>
 
-  <h3 class="h3">Share</h3>
+  <h3 class="h3" id="shareH">Share</h3>
   <div class="share">
-    <button class="btn small" id="copy" type="button">Copy result</button>
+    <button class="btn small" id="shareBtn" type="button">Share my result</button>
+    <button class="btn small ghost" id="copy" type="button">Copy result</button>
     <button class="btn small ghost" id="cardBtn" type="button">Image for stories</button>
     <button class="btn small ghost" id="again" type="button">Take it again</button>
     <span class="copied" id="copied" role="status"></span>
@@ -356,6 +366,8 @@ html{overflow-x:clip}
     <img id="cardImg" alt="Quiz result card">
     <p class="note" id="cardNote"></p>
   </div>
+
+  <div id="histRes" hidden></div>
 
   <div class="thanks" id="thanks" hidden>
     <h3 class="h3">Support the author</h3>
@@ -948,7 +960,7 @@ if(reduce){ window.addEventListener("resize",function(){loop(1000);}); }
 function redraw(){ if(reduce) loop(1000); }
 
 /* ---------- Вопросы ---------- */
-function start(){ track("start");
+function start(){ track("start"); state.view=null; clearHash();
   state.qs = Q.pickQuestions(); state.idx=0; state.picks=[]; state.res=null;
   show("quiz"); renderQ(); redraw();
 }
@@ -1066,9 +1078,10 @@ var FATE={loyal:"Remained loyal",traitor:"Betrayed his father",unknown:"Allegian
 function list(el, arr){ el.innerHTML=""; arr.forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li);}); }
 
 function renderResult(){
+  if(!state.view){ var nr=dec(enc(state.res)); if(nr) state.res=nr; }
   var res=state.res, rk=res.ranking, top=rk[0], emp=res.emperor;
   var p = emp? Q.EMPEROR : top.p;
-  track("result",{primarch:p.id});
+  if(!state.view) track("result",{primarch:p.id});
   $("seal").innerHTML = sealSVG(p, emp);
   var ra=$("rArt"); ra.hidden=!ART[p.id]; if(ART[p.id]) ra.style.backgroundImage="url('"+ART[p.id]+"')";
   $("seal").hidden=!!ART[p.id]; $("result").classList.toggle("withart",!!ART[p.id]);
@@ -1090,7 +1103,8 @@ function renderResult(){
   renderPrint(res, emp?null:top.p);
   renderThanks();
   $("cardOut").hidden=true;
-  store(false,{id:p.id,n:p.n,d:Date.now()});
+  if(!state.view){ store(false,{id:p.id,n:p.n,d:Date.now()}); saveHist(res,p,top); }
+  renderView(); renderHist(); prepCard();
   $("copied").textContent=""; $("sharebox").hidden=true;
   show("result");
 }
@@ -1178,7 +1192,7 @@ var ART = {emperor:"../art/emperor.jpg",lion:"../art/lion.jpg",fulgrim:"../art/f
 var THANKS = {
   text: "I made this quiz on my own: the questions, the maths, the art — all in the evenings after work. If you enjoyed it, you can support me, and that’s how the next one gets made.",
   links: [
-    {label:"Support the author", url:"https://boosty.to/lifelover2311/donate"}
+    {label:"Support the author", url:"https://boosty.to/lifelover2311/donate", goal:"donate_boosty"}
   ]
 };
 function renderThanks(){
@@ -1186,7 +1200,7 @@ function renderThanks(){
   $("thanksText").textContent=THANKS.text;
   THANKS.links.forEach(function(l){
     var a=document.createElement("a"); a.className="btn small"; a.textContent=l.label;
-    if(l.url){ a.href=l.url; a.target="_blank"; a.rel="noopener"; a.addEventListener("click",function(){ track("donate"); }); }
+    if(l.url){ a.href=l.url; a.target="_blank"; a.rel="noopener"; a.addEventListener("click",function(){ track("donate"); if(l.goal) track(l.goal); }); }
     else { a.setAttribute("aria-disabled","true"); a.textContent=l.label+" · soon"; }
     box.appendChild(a);
   });
@@ -1292,7 +1306,7 @@ function shareText(){
     ? "My blood test showed an anomaly: the blood of the Emperor Himself runs in me. Closest of His sons: "+top.p.n+"."
     : "The blood of "+p.n+" runs in me (Legion "+p.l+", "+p.leg+"), "+top.pct+"% match. Second bloodline: "+res.ranking[1].p.n+". Antithesis: "+res.ranking[res.ranking.length-1].p.n+".";
   s += " Whose blood runs in you? “Blood of the Primarchs” is a quiz about everyday life, not war.";
-  if(/^https?:/.test(location.href)) s += " "+location.href.split("#")[0];
+  if(/^https?:/.test(location.href)) s += " "+resultLink();
   return s;
 }
 $("copy").addEventListener("click",function(){ track("copy");
@@ -1305,7 +1319,94 @@ $("start").addEventListener("click",start);
 
 /* Прошлый результат */
 var last=store(true);
-if(last && last.n){ var el=$("last"); el.hidden=false; el.innerHTML="Last time, your blood matched: <b></b>. The questions will be different."; el.querySelector("b").textContent=last.n; $("start").textContent="Run the analysis again"; }
+if(last && last.n && !loadHist().length){ var el=$("last"); el.hidden=false; el.innerHTML="Last time, your blood matched: <b></b>. The questions will be different."; el.querySelector("b").textContent=last.n; $("start").textContent="Run the analysis again"; }
+
+/* ---------- Ссылка на результат, история, «Поделиться» ---------- */
+var TX = {"histTitle": "Your past results", "again": "Run the analysis again", "friend": "This is a friend's result. Whose blood runs in you?", "selfStart": "Take the quiz yourself", "histFrom": "Your result from ", "newRun": "Take it again", "againBtn": "Take it again", "linkCopied": "Link to your result copied. Send it to your friends.", "manual": "Select the text and copy it manually.", "file": "blood-of-the-primarchs.png", "title": "Blood of the Primarchs", "shareBtn": "Share my result", "loc": "en-GB", "shareH": "Share"};
+var HKEY = KEY+"-hist", HMAX = 10, cardFile = null;
+function b36(n){ return (n<36?"0":"")+n.toString(36); }
+function enc(res){
+  var top=res.ranking[0].p, ti=Q.PRIMARCHS.indexOf(top);
+  return (res.emperor?"e":"n")+res.user.map(function(v){ return b36(Math.max(0,Math.min(1295,Math.round(v*1000)))); }).join("")+(ti>=0?ti.toString(36):"");
+}
+function dec(code){
+  var L=Q.TRAITS.length*2+1;
+  if(!/^[en][0-9a-z]+$/.test(code||"") || (code.length!==L && code.length!==L+1)) return null;
+  var u=[]; for(var i=1;i<L;i+=2) u.push(parseInt(code.substr(i,2),36)/1000);
+  var ranking=Q.PRIMARCHS.map(function(p){ var r=Q.pearson(u,Q.vec(p.v))+(Q.BIAS[p.id]||0); return {p:p,r:r,pct:Math.max(1,Math.min(99,Math.round((r+1)*50)))}; }).sort(function(a,b){return b.r-a.r;});
+  if(code.length===L+1){
+    var want=Q.PRIMARCHS[parseInt(code[L],36)];
+    for(var j=1;j<ranking.length;j++) if(ranking[j].p===want){ var it=ranking.splice(j,1)[0]; ranking.unshift(it); if(it.pct<=ranking[1].pct) it.pct=Math.min(99,ranking[1].pct+1); break; }
+  }
+  if(ranking.some(function(x){return isNaN(x.r);})) return null;
+  return {user:u, ranking:ranking, emp:0, emperor:code[0]==="e", tie:false};
+}
+function baseURL(){ return location.href.split("#")[0]; }
+function resultLink(){ return baseURL()+"#r="+enc(state.res); }
+function clearHash(){ try{ if(location.hash) history.replaceState(null,"",baseURL()); }catch(e){} }
+function loadHist(){ try{ var h=JSON.parse(localStorage.getItem(HKEY)||"[]"); return Array.isArray(h)?h:[]; }catch(e){ return []; } }
+function saveHist(res,p,top){
+  try{ var h=loadHist(); h.unshift({c:enc(res),d:Date.now(),n:p.n,pct:res.emperor?0:top.pct}); localStorage.setItem(HKEY, JSON.stringify(h.slice(0,HMAX))); }catch(e){}
+}
+function fmtD(t){ try{ return new Date(t).toLocaleDateString(TX.loc); }catch(e){ return ""; } }
+function renderHist(){
+  var h=loadHist();
+  [["histIntro",true],["histRes",true]].forEach(function(t){
+    var el=$(t[0]); if(!el) return;
+    if(!h.length){ if(t[1]) el.hidden=true; return; }
+    el.hidden=false; el.innerHTML=""; el.classList.add("hist");
+    var hd=document.createElement("div"); hd.className="histh"; hd.textContent=TX.histTitle; el.appendChild(hd);
+    h.forEach(function(e){
+      var b=document.createElement("button"); b.type="button"; b.className="histi";
+      b.textContent=fmtD(e.d)+" · "+e.n+(e.pct?" · "+e.pct+"%":"");
+      b.addEventListener("click",function(){ var r=dec(e.c); if(!r) return; state.res=r; state.view="hist"; state.viewD=e.d; track("history_open"); renderResult(); });
+      el.appendChild(b);
+    });
+  });
+  if(h.length) $("start").textContent=TX.again;
+}
+function renderView(){
+  var v=state.view, mine=v!=="friend";
+  $("viewNote").hidden=!v;
+  if(v) $("viewText").textContent = v==="friend"? TX.friend : TX.histFrom+fmtD(state.viewD);
+  $("viewStart").textContent = mine? TX.newRun : TX.selfStart;
+  ["shareBtn","copy","cardBtn","shareH"].forEach(function(id){ $(id).hidden=!mine; });
+  $("again").textContent = mine? TX.againBtn : TX.selfStart;
+}
+function openFromHash(){
+  var m=/[#&]r=([0-9a-z]+)/.exec(location.hash); if(!m) return;
+  var r=dec(m[1]); if(!r){ clearHash(); return; }
+  state.res=r; state.view="friend"; track("friend_view"); renderResult();
+}
+function touch(){ return !!(window.matchMedia && matchMedia("(pointer: coarse)").matches); }
+function canShareFiles(){ try{ return touch() && !!navigator.canShare && navigator.canShare({files:[new File([""],"a.png",{type:"image/png"})]}); }catch(e){ return false; } }
+function cardURL(cb){
+  var p0=state.res.emperor?null:state.res.ranking[0].p;
+  var go=function(){ if(p0&&ART[p0.id]){ var im=new Image(); im.onload=function(){cb(makeCard(im));}; im.onerror=function(){cb(makeCard(null));}; im.src=ART[p0.id]; } else cb(makeCard(null)); };
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(go); else go();
+}
+function prepCard(){
+  cardFile=null; if(state.view==="friend" || !canShareFiles()) return;
+  var r=state.res;
+  cardURL(function(url){ if(state.res!==r) return;
+    try{ fetch(url).then(function(x){return x.blob();}).then(function(b){ if(state.res===r) cardFile=new File([b], TX.file, {type:"image/png"}); }).catch(function(){}); }catch(e){} });
+}
+$("shareBtn").addEventListener("click",function(){
+  track("share",{primarch:state.res.emperor?"emperor":state.res.ranking[0].p.id});
+  var text=shareText(), link=resultLink();
+  var copyLink=function(){
+    var ok=function(){ $("copied").textContent=TX.linkCopied; };
+    var fb=function(){ var box=$("sharebox"); box.hidden=false; box.value=link; box.focus(); box.select(); $("copied").textContent=TX.manual; };
+    try{ navigator.clipboard.writeText(link).then(ok,fb); }catch(e){ fb(); }
+  };
+  if(touch() && navigator.share){
+    var data = cardFile? {files:[cardFile], text:text} : {title:TX.title, text:text};
+    try{ navigator.share(data).catch(function(err){ if(!err || err.name!=="AbortError") copyLink(); }); }catch(e){ copyLink(); }
+  } else copyLink();
+});
+$("viewStart").addEventListener("click",start);
+renderHist(); openFromHash();
+window.addEventListener("hashchange",openFromHash);
 
 if(reduce) loop(1000); else requestAnimationFrame(loop);
 window.addEventListener("resize",redraw);
