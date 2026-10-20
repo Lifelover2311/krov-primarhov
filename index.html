@@ -1178,20 +1178,31 @@ var ART = {emperor:"art/emperor.jpg",lion:"art/lion.jpg",fulgrim:"art/fulgrim.jp
 var THANKS = {
   text: "Я сделал этот тест один: вопросы, расчёт, арты — всё по вечерам после работы. Если он тебе понравился, можешь поддержать меня — так выйдет следующий.",
   links: [
-    {label:"Поддержать автора", url:"https://boosty.to/lifelover2311/donate"},
-    {label:"Закинуть на кофе", url:"https://yoomoney.ru/to/4100119662398407"}
+    {label:"Boosty (подписка или разовый донат)", url:"https://boosty.to/lifelover2311/donate"},
+    {label:"ЮMoney (карта любого банка)", url:"https://yoomoney.ru/to/4100119662398407"}
   ]
 };
 function renderThanks(){
   var box=$("thanksBtns"); box.innerHTML="";
   $("thanksText").textContent=THANKS.text;
-  THANKS.links.forEach(function(l){
-    var a=document.createElement("a"); a.className="btn small"; a.textContent=l.label;
-    if(l.url){ a.href=l.url; a.target="_blank"; a.rel="noopener"; a.addEventListener("click",function(){ track("donate"); }); }
-    else { a.setAttribute("aria-disabled","true"); a.textContent=l.label+" · скоро"; }
-    box.appendChild(a);
-  });
-  $("thanks").hidden=!THANKS.links.length;
+  function mk(l,cls){
+    var a=document.createElement("a"); a.className=cls; a.textContent=l.label;
+    a.href=l.url; a.target="_blank"; a.rel="noopener";
+    a.addEventListener("click",function(){ track("donate"); });
+    return a;
+  }
+  var L=THANKS.links.filter(function(l){return l.url;});
+  if(L.length===1){ box.appendChild(mk(L[0],"btn small")); }
+  else if(L.length>1){
+    var main=document.createElement("button"); main.type="button"; main.className="btn small";
+    main.textContent="Поддержать автора"; main.setAttribute("aria-expanded","false");
+    var opts=document.createElement("div"); opts.className="share"; opts.hidden=true; opts.style.margin="12px 0 0";
+    L.forEach(function(l){ opts.appendChild(mk(l,"btn small ghost")); });
+    main.addEventListener("click",function(){ opts.hidden=!opts.hidden; main.setAttribute("aria-expanded",String(!opts.hidden)); });
+    box.appendChild(main);
+    box.parentNode.insertBefore(opts,box.nextSibling);
+  }
+  $("thanks").hidden=!L.length;
 }
 
 /* ---------- Генетический отпечаток ---------- */
