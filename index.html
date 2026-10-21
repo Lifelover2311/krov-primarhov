@@ -1018,7 +1018,9 @@ function choose(i){
   if(q.max>1){
     var cur=(state.picks[state.idx]||[]).slice(), j=cur.indexOf(q.a[i]);
     if(j>=0) cur.splice(j,1); else if(cur.length<q.max) cur.push(q.a[i]);
-    state.picks[state.idx]=cur; syncMulti(); return;
+    state.picks[state.idx]=cur; syncMulti();
+    if(cur.length>=q.max){ busy=true; setTimeout(function(){ busy=false; advance(); }, reduce?60:260); }
+    return;
   }
   busy=true; state.picks[state.idx]=[q.a[i]];
   var btns=$("answers").querySelectorAll(".ans"); btns.forEach(function(b){b.classList.remove("picked");}); btns[i].classList.add("picked");
