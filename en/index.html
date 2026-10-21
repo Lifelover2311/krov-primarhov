@@ -1040,8 +1040,8 @@ document.addEventListener("keydown",function(e){
 /* ---------- Подсчёт ---------- */
 function finish(){
   var res = Q.evaluate(state.qs, state.picks);
-  try{ state.qs.forEach(function(q,k){ if(q.id==="m5"&&state.picks[k]&&state.picks[k][0]) localStorage.setItem("krov-wallet", String(q.a.indexOf(state.picks[k][0]))); }); }catch(e){}
-  try{ var KA="krov-answers", ka=JSON.parse(localStorage.getItem(KA)||"{}"); if(!ka||typeof ka!=="object"||Array.isArray(ka)) ka={}; state.qs.forEach(function(q,k){ var p=state.picks[k]; if(q.id&&p&&p.length) ka[q.id]=p.map(function(x){ return q.a.indexOf(x); }); }); ka._t=Date.now(); localStorage.setItem(KA, JSON.stringify(ka)); }catch(e){}
+  /* Ответы для отсылок в следующих тестах серии: номер варианта в исходном (неперемешанном) порядке */
+  try{ localStorage.removeItem("krov-wallet"); localStorage.removeItem("krov-answers"); var KA="krov-answers2", ka=JSON.parse(localStorage.getItem(KA)||"{}"); if(!ka||typeof ka!=="object"||Array.isArray(ka)) ka={}; state.qs.forEach(function(q,k){ var p=state.picks[k]; if(q.id&&p&&p.length) ka[q.id]=p.map(function(x){ return x.i; }); }); ka._t=Date.now(); localStorage.setItem(KA, JSON.stringify(ka)); }catch(e){}
   state.res = res;
   if(res.tie && !res.emperor){ return showTie(res); }
   scan();
