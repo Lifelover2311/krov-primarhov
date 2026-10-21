@@ -126,6 +126,9 @@ button{font:inherit;color:inherit}
 .tag.egg.on{border-color:var(--gilt);color:var(--gilt)}
 .tag.egg s{color:var(--blood);opacity:.8}
 .tag.egg b{font-weight:600}
+@keyframes eggpulse{0%,100%{box-shadow:0 0 0 0 rgba(207,167,82,0)}50%{box-shadow:0 0 12px 2px rgba(207,167,82,.6)}}
+.tag.egg.hint:not(.on){animation:eggpulse 2.2s ease-in-out 1.2s 3}
+@media (prefers-reduced-motion:reduce){.tag.egg.hint{animation:none}}
 .tag.emperor,.tag.match{border-color:var(--gilt);color:var(--gilt)}
 @media (max-width:560px){.res-top{grid-template-columns:1fr;gap:14px}.seal{width:150px}}
 .withart .res-top{grid-template-columns:1fr;padding-top:clamp(60px,14vw,170px)}
@@ -1348,7 +1351,7 @@ function found(k){
 }
 function eggTag(el, k, strike){
   var base=el.textContent, on=false;
-  el.classList.add("egg"); el.setAttribute("role","button"); el.tabIndex=0; el.title=EGG.hint;
+  el.classList.add("egg"); el.setAttribute("role","button"); el.tabIndex=0; el.title=EGG.hint; if(eggsFound().indexOf(k)<0) el.classList.add("hint");
   var flip=function(){ on=!on; el.innerHTML="";
     if(on){ if(strike){ var st=document.createElement("s"); st.textContent=base; el.appendChild(st); } else el.appendChild(document.createTextNode(base));
       el.appendChild(document.createTextNode(" ")); var b=document.createElement("b"); b.textContent=EGG[k]; el.appendChild(b); el.classList.add("on"); found(k); }
