@@ -1037,6 +1037,7 @@ document.addEventListener("keydown",function(e){
 /* ---------- Подсчёт ---------- */
 function finish(){
   var res = Q.evaluate(state.qs, state.picks);
+  try{ state.qs.forEach(function(q,k){ if(q.id==="m5"&&state.picks[k]&&state.picks[k][0]) localStorage.setItem("krov-wallet", String(q.a.indexOf(state.picks[k][0]))); }); }catch(e){}
   state.res = res;
   if(res.tie && !res.emperor){ return showTie(res); }
   scan();
