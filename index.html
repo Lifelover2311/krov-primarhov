@@ -53,6 +53,13 @@ button{font:inherit;color:inherit}
 .eyebrow{font-family:var(--f-mono);font-size:var(--s-1);letter-spacing:.14em;text-transform:uppercase;color:var(--dust)}
 .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 
+.nextch{display:grid;grid-template-columns:minmax(0,1fr);margin:34px 0 22px;border:1px solid var(--gilt);background:var(--vault-2);color:inherit;text-decoration:none;transition:transform .15s,box-shadow .15s}
+.nextch:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.45)}
+.nextch .nc-im{aspect-ratio:1200/630;background:url("../imperium/cover.jpg") 68% center/cover;border-bottom:1px solid var(--rule)}
+.nextch .nc-b{display:grid;gap:6px;padding:16px 18px 18px}
+.nextch b{font-family:var(--f-display);font-weight:700;font-size:var(--s3);line-height:1.05;color:var(--bone)}
+.nextch .nc-go{color:var(--gilt);font-weight:500;margin-top:4px}
+@media (min-width:600px){.nextch{grid-template-columns:240px minmax(0,1fr)}.nextch .nc-im{aspect-ratio:auto;min-height:100%;border-bottom:0;border-right:1px solid var(--rule)}}
 /* ---------- Вступление ---------- */
 .hero{position:relative;padding-block:0 8px}
 /* Обложка и фон (как во втором тесте серии) */
@@ -385,6 +392,16 @@ html{overflow-x:clip}
     <img id="cardImg" alt="Карточка с результатом теста">
     <p class="note" id="cardNote"></p>
   </div>
+
+  <a class="nextch" id="nextCh" href="../imperium/">
+    <span class="nc-im" aria-hidden="true"></span>
+    <span class="nc-b">
+      <span class="eyebrow">Глава вторая · уже вышла</span>
+      <b>Твоя роль в Империуме</b>
+      <span>Кровь установлена. Теперь Администратум решит, где ты будешь служить. Второй тест помнит твои ответы из этого.</span>
+      <span class="nc-go">Заполнить анкету →</span>
+    </span>
+  </a>
 
   <p class="note" id="eggNote"></p>
   <div id="histRes" hidden></div>
@@ -1356,6 +1373,7 @@ $("copy").addEventListener("click",function(){ track("copy");
   try{ navigator.clipboard.writeText(t).then(done, fallback); }catch(e){ fallback(); }
 });
 $("again").addEventListener("click",start);
+$("nextCh").addEventListener("click",function(){ track("to_imperium"); });
 $("start").addEventListener("click",start);
 
 /* Прошлый результат */
