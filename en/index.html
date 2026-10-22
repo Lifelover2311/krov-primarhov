@@ -151,6 +151,8 @@ button{font:inherit;color:inherit}
 .scene p{margin:0}
 .motto{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,6vw,40px);line-height:1.1;margin:0 0 8px;text-wrap:balance}
 .bond{color:var(--dust);margin:0 0 34px}
+.legsize{margin:-12px 0 28px;padding:8px 14px;border-left:2px solid var(--gilt);color:var(--dust);font-size:15px;max-width:34em}
+.legsize:empty{display:none}
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-block:1px solid var(--rule);margin:0 0 36px}
 .pair div{padding:14px 12px 14px 0;min-width:0}
 .pair div + div{padding-left:14px;border-left:1px solid var(--rule)}
@@ -346,6 +348,7 @@ html{overflow-x:clip}
   </div>
   <p class="secret" id="rSecret" hidden></p>
   <p class="desc" id="rDesc"></p>
+  <p class="legsize" id="rLegSize"></p>
   <div class="cols">
     <div><h3 class="h3">Strength</h3><ul id="rS"></ul></div>
     <div class="shadow"><h3 class="h3">Shadow</h3><ul id="rSh"></ul></div>
@@ -1103,6 +1106,7 @@ function sealSVG(p, emperor){
 var FATE={loyal:"Remained loyal",traitor:"Betrayed his father",unknown:"Allegiance unknown",emperor:"The Golden Throne"};
 function list(el, arr){ el.innerHTML=""; arr.forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li);}); }
 
+var LEGSIZE={"guilliman": "Your blood is the most common in the galaxy. There are a lot of Ultramarines, and every one of them has a codex.", "horus": "Your blood ran in many. Half the galaxy followed Horus, and the other half feared him.", "lion": "The Dark Angels were one of the largest Legions. And every one of their warriors keeps a secret.", "dorn": "There were enough Imperial Fists to hold the Emperor's Palace. You'll hold out too.", "perturabo": "There were a lot of Iron Warriors, and all of them got thrown at the most thankless sieges. Sound familiar?", "lorgar": "There were a lot of Word Bearers. Each one believed, and badly wanted everyone else to believe too.", "angron": "There were a lot of World Eaters, until they started burning through themselves faster than they could recruit.", "sanguinius": "The Angel's blood is prized, but it carries a flaw. Many bear it; not all hold on.", "khan": "The White Scars were rarely seen but often heard. Usually once they were already far away.", "mortarion": "The Death Guard is a Legion that never runs out. Even when it should have.", "curze": "There are plenty of Night Lords. Especially in the dark.", "ferrus": "There are a lot of Iron Hands, and less living flesh in them every year.", "corax": "The Raven Guard were numerous until Isstvan took most of them. You know how to start over.", "alpharius": "How many share your blood? Classified. Maybe you're one of them. Maybe not.", "magnus": "Your blood is rare: the Thousand Sons were never numerous, and the flesh-change took even more.", "vulkan": "There were always few Salamanders. But you never have to worry about any of them.", "russ": "Fenris kills most aspirants. If you're here, you're one of the survivors.", "fulgrim": "The Emperor's Children nearly died out at the very start. They are few, and each one considers himself perfect.", "emperor": "There was only one bearer of your blood. Now there are two."};
 function renderResult(){
   if(!state.view){ var nr=dec(enc(state.res)); if(nr) state.res=nr; }
   var res=state.res, rk=res.ranking, top=rk[0], emp=res.emperor;
@@ -1120,7 +1124,7 @@ function renderResult(){
   applyTagEggs(p, t1, emp?null:t2);
   $("rSecret").hidden=!emp;
   if(emp) $("rSecret").textContent="Secret result. There is a little of every brother in you, and the closest is "+top.p.n+" ("+top.pct+"%).";
-  $("rDesc").textContent=p.d; list($("rS"),p.s); list($("rSh"),p.sh);
+  $("rDesc").textContent=p.d; $("rLegSize").textContent=LEGSIZE[p.id]||""; list($("rS"),p.s); list($("rSh"),p.sh);
   $("rScene").textContent=p.sc; $("rMotto").textContent="“"+p.m+"”"; $("rBond").textContent=p.b;
   var second = emp? rk[0] : rk[1], anti=rk[rk.length-1];
   $("rSecond").textContent=second.p.n; $("rSecondP").textContent=second.p.leg+" · "+second.pct+"%";

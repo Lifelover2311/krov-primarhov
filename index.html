@@ -158,6 +158,8 @@ button{font:inherit;color:inherit}
 .scene p{margin:0}
 .motto{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,6vw,40px);line-height:1.1;margin:0 0 8px;text-wrap:balance}
 .bond{color:var(--dust);margin:0 0 34px}
+.legsize{margin:-12px 0 28px;padding:8px 14px;border-left:2px solid var(--gilt);color:var(--dust);font-size:15px;max-width:34em}
+.legsize:empty{display:none}
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-block:1px solid var(--rule);margin:0 0 36px}
 .pair div{padding:14px 12px 14px 0;min-width:0}
 .pair div + div{padding-left:14px;border-left:1px solid var(--rule)}
@@ -353,6 +355,7 @@ html{overflow-x:clip}
   </div>
   <p class="secret" id="rSecret" hidden></p>
   <p class="desc" id="rDesc"></p>
+  <p class="legsize" id="rLegSize"></p>
   <div class="cols">
     <div><h3 class="h3">Сила</h3><ul id="rS"></ul></div>
     <div class="shadow"><h3 class="h3">Тень</h3><ul id="rSh"></ul></div>
@@ -1120,6 +1123,7 @@ function sealSVG(p, emperor){
 var FATE={loyal:"Остался верен",traitor:"Предал отца",unknown:"Верность неизвестна",emperor:"Золотой Трон"};
 function list(el, arr){ el.innerHTML=""; arr.forEach(function(t){var li=document.createElement("li");li.textContent=t;el.appendChild(li);}); }
 
+var LEGSIZE={"guilliman": "Твоя кровь — самая распространённая в галактике. Ультрамаринов много, и у каждого есть устав.", "horus": "Твоей крови было много. За Хорусом шла половина галактики, а вторая половина его боялась.", "lion": "Тёмные Ангелы — один из крупнейших легионов. И у каждого его воина есть секрет.", "dorn": "Имперских Кулаков хватило, чтобы удержать Дворец Императора. Тебя тоже на многое хватит.", "perturabo": "Железных Воинов было много, и всех их бросали на самые неблагодарные осады. Знакомо?", "lorgar": "Несущих Слово было много. Каждый верил сам и очень хотел, чтобы верили остальные.", "angron": "Пожирателей Миров было много, пока они не начали тратить себя быстрее, чем набирать новых.", "sanguinius": "Кровь Ангела ценится высоко, но в ней есть изъян. Носителей много, а держатся не все.", "khan": "Белых Шрамов редко видели, зато часто слышали. Обычно, когда они уже были далеко.", "mortarion": "Гвардия Смерти — легион, который не кончается. Даже когда должен был.", "curze": "Повелителей Ночи хватает. Особенно в темноте.", "ferrus": "Железных Рук много, а живой плоти в них с каждым годом всё меньше.", "corax": "Гвардии Ворона было немало, пока Истваан не забрал большинство. Ты умеешь начинать сначала.", "alpharius": "Сколько носителей у твоей крови? Засекречено. Возможно, ты один из них. Возможно, нет.", "magnus": "Твоя кровь редка: Тысяча Сынов никогда не была многочисленной, а изменения плоти забрали ещё больше.", "vulkan": "Саламандр всегда было мало. Зато за каждого можно не волноваться.", "russ": "Фенрис убивает большинство кандидатов. Раз ты здесь, ты из выживших.", "fulgrim": "Детей Императора чуть не стало в самом начале. Их мало, и каждый считает себя совершенным.", "emperor": "Носитель твоей крови был один. Теперь вас двое."};
 function renderResult(){
   if(!state.view){ var nr=dec(enc(state.res)); if(nr) state.res=nr; }
   var res=state.res, rk=res.ranking, top=rk[0], emp=res.emperor;
@@ -1137,7 +1141,7 @@ function renderResult(){
   applyTagEggs(p, t1, emp?null:t2);
   $("rSecret").hidden=!emp;
   if(emp) $("rSecret").textContent="Секретный результат. В тебе понемногу от всех братьев, а ближе всего — "+top.p.n+" ("+top.pct+"%).";
-  $("rDesc").textContent=p.d; list($("rS"),p.s); list($("rSh"),p.sh);
+  $("rDesc").textContent=p.d; $("rLegSize").textContent=LEGSIZE[p.id]||""; list($("rS"),p.s); list($("rSh"),p.sh);
   $("rScene").textContent=p.sc; $("rMotto").textContent="«"+p.m+"»"; $("rBond").textContent=p.b;
   var second = emp? rk[0] : rk[1], anti=rk[rk.length-1];
   $("rSecond").textContent=second.p.n; $("rSecondP").textContent=second.p.leg+" · "+second.pct+"%";
