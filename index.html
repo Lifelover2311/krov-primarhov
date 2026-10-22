@@ -1156,7 +1156,7 @@ function renderResult(){
   renderPrint(res, emp?null:top.p);
   renderThanks();
   $("cardOut").hidden=true;
-  if(!state.view){ store(false,{id:p.id,n:p.n,d:Date.now()}); saveHist(res,p,top); }
+  if(!state.view){ store(false,{id:p.id,n:p.n,d:Date.now()}); saveHist(res,p,top); refreshNext(); }
   renderView(); renderHist(); prepCard();
   $("copied").textContent=""; $("sharebox").hidden=true;
   if(state.view) $("delo").hidden=true; else if(window.DELO) DELO.mount($("delo"));
@@ -1381,7 +1381,10 @@ $("copy").addEventListener("click",function(){ track("copy");
   try{ navigator.clipboard.writeText(t).then(done, fallback); }catch(e){ fallback(); }
 });
 $("again").addEventListener("click",start);
-$("nextCh").addEventListener("click",function(){ track("to_imperium"); });
+/* Ссылка на второй тест несёт кровь и ответы в адресе: связка переживёт смену браузера */
+function refreshNext(){ try{ var a=$("nextCh"); if(a&&window.DELO&&DELO.carry) a.href="../imperium/"+DELO.carry(); }catch(e){} }
+$("nextCh").addEventListener("click",function(){ refreshNext(); track("to_imperium"); });
+refreshNext();
 $("start").addEventListener("click",start);
 
 /* Прошлый результат */
