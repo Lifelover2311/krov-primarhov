@@ -396,6 +396,8 @@ html{overflow-x:clip}
     <p class="note" id="cardNote"></p>
   </div>
 
+  <div id="delo" hidden></div>
+
   <a class="nextch" id="nextCh" href="../imperium/">
     <span class="nc-im" aria-hidden="true"></span>
     <span class="nc-b">
@@ -956,6 +958,7 @@ if (typeof module!=="undefined" && module.exports) module.exports = API; else ro
 })(this);
 
 </script>
+<script src="../delo.js"></script>
 <script>
 (function(){
 "use strict";
@@ -1156,6 +1159,7 @@ function renderResult(){
   if(!state.view){ store(false,{id:p.id,n:p.n,d:Date.now()}); saveHist(res,p,top); }
   renderView(); renderHist(); prepCard();
   $("copied").textContent=""; $("sharebox").hidden=true;
+  if(state.view) $("delo").hidden=true; else if(window.DELO) DELO.mount($("delo"));
   show("result");
 }
 function renderMap(rk, meId){
