@@ -890,6 +890,10 @@ var EMPEROR = {id:"emperor", n:"Император Человечества", l:
   b:"Двадцать сыновей. Двое удалены из всех записей. Ты знаешь почему."};
 
 var EMP_THRESHOLD = 3;
+/* Устойчивость при повторе: прошлое прохождение входит в подсчёт с весом PREV_W (и затухает дальше),
+   а прошлый примарх остаётся, если уступает лидеру не больше STICKY. Подобрано симуляцией 26.10.2026:
+   повтор совпадает ~67% вместо ~48%, нарочно сменивший ответы «застревает» ~21%. */
+var PREV_W = 0.5, STICKY = 0.03;
 /* Калибровка: выравнивает частоты результатов по реальным ответам (Метрика, 19.10.2026, ~6000 прохождений), с запасом, чтобы не ломать узнаваемость. */
 var BIAS = {"lion":-0.055,"fulgrim":0.147,"perturabo":0.08,"khan":-0.045,"russ":-0.045,"dorn":0.04,"curze":-0.125,"sanguinius":0.001,"ferrus":0.01,"angron":-0.038,"guilliman":0.085,"mortarion":-0.055,"magnus":0.015,"horus":0.12,"lorgar":0.075,"vulkan":0.025,"corax":-0.03,"alpharius":-0.055};
 
@@ -917,7 +921,7 @@ function pearson(a,b){
 
 /* picks[i] — выбранный ответ или массив ответов (для вопросов с несколькими вариантами).
    При нескольких ответах их вес делится поровну, чтобы такой вопрос не весил больше обычного. */
-function evaluate(questions, picks){
+function evaluate(questions, picks, prev){
   var raw={},exp={},emp=0;
   TRAITS.forEach(function(k){raw[k]=0;exp[k]=0;});
   questions.forEach(function(q){
@@ -930,12 +934,23 @@ function evaluate(questions, picks){
     arr.forEach(function(a){ for(var k in a.w) raw[k]+=a.w[k]*share; if(a.emp) hasEmp=true; });
     if(hasEmp) emp++;
   });
+  var okPrev = prev && Array.isArray(prev.raw) && Array.isArray(prev.exp) && prev.raw.length===TRAITS.length && prev.exp.length===TRAITS.length;
+  if(okPrev) TRAITS.forEach(function(k,i){ var a=+prev.raw[i], b=+prev.exp[i]; if(isFinite(a)&&isFinite(b)){ raw[k]+=PREV_W*a; exp[k]+=PREV_W*b; } });
   var user = TRAITS.map(function(k){return exp[k]?raw[k]/exp[k]:0;});
   var ranking = P.map(function(p){
     var r=pearson(user, vec(p.v))+(BIAS[p.id]||0);
     return {p:p, r:r, pct:Math.max(1,Math.min(99,Math.round((r+1)*50)))};
   }).sort(function(a,b){return b.r-a.r;});
-  return {user:user, ranking:ranking, emp:emp, emperor:emp>=EMP_THRESHOLD, tie:(ranking[0].r-ranking[1].r)<0.015};
+  var stuck=false;
+  if(okPrev && prev.id){
+    for(var j=1;j<ranking.length;j++) if(ranking[j].p.id===prev.id){
+      if(ranking[j].r>=ranking[0].r-STICKY){ var it=ranking.splice(j,1)[0]; ranking.unshift(it); if(it.pct<=ranking[1].pct) it.pct=Math.min(99,ranking[1].pct+1); stuck=true; }
+      break;
+    }
+    if(ranking[0].p.id===prev.id) stuck=true;
+  }
+  return {user:user, ranking:ranking, emp:emp, emperor:emp>=EMP_THRESHOLD, tie:!stuck&&(ranking[0].r-ranking[1].r)<0.015,
+    acc:{raw:TRAITS.map(function(k){return +raw[k].toFixed(3);}), exp:TRAITS.map(function(k){return +exp[k].toFixed(3);})}};
 }
 
 /* Что общего у человека с примархом и чего меньше. */
@@ -952,7 +967,7 @@ function compare(res, p){
 }
 
 var API = {TRAITS:TRAITS, TRAIT_NAMES:TRAIT_NAMES, compare:compare, OPENERS:OPENERS, MIDDLE:MIDDLE, FINALS:FINALS,
-  PRIMARCHS:P, EMPEROR:EMPEROR, BIAS:BIAS, EMP_THRESHOLD:EMP_THRESHOLD,
+  PRIMARCHS:P, EMPEROR:EMPEROR, BIAS:BIAS, EMP_THRESHOLD:EMP_THRESHOLD, PREV_W:PREV_W, STICKY:STICKY,
   pickQuestions:pickQuestions, evaluate:evaluate, mulberry32:mulberry32, shuffle:shuffle, vec:vec, pearson:pearson};
 if (typeof module!=="undefined" && module.exports) module.exports = API; else root.QUIZ = API;
 })(this);
@@ -1072,8 +1087,11 @@ document.addEventListener("keydown",function(e){
 });
 
 /* ---------- Подсчёт ---------- */
+var BKEY="krov-blood";
 function finish(){
-  var res = Q.evaluate(state.qs, state.picks);
+  var prev=null; try{ prev=JSON.parse(localStorage.getItem(BKEY)||"null"); }catch(e){}
+  var res = Q.evaluate(state.qs, state.picks, prev);
+  state.acc = res.acc;
   /* Ответы для отсылок в следующих тестах серии: номер варианта в исходном (неперемешанном) порядке */
   try{ localStorage.removeItem("krov-wallet"); localStorage.removeItem("krov-answers"); var KA="krov-answers2", ka=JSON.parse(localStorage.getItem(KA)||"{}"); if(!ka||typeof ka!=="object"||Array.isArray(ka)) ka={}; state.qs.forEach(function(q,k){ var p=state.picks[k]; if(q.id&&p&&p.length) ka[q.id]=p.map(function(x){ return x.i; }); }); ka._t=Date.now(); localStorage.setItem(KA, JSON.stringify(ka)); }catch(e){}
   state.res = res;
@@ -1156,7 +1174,7 @@ function renderResult(){
   renderPrint(res, emp?null:top.p);
   renderThanks();
   $("cardOut").hidden=true;
-  if(!state.view){ store(false,{id:p.id,n:p.n,d:Date.now()}); saveHist(res,p,top); refreshNext(); }
+  if(!state.view){ store(false,{id:p.id,n:p.n,d:Date.now()}); try{ if(state.acc) localStorage.setItem(BKEY, JSON.stringify({raw:state.acc.raw,exp:state.acc.exp,id:p.id,t:Date.now()})); state.acc=null; }catch(e){} saveHist(res,p,top); refreshNext(); }
   renderView(); renderHist(); prepCard();
   $("copied").textContent=""; $("sharebox").hidden=true;
   if(state.view) $("delo").hidden=true; else if(window.DELO) DELO.mount($("delo"));
