@@ -158,6 +158,21 @@ button{font:inherit;color:inherit}
 .scene p{margin:0}
 .motto{font-family:var(--f-display);font-weight:700;font-size:clamp(28px,6vw,40px);line-height:1.1;margin:0 0 8px;text-wrap:balance}
 .bond{color:var(--dust);margin:0 0 34px}
+.contra{border-left-color:var(--blood,#8f2a24)}
+.contra p{font-size:var(--s1,18px);line-height:1.5}
+@media (max-width:599px){.share.share-top{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.share-top .btn{justify-content:center;text-align:center;padding-inline:8px;white-space:normal;line-height:1.15}.share-top #cardBtn{grid-column:1/-1}.share-top .copied{grid-column:1/-1}}
+.share.share-top{margin-bottom:30px}
+#delo h3,#delo .delo-btn{font-family:var(--f-display)}
+.deep{margin:0 0 34px;border:1px solid var(--rule)}
+.deep>summary{list-style:none;cursor:pointer;padding:16px 48px 16px 18px;position:relative;display:grid;gap:4px;background:var(--vault)}
+.deep>summary::-webkit-details-marker{display:none}
+.deep>summary b{font-family:var(--f-display);font-size:clamp(20px,4.6vw,24px);color:var(--gilt-hi,var(--gilt))}
+.deep>summary span{font-size:var(--s-1);color:var(--dust)}
+.deep>summary::after{content:"";position:absolute;right:20px;top:50%;width:10px;height:10px;border-right:2px solid var(--gilt);border-bottom:2px solid var(--gilt);transform:translateY(-70%) rotate(45deg);transition:transform .2s}
+.deep[open]>summary::after{transform:translateY(-30%) rotate(-135deg)}
+.deep>summary:focus-visible{outline:2px solid var(--gilt);outline-offset:2px}
+.deep[open]{padding:0 18px 4px}
+.deep[open]>summary{margin:0 -18px 26px}
 .legsize{margin:-12px 0 28px;padding:8px 14px;border-left:2px solid var(--gilt);color:var(--dust);font-size:15px;max-width:34em}
 .legsize:empty{display:none}
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-block:1px solid var(--rule);margin:0 0 36px}
@@ -356,6 +371,21 @@ html{overflow-x:clip}
   <p class="secret" id="rSecret" hidden></p>
   <p class="desc" id="rDesc"></p>
   <p class="legsize" id="rLegSize"></p>
+
+  <h3 class="h3" id="shareH">Поделиться</h3>
+  <div class="share share-top">
+    <button class="btn small" id="cardBtn" type="button">Картинка для сторис</button>
+    <button class="btn small ghost" id="shareBtn" type="button">Поделиться результатом</button>
+    <button class="btn small ghost" id="copy" type="button">Скопировать результат</button>
+    <button class="btn small ghost" id="again" type="button">Пройти ещё раз</button>
+    <span class="copied" id="copied" role="status"></span>
+  </div>
+  <textarea class="sharebox" id="sharebox" readonly hidden aria-label="Текст результата"></textarea>
+  <div class="cardout" id="cardOut" hidden>
+    <img id="cardImg" alt="Карточка с результатом теста">
+    <p class="note" id="cardNote"></p>
+  </div>
+
   <div class="cols">
     <div><h3 class="h3">Сила</h3><ul id="rS"></ul></div>
     <div class="shadow"><h3 class="h3">Тень</h3><ul id="rSh"></ul></div>
@@ -364,6 +394,9 @@ html{overflow-x:clip}
   <div class="scene"><p id="rScene"></p></div>
   <p class="motto" id="rMotto"></p>
   <p class="bond" id="rBond"></p>
+
+  <h3 class="h3" id="rContraH">Противоречие в крови</h3>
+  <div class="scene contra"><p id="rContra"></p></div>
 
   <a class="nextch" id="nextCh" href="../imperium/">
     <span class="nc-im" aria-hidden="true"></span>
@@ -375,11 +408,15 @@ html{overflow-x:clip}
     </span>
   </a>
 
+  <div id="delo" hidden></div>
+
   <div class="pair">
     <div><span class="eyebrow">Вторая кровь</span><b id="rSecond"></b><span id="rSecondP"></span></div>
     <div><span class="eyebrow">Твой антипод</span><b id="rAnti"></b><span id="rAntiP"></span></div>
   </div>
 
+  <details class="deep" id="deep">
+  <summary><b>Полный генетический анализ</b><span>Отпечаток характера, карта двадцати легионов и все восемнадцать братьев по степени сходства</span></summary>
   <h3 class="h3">Генетический отпечаток</h3>
   <p class="mapnote">Твои черты характера по ответам (зелёным) и черты твоего примарха (золотой контур). Чем больше совпадают фигуры, тем сильнее кровь.</p>
   <div class="print" id="print"></div>
@@ -391,23 +428,7 @@ html{overflow-x:clip}
   <h3 class="h3">Все братья в твоей крови</h3>
   <p class="mapnote">Все восемнадцать примархов по степени сходства. Открой любого, чтобы прочитать, что у вас общего и чем вы различаетесь.</p>
   <div class="bros" id="bros"></div>
-
-  <h3 class="h3" id="shareH">Поделиться</h3>
-  <div class="share">
-    <button class="btn small" id="shareBtn" type="button">Поделиться результатом</button>
-    <button class="btn small ghost" id="copy" type="button">Скопировать результат</button>
-    <button class="btn small ghost" id="cardBtn" type="button">Картинка для сторис</button>
-    <button class="btn small ghost" id="again" type="button">Пройти ещё раз</button>
-    <span class="copied" id="copied" role="status"></span>
-  </div>
-  <textarea class="sharebox" id="sharebox" readonly hidden aria-label="Текст результата"></textarea>
-  <div class="cardout" id="cardOut" hidden>
-    <img id="cardImg" alt="Карточка с результатом теста">
-    <p class="note" id="cardNote"></p>
-  </div>
-
-  <div id="delo" hidden></div>
-
+  </details>
 
   <p class="note" id="eggNote"></p>
   <div id="histRes" hidden></div>
@@ -578,14 +599,14 @@ var MIDDLE = [
   {t:"Заказываю доставку и перекладываю в свои тарелки.", w:{cun:2}},
   {t:"Никого не пускаю на кухню и выношу шедевр.", w:{pri:2,cra:1}}
  ]},
- {id:"m13", t:"Соседи сверху шумят третью ночь подряд.", a:[
-  {t:"Поднимаюсь и говорю всё, что думаю. Громко.", w:{wra:2,hon:1}},
-  {t:"Вежливо пишу в домовой чат со ссылкой на закон о тишине.", w:{ord:2,int:1}},
-  {t:"В субботу в семь утра у меня по плану перфоратор.", w:{cun:2,gri:1}},
-  {t:"Беруши. Бывало и хуже.", w:{end:2}},
-  {t:"Поднимаюсь с тортиком знакомиться. Через месяц мы дружим.", w:{car:1,pac:2}},
-  {t:"Стучу по батарее. Молча. Каждую ночь.", w:{gri:1,wra:1,end:1}},
-  {t:"Начинаю искать квартиру потише.", w:{fre:2}}
+ {id:"m13", t:"Бронь на твой день рождения потерялась: столик отдали другой компании.", a:[
+  {t:"Говорю всё, что думаю. Громко, при всех.", w:{wra:2,hon:1}},
+  {t:"Спокойно прошу открыть бронь в системе и позвать управляющего.", w:{ord:2,int:1}},
+  {t:"Улыбаюсь. А вечером пишу отзыв, где всё до минуты и со скриншотами.", w:{cun:2,gri:1}},
+  {t:"Ждём у бара. Бывало и хуже.", w:{end:2}},
+  {t:"Подсаживаемся к той компании. К концу вечера празднуем вместе.", w:{car:1,pac:2}},
+  {t:"Молча стоим у их стола, пока им самим не станет неловко.", w:{gri:1,wra:1,end:1}},
+  {t:"Разворачиваемся и идём куда глаза глядят.", w:{fre:2}}
  ]},
  {id:"m14", max:2, t:"Старая семейная фотография. Что чувствуешь?", a:[
   {t:"Тоску по тем, кого уже нет.", w:{gri:1,fai:1,car:1}},
@@ -1165,6 +1186,8 @@ function renderResult(){
   if(emp) $("rSecret").textContent="Секретный результат. В тебе понемногу от всех братьев, а ближе всего — "+top.p.n+" ("+top.pct+"%).";
   $("rDesc").textContent=p.d; $("rLegSize").textContent=LEGSIZE[p.id]||""; list($("rS"),p.s); list($("rSh"),p.sh);
   $("rScene").textContent=p.sc; $("rMotto").textContent="«"+p.m+"»"; $("rBond").textContent=p.b;
+  var cx=CONTRA[p.id]||""; $("rContra").textContent=cx; $("rContraH").hidden=!cx; $("rContra").parentNode.hidden=!cx;
+  $("deep").open=false;
   var second = emp? rk[0] : rk[1], anti=rk[rk.length-1];
   $("rSecond").textContent=second.p.n; $("rSecondP").textContent=second.p.leg+" · "+second.pct+"%";
   $("rAnti").textContent=anti.p.n; $("rAntiP").textContent=anti.p.leg+" · "+anti.pct+"%"+(anti.p.id==="perturabo"?". "+EGG.perturabo:"");
@@ -1179,8 +1202,48 @@ function renderResult(){
   renderView(); renderHist(); prepCard();
   $("copied").textContent=""; $("sharebox").hidden=true;
   if(state.view) $("delo").hidden=true; else if(window.DELO) DELO.mount($("delo"));
+  tuneDelo();
   show("result");
 }
+/* Противоречие в крови: одна сцена, где сталкиваются две стороны характера (06.11.2026). */
+var CONTRA = {
+  lion:"Ты не выносишь, когда от тебя что-то скрывают. А у самого целый ящик того, о чём не знает никто, даже те, кто рядом с тобой двадцать лет.",
+  fulgrim:"Ты можешь неделю выбирать идеальный оттенок штор. А потом за один вечер купить что-то совершенно безумное, просто потому что захотелось.",
+  perturabo:"Похвала тебе неприятна: неловко и лишнее. Зато ты годами помнишь тот единственный раз, когда тебя не похвалили.",
+  khan:"Тебе тесно в любых планах, и ты пропадаешь на месяц. Но если друг позовёт в три ночи, ты приедешь раньше всех.",
+  russ:"Ты всегда говоришь правду в глаза. Кроме случаев, когда речь о своих: за них ты сначала заступаешься при всех, а правду говоришь уже потом, наедине.",
+  dorn:"Ты можешь неделю спать по четыре часа и ни разу не пожаловаться. А потом весь вечер ходить расстроенным, потому что кто-то из близких сказал: «Ты как стена».",
+  curze:"Больше всего тебя злит, когда наказывают несправедливо. И ты первым придумываешь, как наказать того, кто это сделал.",
+  sanguinius:"Ты умеешь успокоить любого, кто боится будущего. Своё будущее ты при этом давно продумал до последнего дня и ни с кем о нём не говоришь.",
+  ferrus:"Чужую слабость ты не прощаешь. А свою прячешь так старательно, что о ней не знают даже самые близкие.",
+  angron:"Тебя можно довести до бешенства одной фразой. А через час ты весь вечер сидишь на полу с чужой собакой, потому что она боится грозы.",
+  guilliman:"У тебя расписан каждый час. Но если кому-то из своих плохо, ты первым ломаешь всё расписание, а потом неделю мучаешься, что выбился из графика.",
+  mortarion:"Ты презираешь тех, кто сдаётся, и не терпишь, когда тебя жалеют. При этом сам годами терпишь то, от чего давно стоило уйти, и называешь это силой.",
+  magnus:"Ты понимаешь, как устроено почти всё. Кроме одного: почему люди злятся, когда ты им это объясняешь.",
+  horus:"Тебе легко вести за собой других. Труднее всего пойти за кем-то самому, даже когда этот человек прав.",
+  lorgar:"Ты умеешь заставить поверить кого угодно. Не получается убедить только одного человека — того, ради кого всё это и затевалось.",
+  vulkan:"Ты можешь починить что угодно и помочь кому угодно. А когда помощь нужна тебе, ты говоришь «всё нормально» и идёшь чинить что-нибудь ещё.",
+  corax:"Ты всегда встаёшь за тех, на кого давят. А ночью вспоминаешь не тех, кого защитил, а одного, за кого не успел.",
+  alpharius:"Ты можешь соврать так, что не подкопаешься. Но «я тебе доверяю» говоришь только всерьёз и не чаще раза в год.",
+  emperor:"Ты держишь всё и всех. И ни один человек ни разу не спросил, кто держит тебя."
+};
+/* Карточка «Личное дело» после первого теста становится главным входом во вторую часть. */
+function tuneDelo(){
+  var d=$("delo"), nc=$("nextCh");
+  nc.hidden=false;
+  if(state.view||d.hidden) return;
+  var a=d.querySelector('a[href*="imperium/"]');
+  if(!a){ nc.hidden=true; return; }
+  nc.hidden=true;
+  var eb=d.querySelector(".delo-eyebrow"); if(eb) eb.textContent="Глава вторая · уже вышла";
+  var h=d.querySelector("h3"); if(h) h.textContent="Твоя роль в Империуме";
+  var lead=d.querySelector("p"); if(lead) lead.textContent="Личное дело заполнено наполовину: кровь установлена, а графа «Роль» пустая. Её заполнит Администратум по анкете во второй части. Второй тест помнит твои ответы из этого, начинать с нуля не придётся.";
+  a.textContent="Заполнить анкету →"; a.classList.remove("ghost");
+  a.addEventListener("click",function(){ track("to_imperium"); });
+  var btns=a.parentNode; btns.insertBefore(a,btns.firstChild);
+  var sv=btns.querySelector("button"); if(sv){ sv.classList.add("ghost"); }
+}
+$("deep").addEventListener("toggle",function(){ if(this.open) track("deep_open"); });
 function renderMap(rk, meId){
   var byL={}; rk.forEach(function(x){byL[x.p.l]=x;});
   var map=$("map"); map.innerHTML="";
